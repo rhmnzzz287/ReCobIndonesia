@@ -1,0 +1,21 @@
+{
+  "name": "@recobid/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./constants/limits": "./src/constants/limits.ts",
+    "./constants/funnel-events": "./src/constants/funnel-events.ts",
+    "./constants/regions": "./src/constants/regions.ts",
+    "./contracts/lead": "./src/contracts/lead.ts",
+    "./contracts/events": "./src/contracts/events.ts",
+    "./db/types": "./src/db/types.ts"
+  },
+  "dependencies": {
+    "zod": "4.6.5"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src"
+  }
+}

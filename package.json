@@ -1,0 +1,33 @@
+{
+  "name": "recobid",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/backend",
+    "packages/shared"
+  ],
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @recobid/web",
+    "build": "npm run build --workspace @recobid/web",
+    "start": "npm run start --workspace @recobid/web",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:rls": "npm run test:rls --workspace @recobid/backend",
+    "test:e2e": "npm run test:e2e --workspace @recobid/web",
+    "db:push": "npm run db:push --workspace @recobid/backend",
+    "db:seed": "npm run db:seed --workspace @recobid/backend",
+    "db:gen-types": "npm run db:gen-types --workspace @recobid/backend",
+    "demo:export": "npm run demo:export --workspace @recobid/backend",
+    "fn:deploy": "npm run fn:deploy --workspace @recobid/backend",
+    "check:tokens": "node scripts/export-design-tokens.mjs --check",
+    "check:emoji": "NO_EMOJI_EXTRA_IGNORE=Docs node scripts/check-no-emoji.mjs .",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "check:env": "node apps/backend/scripts/check-env.mjs",
+    "verify": "npm run lint && npm run typecheck && npm run check:tokens && npm run check:env && npm run check:emoji && npm run check:secrets && npm run test && npm run build && npm run test:e2e"
+  }
+}

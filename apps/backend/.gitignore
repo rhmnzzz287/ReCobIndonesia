@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+!.env.*.example
+supabase/.temp/
+supabase/.branches/
+*.dump
+*.sql.gz
