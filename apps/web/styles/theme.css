@@ -1,0 +1,173 @@
+/* BERKAS INI DIHASILKAN dari Docs/DESIGN.md oleh scripts/export-design-tokens.mjs. */
+/* Jangan diedit tangan: ubah Docs/DESIGN.md lalu jalankan `npm run check:tokens`. */
+
+@theme {
+  --color-surface: #ffffff;
+  --color-cream: #fff8ee;
+  --color-paper: #f4f8f0;
+  --color-ink: #0d1216;
+  --color-ink-deep: #123326;
+  --color-primary: #0b6e3b;
+  --color-primary-strong: #084f2a;
+  --color-primary-soft: #e7f1e4;
+  --color-accent: #7dbe35;
+  --color-accent-ink: #61a33c;
+  --color-corn: #edc22e;
+  --color-tan: #d9c89a;
+  --color-text: #1f2a24;
+  --color-text-secondary: #4a5a52;
+  --color-border: #ddebd2;
+  --color-amber-soft: #fff3d1;
+  --color-amber-ink: #7a5c12;
+  --font-display-xl: var(--font-rubik), "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --text-display-xl: 3.5rem;
+  --font-weight-display-xl: 800;
+  --leading-display-xl: 1.05;
+  --tracking-display-xl: -0.03em;
+  --font-h1: var(--font-rubik), "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --text-h1: 2.5rem;
+  --font-weight-h1: 800;
+  --leading-h1: 1.1;
+  --tracking-h1: -0.02em;
+  --font-h2: var(--font-rubik), "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --text-h2: 1.875rem;
+  --font-weight-h2: 700;
+  --leading-h2: 1.15;
+  --tracking-h2: -0.01em;
+  --font-h3: var(--font-rubik), "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --text-h3: 1.25rem;
+  --font-weight-h3: 600;
+  --leading-h3: 1.3;
+  --font-body-lg: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --text-body-lg: 1.125rem;
+  --font-weight-body-lg: 400;
+  --leading-body-lg: 1.65;
+  --font-body-md: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --text-body-md: 1rem;
+  --font-weight-body-md: 400;
+  --leading-body-md: 1.6;
+  --font-body-sm: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --text-body-sm: 0.875rem;
+  --font-weight-body-sm: 400;
+  --leading-body-sm: 1.55;
+  --font-label-md: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --text-label-md: 0.8125rem;
+  --font-weight-label-md: 600;
+  --leading-label-md: 1.2;
+  --tracking-label-md: 0.08em;
+  --font-caption: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --text-caption: 0.75rem;
+  --font-weight-caption: 500;
+  --leading-caption: 1.45;
+  --font-metric-lg: var(--font-rubik), "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --text-metric-lg: 3.25rem;
+  --font-weight-metric-lg: 800;
+  --leading-metric-lg: 1;
+  --tracking-metric-lg: -0.03em;
+  --font-metric-md: var(--font-rubik), "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --text-metric-md: 2rem;
+  --font-weight-metric-md: 700;
+  --leading-metric-md: 1.05;
+  --font-mono-data: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --text-mono-data: 0.8125rem;
+  --font-weight-mono-data: 500;
+  --leading-mono-data: 1.4;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-section: 96px;
+}
+
+/* Kelas komposit: satu kelas membawa satu gaya ketik utuh. */
+@layer components {
+  .type-display-xl {
+    font-family: var(--font-display-xl);
+    font-size: var(--text-display-xl);
+    font-weight: var(--font-weight-display-xl);
+    line-height: var(--leading-display-xl);
+    letter-spacing: var(--tracking-display-xl);
+  }
+  .type-h1 {
+    font-family: var(--font-h1);
+    font-size: var(--text-h1);
+    font-weight: var(--font-weight-h1);
+    line-height: var(--leading-h1);
+    letter-spacing: var(--tracking-h1);
+  }
+  .type-h2 {
+    font-family: var(--font-h2);
+    font-size: var(--text-h2);
+    font-weight: var(--font-weight-h2);
+    line-height: var(--leading-h2);
+    letter-spacing: var(--tracking-h2);
+  }
+  .type-h3 {
+    font-family: var(--font-h3);
+    font-size: var(--text-h3);
+    font-weight: var(--font-weight-h3);
+    line-height: var(--leading-h3);
+  }
+  .type-body-lg {
+    font-family: var(--font-body-lg);
+    font-size: var(--text-body-lg);
+    font-weight: var(--font-weight-body-lg);
+    line-height: var(--leading-body-lg);
+  }
+  .type-body-md {
+    font-family: var(--font-body-md);
+    font-size: var(--text-body-md);
+    font-weight: var(--font-weight-body-md);
+    line-height: var(--leading-body-md);
+  }
+  .type-body-sm {
+    font-family: var(--font-body-sm);
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-body-sm);
+    line-height: var(--leading-body-sm);
+  }
+  .type-label-md {
+    font-family: var(--font-label-md);
+    font-size: var(--text-label-md);
+    font-weight: var(--font-weight-label-md);
+    line-height: var(--leading-label-md);
+    letter-spacing: var(--tracking-label-md);
+  }
+  .type-caption {
+    font-family: var(--font-caption);
+    font-size: var(--text-caption);
+    font-weight: var(--font-weight-caption);
+    line-height: var(--leading-caption);
+  }
+  .type-metric-lg {
+    font-family: var(--font-metric-lg);
+    font-size: var(--text-metric-lg);
+    font-weight: var(--font-weight-metric-lg);
+    line-height: var(--leading-metric-lg);
+    letter-spacing: var(--tracking-metric-lg);
+    font-feature-settings: "tnum";
+  }
+  .type-metric-md {
+    font-family: var(--font-metric-md);
+    font-size: var(--text-metric-md);
+    font-weight: var(--font-weight-metric-md);
+    line-height: var(--leading-metric-md);
+    font-feature-settings: "tnum";
+  }
+  .type-mono-data {
+    font-family: var(--font-mono-data);
+    font-size: var(--text-mono-data);
+    font-weight: var(--font-weight-mono-data);
+    line-height: var(--leading-mono-data);
+  }
+}

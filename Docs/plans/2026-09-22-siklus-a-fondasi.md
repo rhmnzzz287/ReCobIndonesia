@@ -430,7 +430,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const ROOT = join(__dirname, "..", "..", "..");
+const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
 const GENERATOR = join(ROOT, "scripts", "export-design-tokens.mjs");
 const THEME = join(ROOT, "apps", "web", "styles", "theme.css");
 
@@ -711,7 +711,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-const ROOT = join(__dirname, "..", "..", "..");
+const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
 const SECRETS = join(ROOT, "scripts", "check-secrets.mjs");
 
 let dir: string;
@@ -2315,7 +2315,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const ROOT = join(__dirname, "..", "..", "..");
+const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
 const SEED = readFileSync(join(ROOT, "apps", "backend", "supabase", "seed", "pitch.sql"), "utf8");
 const DEMO = readFileSync(join(ROOT, "apps", "web", "lib", "data", "demo-data.ts"), "utf8");
 
