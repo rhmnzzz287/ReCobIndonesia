@@ -91,7 +91,7 @@ export async function Hero(): Promise<ReactNode> {
         </dl>
 
         <div className="mt-md rounded-sm bg-surface/35 px-sm py-xs">
-          <p className="type-caption text-ink-deep">{copy.hero.priceCaption}</p>
+          <p className="text-center type-caption text-ink-deep">{copy.hero.priceCaption}</p>
         </div>
 
         <p className="mt-md type-caption text-ink-deep">
