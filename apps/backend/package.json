@@ -7,14 +7,23 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run tests/unit",
     "test:rls": "vitest run tests/rls",
-    "check:env": "node scripts/check-env.mjs"
+    "check:env": "node scripts/check-env.mjs",
+    "preflight": "node scripts/preflight.mjs",
+    "db:push": "supabase db push --linked",
+    "db:seed": "node scripts/seed.mjs",
+    "db:gen-types": "node scripts/gen-types.mjs",
+    "fn:deploy": "supabase functions deploy notify-lead",
+    "dev-db": "node scripts/dev-db.mjs",
+    "dev-db:reset": "node scripts/dev-db.mjs reset"
   },
   "devDependencies": {
     "@types/node": "26.6.2",
     "@types/pg": "8.23.1",
     "pg": "8.23.0",
+    "supabase": "2.117.0",
     "typescript": "7.0.2",
     "vitest": "5.0.1",
-    "yaml": "2.9.1"
+    "yaml": "2.9.1",
+    "embedded-postgres": "18.4.0-beta.17"
   }
 }

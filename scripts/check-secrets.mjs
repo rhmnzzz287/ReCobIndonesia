@@ -84,8 +84,16 @@ const PATTERNS = [
   },
 ];
 
-/** Penugasan bernilai: `NAME=value` atau `"name": "value"` dengan nilai bukan placeholder. */
+/**
+ * Penugasan bernilai: `NAME=value` atau `"name": "value"` dengan nilai bukan placeholder.
+ *
+ * Pola `service_role` sengaja TIDAK menyala pada nama peran telanjang. `grant … to service_role`
+ * di berkas migrasi dan `create role service_role` di skrip pengembangan adalah penggunaan sah —
+ * nama peran bukan rahasia. Yang berbahaya adalah kunci berhak istimewa, sehingga pola menyala
+ * hanya bila istilahnya menandai kunci/token/rahasia, atau saat ada nilai yang benar-benar terisi.
+ */
 const ASSIGNED_SECRET = /SERVICE_ROLE[A-Z_]*\s*[:=]\s*["']?[A-Za-z0-9_\-.]{8,}/iu;
+const KEYISH_TERM = /service_role[A-Za-z_]*[_-]?(key|token|secret|jwt|password)/iu;
 
 function extensionOf(path) {
   const base = path.split("/").pop() ?? path;
@@ -158,11 +166,17 @@ function looksBinary(buffer) {
   return buffer.subarray(0, 4096).includes(0);
 }
 
-/** Pola `service_role` hanya berlaku pada kode/konfigurasi atau saat muncul sebagai penugasan. */
+/**
+ * Pola `service_role` menyala bila baris menandai kunci/token/rahasia, atau saat ada penugasan
+ * bernilai. Nama peran telanjang (`grant … to service_role`) adalah penggunaan sah, bukan rahasia.
+ */
 function appliesTo(pattern, relativePath, line) {
   if (pattern.scope === "any") return true;
-  if (CODE_EXT.has(extensionOf(relativePath))) return true;
-  return ASSIGNED_SECRET.test(line);
+  if (KEYISH_TERM.test(line)) return true;
+  if (ASSIGNED_SECRET.test(line)) return true;
+  // Kunci JWT yang tertulis telanjang sudah ditangkap pola `jwt-supabase` (scope "any"),
+  // jadi di sini cukup menolak.
+  return false;
 }
 
 const findings = [];

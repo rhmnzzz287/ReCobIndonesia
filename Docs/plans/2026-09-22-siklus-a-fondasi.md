@@ -348,7 +348,7 @@ Bagian ini dilengkapi pada Task 15 (tabel variabel per aplikasi, perintah seed, 
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm install
 npm ls --workspaces --depth=0
 ```
@@ -1433,7 +1433,7 @@ SENTRY_AUTH_TOKEN=
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm install
 npx playwright install chromium
 npm run typecheck --workspace @recobid/web
@@ -1770,7 +1770,7 @@ project nyata.
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID/apps/backend"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia/apps/backend"
 npx supabase@latest init --workdir .
 ```
 
@@ -1913,7 +1913,7 @@ untuk memastikan CLI tersedia. Skrip yang tersisa hanya memuat satu ketergantung
 Pemilik produk mengisi `apps/backend/.env` (tidak boleh lewat chat):
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID/apps/backend"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia/apps/backend"
 npx supabase@latest --version
 npx supabase@latest link --project-ref "$SUPABASE_PROJECT_REF"
 node scripts/preflight.mjs
@@ -1985,7 +1985,7 @@ drop type if exists lead_status;
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID/apps/backend"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia/apps/backend"
 npx supabase@latest db push --linked --dry-run
 npx supabase@latest db push --linked
 npx supabase@latest migration list --linked
@@ -2217,7 +2217,7 @@ suite("RLS & RPC Phase 1 (basis data nyata)", () => {
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 set -a; . apps/backend/.env; set +a
 npm run test:rls --workspace @recobid/backend
 ```
@@ -2585,7 +2585,7 @@ try {
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run db:seed --workspace @recobid/backend
 npm run db:seed --workspace @recobid/backend
 ```
@@ -3400,7 +3400,7 @@ export async function submitLead(input: SubmitLeadInput): Promise<SubmitLeadResu
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run test --workspace @recobid/web
 npm run typecheck --workspace @recobid/web
 npm run lint --workspace @recobid/web
@@ -4245,7 +4245,7 @@ export function FieldError({ children }: FieldErrorProps): ReactNode {
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run test --workspace @recobid/web
 npm run typecheck --workspace @recobid/web
 npm run lint --workspace @recobid/web
@@ -4780,7 +4780,7 @@ export const metadata: Metadata = {
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run test --workspace @recobid/web
 npm run typecheck --workspace @recobid/web
 npm run lint --workspace @recobid/web
@@ -5504,7 +5504,7 @@ export default function HomePage(): ReactNode {
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run test --workspace @recobid/web
 npm run typecheck --workspace @recobid/web
 npm run lint --workspace @recobid/web
@@ -5907,7 +5907,7 @@ export async function GET(): Promise<NextResponse> {
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run test --workspace @recobid/web
 npm run typecheck --workspace @recobid/web
 npm run lint --workspace @recobid/web
@@ -5934,7 +5934,7 @@ sama → `{"status":"duplicate"}` (idempoten, bukan galat); `/api/health` → `{
 Verifikasi baris benar-benar masuk:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID/apps/backend"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia/apps/backend"
 npx supabase db query --linked "select full_name, phone_wa, region_code from lead order by created_at desc limit 3"
 ```
 
@@ -6250,7 +6250,7 @@ process.stdout.write(`Rahasia tersimpan: ${present.join(", ")}\n`);
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run test --workspace @recobid/backend
 npm run typecheck --workspace @recobid/backend
 ```
@@ -6262,7 +6262,7 @@ Expected: seluruh tes tanda tangan PASS.
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID/apps/backend"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia/apps/backend"
 node scripts/fn-secrets.mjs
 npm run fn:deploy
 ```
@@ -6503,7 +6503,7 @@ Skrip root **tidak perlu diubah**: `verify` dan `test:e2e` sudah didefinisikan p
 Periksa saja keduanya masih utuh:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm pkg get scripts.verify scripts.test:e2e
 ```
 
@@ -6690,7 +6690,7 @@ commit yang memuat nilai rahasia.
 Run:
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 npm run verify
 ```
 
@@ -6715,7 +6715,7 @@ Jalankan berurutan pada mesin bersih, dan laporkan keluaran nyatanya:
 - [ ] **V1: Instalasi bersih tanpa `.env`**
 
 ```bash
-cd "/run/media/sh1shiroon/Kerjaan Windows #1/ReCobID"
+cd "/run/media/sh1shiroon/Kerjaan-Linux-1/ReCobIndonesia"
 rm -rf node_modules apps/web/node_modules apps/backend/node_modules packages/shared/node_modules
 npm install
 npm run lint && npm run typecheck && npm run test && npm run build

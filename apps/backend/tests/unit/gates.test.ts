@@ -48,11 +48,23 @@ describe("check-secrets", () => {
     expect(runScan(dir).code).toBe(0);
   });
 
-  it("menolak istilah kunci istimewa pada berkas kode", () => {
-    writeFileSync(join(dir, "seed.ts"), `const key = "${PRIVILEGED_TERM}";\n`);
+  it("menolak nama kunci berhak istimewa pada berkas kode", () => {
+    // Yang berbahaya adalah KUNCI-nya, bukan nama peran. `grant … to service_role` sah.
+    writeFileSync(
+      join(dir, "seed.ts"),
+      `const ${PRIVILEGED_VAR.toLowerCase()} = process.env.${PRIVILEGED_VAR};\\n`,
+    );
     const result = runScan(dir);
     expect(result.code).toBe(1);
     expect(result.stderr).toContain(PRIVILEGED_TERM);
+  });
+
+  it("tidak menuduh nama peran telanjang pada berkas migrasi", () => {
+    writeFileSync(
+      join(dir, "0001_grants.sql"),
+      `grant all on all tables in schema public to ${PRIVILEGED_TERM};\\n`,
+    );
+    expect(runScan(dir).code).toBe(0);
   });
 
   it("menolak JWT Supabase pada berkas biasa", () => {
