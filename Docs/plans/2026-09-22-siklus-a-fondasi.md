@@ -2491,8 +2491,10 @@ from (values
 join impact_metric m on m.code = v.metric_code;
 
 -- 6. Lead contoh (is_demo = true, tidak pernah dihitung sebagai capaian nyata)
+--    `source` adalah enum `lead_source`; nilai dari klausa VALUES bertipe text sehingga
+--    memerlukan cast eksplisit (tanpa itu Postgres menolak dengan 42804).
 insert into lead (full_name, phone_wa, cattle_count, region_id, kud_id, message, source, status, is_demo, idempotency_key, consented_at)
-select v.full_name, v.phone_wa, v.cattle_count, r.id, k.id, v.message, v.source, 'new', true,
+select v.full_name, v.phone_wa, v.cattle_count, r.id, k.id, v.message, v.source::lead_source, 'new', true,
        'seed-pitch-' || v.urut, now() - (v.urut || ' days')::interval
 from (values
   (1, 'Tarno Sujarwo',     '081200000101',  8,  'jabar',  'kpbs-pangalengan', 'Ingin uji 2 karung untuk 8 ekor.',        'tiktok'),
