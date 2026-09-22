@@ -1,0 +1,94 @@
+import { describe, expect, it } from "vitest";
+import { copy } from "@/content/copy";
+
+const EMOJI = /[\u{1F000}-\u{1FAFF}\u2600-\u27BF\uFE0F]/u;
+
+function collectStrings(value: unknown, path = "copy"): Array<{ path: string; text: string }> {
+  if (typeof value === "string") return [{ path, text: value }];
+  if (Array.isArray(value)) {
+    return value.flatMap((item, index) => collectStrings(item, `${path}[${index}]`));
+  }
+  if (value !== null && typeof value === "object") {
+    return Object.entries(value).flatMap(([key, item]) => collectStrings(item, `${path}.${key}`));
+  }
+  return [];
+}
+
+const strings = collectStrings(copy);
+
+describe("lapisan konten", () => {
+  it("memuat 12 bagian beranda", () => {
+    for (const section of [
+      "hero",
+      "problem",
+      "solution",
+      "product",
+      "costCompare",
+      "impact",
+      "partnership",
+      "validation",
+      "education",
+      "faq",
+      "cta",
+      "footer",
+    ]) {
+      expect(copy).toHaveProperty(section);
+    }
+  });
+
+  it("tidak memuat emoji", () => {
+    for (const { path, text } of strings) {
+      expect(EMOJI.test(text), `${path} memuat emoji`).toBe(false);
+    }
+  });
+
+  it("tidak memuat penanda TODO atau placeholder implementasi", () => {
+    // Batas kata penting: tanpa itu "metodologi" cocok dengan TODO.
+    for (const { path, text } of strings) {
+      expect(/\b(TODO|TBD|FIXME|lorem)\b/iu.test(text), `${path} memuat penanda terlarang`).toBe(
+        false,
+      );
+    }
+  });
+
+  it("tidak memuat string kosong", () => {
+    for (const { path, text } of strings) {
+      expect(text.trim().length, `${path} masih kosong`).toBeGreaterThan(0);
+    }
+  });
+
+  it("memuat minimal enam pertanyaan FAQ beserta jawabannya", () => {
+    expect(copy.faq.items.length).toBeGreaterThanOrEqual(6);
+    for (const item of copy.faq.items) {
+      expect(item.question.length).toBeGreaterThan(10);
+      expect(item.answer.length).toBeGreaterThan(40);
+    }
+  });
+
+  it("menandai klaim kenaikan produksi susu sebagai klaim berbasis kajian", () => {
+    expect(copy.validation.claimNotice).toMatch(/klaim berbasis kajian/iu);
+    expect(copy.validation.claimNotice).toMatch(/validasi lapangan/iu);
+  });
+
+  it("menyatakan status NPP apa adanya", () => {
+    expect(copy.validation.nppStatus).toMatch(/dalam proses pendaftaran/iu);
+  });
+
+  it("menyatakan kontak resmi belum final", () => {
+    expect(copy.footer.contactNotice).toMatch(/menyusul sebelum rilis publik/iu);
+  });
+
+  it("menyebut tiga wilayah operasi", () => {
+    const joined = strings.map((item) => item.text).join(" ");
+    for (const city of ["Bandung", "Boyolali", "Pasuruan"]) {
+      expect(joined).toContain(city);
+    }
+  });
+
+  it("memuat empat KUD target", () => {
+    const joined = strings.map((item) => item.text).join(" ");
+    for (const kud of ["KPBS Pangalengan", "KUD Mojosongo", "KUD Cepogo", "KUD Setia Kawan"]) {
+      expect(joined).toContain(kud);
+    }
+  });
+});
