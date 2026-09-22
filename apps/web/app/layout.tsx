@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans, Rubik } from "next/font/google";
+import { copy } from "@/content/copy";
 import "./globals.css";
 
 const rubik = Rubik({
@@ -24,9 +25,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ReCob.id — Pakan Konsentrat Sapi Perah dari Limbah Bonggol Jagung",
-  description:
-    "Pelet konsentrat sapi perah berprotein tinggi dari bonggol jagung dan ampas tahu terfermentasi. Rp160.000 per karung 50 kg.",
+  title: copy.meta.title,
+  description: copy.meta.description,
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

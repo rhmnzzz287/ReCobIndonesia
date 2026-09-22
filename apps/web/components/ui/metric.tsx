@@ -38,11 +38,12 @@ export function MetricValue({
       </div>
       <figcaption
         className={cn(
-          "type-caption",
+          "flex flex-col gap-2xs type-caption",
           tone === "dark" ? "text-surface/80" : "text-text-secondary",
         )}
       >
-        {period}. {caption}
+        <span className="type-label-md">{period}</span>
+        <span>{caption}</span>
       </figcaption>
     </figure>
   );

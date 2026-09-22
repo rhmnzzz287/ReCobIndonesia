@@ -1,10 +1,20 @@
-export default function HomePage() {
+import type { ReactNode } from "react";
+import { CostCompare } from "@/components/sections/cost-compare";
+import { Hero } from "@/components/sections/hero";
+import { Impact } from "@/components/sections/impact";
+import { Problem } from "@/components/sections/problem";
+import { Product } from "@/components/sections/product";
+import { Solution } from "@/components/sections/solution";
+
+export default function HomePage(): ReactNode {
   return (
-    <main className="mx-auto max-w-[1200px] px-lg py-section">
-      <h1 className="type-h1 text-ink">ReCob.id</h1>
-      <p className="type-body-lg text-text-secondary">
-        Fondasi front-end aktif. Beranda lengkap dipasang pada Task 11.
-      </p>
+    <main id="konten">
+      <Hero />
+      <Problem />
+      <Solution />
+      <Product />
+      <CostCompare />
+      <Impact />
     </main>
   );
 }
