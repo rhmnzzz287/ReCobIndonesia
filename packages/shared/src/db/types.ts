@@ -1,9 +1,12 @@
 /**
  * Tipe basis data ReCob.id.
  *
- * BERKAS INI DIHASILKAN ULANG oleh `npm run db:gen-types` (Task 6) dan ditulis ke
- * `packages/shared/src/db/database.types.ts`, lalu diekspor ulang di sini.
- * Jangan mengedit daftar tipe di bawah ini secara manual.
+ * Re-ekspor dari berkas hasil generate. Perubahan manual pada tipe adalah pelanggaran review
+ * (Docs/SCHEMA.md §8).
+ *
+ * `database.types.ts` dihasilkan oleh:
+ *   - `npm run db:gen-types` (dari project Supabase tertaut; sumber kebenaran untuk rilis), atau
+ *   - `npm run db:gen-types:local` (dari Postgres lokal, untuk pengembangan tanpa project tertaut).
  */
 
-export type Database = Record<string, never>;
+export type { Database, Json } from "./database.types";

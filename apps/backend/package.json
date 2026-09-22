@@ -15,7 +15,8 @@
     "fn:deploy": "supabase functions deploy notify-lead",
     "dev-db": "node scripts/dev-db.mjs",
     "dev-db:reset": "node scripts/dev-db.mjs reset",
-    "demo:export": "node scripts/export-demo-data.mjs"
+    "demo:export": "node scripts/export-demo-data.mjs",
+    "db:gen-types:local": "node scripts/gen-types-local.mjs"
   },
   "devDependencies": {
     "@types/node": "26.6.2",
