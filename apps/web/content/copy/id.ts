@@ -6,7 +6,9 @@
  *
  * Aturan yang mengikat (PRD Bagian 8):
  *  1. Setiap angka melekat pada sumbernya: nilai metrik dan klaim disertai caption berisi nilai,
- *     satuan, periode, dan sumber.
+ *     satuan, periode, dan sumber. Pengecualian yang disetujui pemilik produk: kartu
+ *     `problem.items` tidak lagi menampilkan caption sumbernya; daftar lengkapnya tetap ada di
+ *     `validation.citations` dan dipakai `/llms.txt`.
  *  2. Klaim kenaikan produksi susu wajib berlabel "klaim berbasis kajian" dan "validasi lapangan".
  *  3. Status NPP dinyatakan apa adanya; nomor tidak dikarang.
  *  4. Tanpa emoji. Tanpa tanda seru pada caption.
@@ -17,7 +19,6 @@ export const idCopy = {
   hero: {
     badge:
       "Status Legalitas: Nomor Pendaftaran Pakan (NPP) Kementerian Pertanian RI dalam proses pendaftaran resmi",
-    standardBadge: "SNI 3148-1:2017 Ruminansia",
     eyebrow: "Pakan Sapi Perah",
     title:
       "Pakan Konsentrat Sapi Perah Hemat 11%–20%, Pasokan Pasti Sepanjang Tahun",
@@ -37,8 +38,6 @@ export const idCopy = {
     statCattleUnit: "ekor sapi perah terlayani",
     statFarmerValue: "320",
     statFarmerUnit: "peternak anggota KUD",
-    statScaleCaption:
-      "Ilustrasi skala operasi fase awal, bukan capaian terverifikasi. Sumber: proyeksi internal ReCob.id 2026.",
     priceAnchorLabel: "Harga Resmi",
     priceAnchorUnit: "Karung 50 kg",
     priceAnchorValue: "Rp160.000",
@@ -51,9 +50,6 @@ export const idCopy = {
     highlightFormulationLabel: "Bahan",
     highlightFormulationValue: "3 Bahan",
     highlightFormulationNote: "Bonggol, tahu, tetes tebu",
-    highlightPaymentLabel: "Cara Bayar",
-    highlightPaymentValue: "Potong KUD",
-    highlightPaymentNote: "Tanpa uang muka",
     imageAlt:
       "Karung pakan konsentrat ReCob.id 50 kg dan pelet hasil fermentasi bonggol jagung",
   },
@@ -67,22 +63,16 @@ export const idCopy = {
         title: "Biaya Pakan Menyerap 60%–65%",
         body: "Pakan jadi pengeluaran terbesar peternak setiap hari. Saat harga bahan baku impor naik, keuntungan peternak ikut tertekan.",
         metric: "60%–65%",
-        caption:
-          "Sumber Data: Hajar (2025), telaah elastisitas biaya ransum terhadap margin susu peternakan rakyat.",
       },
       {
         title: "Pakan Hijauan Langka di Musim Kemarau",
         body: "Saat kemarau, rumput segar turun sampai 40%. Peternak terpaksa membeli jerami murah, dan itu bisa mengganggu pencernaan sapi.",
         metric: "40%",
-        caption:
-          "Sumber Data: Zulaikhah et al. (2026), dinamika defisit biomassa basah ruminansia tropis laktasi.",
       },
       {
         title: "3,45–4,6 Juta Ton Bonggol Jagung Terbuang",
         body: "Setiap tahun bonggol jagung dibuang dan dibakar di ladang. Padahal bahan ini bisa diolah jadi pakan, dan asapnya mencemari udara desa.",
         metric: "3,45–4,6 Juta Ton",
-        caption:
-          "Sumber Data: BPS RI (2022), Neraca Biomassa Jagung dan Serealia Agrikultur Nasional.",
       },
     ],
   },
@@ -407,6 +397,9 @@ export const idCopy = {
       "Nomor WhatsApp resmi belum tersedia. Isi formulir sampel di bawah, tim lapangan akan menghubungi Anda.",
     legalTitle: "Legalitas",
     legalBody: "Status izin edar dan standar mutu yang kami pegang.",
+    identityTitle: "Identitas Resmi",
+    legalNameLabel: "Entitas Hukum",
+    addressLabel: "Alamat Operasional",
     formTitle: "Ajukan Sampel Gratis",
   },
   faq: {

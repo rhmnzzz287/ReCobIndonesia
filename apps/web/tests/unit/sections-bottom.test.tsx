@@ -60,4 +60,27 @@ describe("seksi kontak", () => {
     const note = container.querySelector("#kanal .grid + div");
     expect(note?.textContent).toBe(copy.footer.contactNotice);
   });
+
+  it("menyediakan jalan keluar saat nomor WhatsApp resmi belum ada", () => {
+    // Kartu WhatsApp tidak boleh jadi jalan buntu: selama `NEXT_PUBLIC_WHATSAPP_NUMBER` kosong,
+    // pengunjung diarahkan ke formulir sampel di halaman yang sama.
+    const { container } = render(<Contact />);
+    const card = container.querySelector("#kanal .grid > div > div");
+
+    expect(card?.textContent).toContain(copy.contact.whatsappUnavailable);
+    const link = card?.querySelector("a");
+    expect(link?.getAttribute("href")).toBe("/kontak#form-sampel");
+    expect(link?.textContent).toBe(copy.contact.formTitle);
+  });
+
+  it("menampilkan identitas resmi tanpa mengarang kanal yang belum ada", () => {
+    const { container } = render(<Contact />);
+    const columns = Array.from(container.querySelectorAll("#kanal .grid > div"));
+    const card = columns[1]?.children[2];
+
+    expect(card?.textContent).toContain(copy.meta.legalName);
+    expect(card?.textContent).toContain(copy.footer.address);
+    // Nomor telepon, surel, dan nomor WhatsApp tetap tidak dikarang (PRD Bagian 8 aturan 6).
+    expect(container.textContent).not.toMatch(/62812|wa\.me/);
+  });
 });

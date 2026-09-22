@@ -9,8 +9,10 @@ import { copy } from "@/content/copy";
  * Angka memakai `metric-md`, bukan `metric-lg`: bilah ini berisi tiga angka dalam satu
  * baris, dan `metric-lg` 88 px akan saling mendesak di lebar 1200 px.
  *
- * Seluruh angka adalah ilustrasi skala fase awal dan WAJIB disertai `statScaleCaption`
- * (PRD Bagian 8). Label tidak boleh dilepas dari captionnya.
+ * Seluruh angka adalah ilustrasi skala fase awal. Caption "Ilustrasi skala operasi fase awal,
+ * bukan capaian terverifikasi" dihapus atas keputusan pemilik produk, sehingga label tidak
+ * lagi disertai penanda ilustrasi di UI — lihat Docs/PRD.md Bagian 7.1 dan 8 bila angka ini
+ * dipakai di luar konteks pitch.
  */
 export async function ImpactStrip(): Promise<ReactNode> {
   const stats = [
@@ -25,10 +27,10 @@ export async function ImpactStrip(): Promise<ReactNode> {
       className="bg-ink-deep py-xl text-surface"
     >
       <Container>
-        <h2 className="type-label-md uppercase text-accent" id="bilah-angka">
+        <h2 className="type-label-md text-center uppercase text-accent" id="bilah-angka">
           {copy.hero.statStripTitle}
         </h2>
-        <ul className="mt-lg grid auto-rows-fr gap-xl sm:grid-cols-3">
+        <ul className="mt-lg grid auto-rows-fr gap-xl text-center sm:grid-cols-3">
           {stats.map((stat, index) => (
             <li
               data-reveal=""
@@ -42,9 +44,6 @@ export async function ImpactStrip(): Promise<ReactNode> {
             </li>
           ))}
         </ul>
-        <p className="mt-lg type-caption text-surface/75">
-          {copy.hero.statScaleCaption}
-        </p>
       </Container>
     </section>
   );

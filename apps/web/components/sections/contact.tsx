@@ -38,9 +38,18 @@ export function Contact(): ReactNode {
               <h3 className="type-h3 text-ink">{copy.contact.whatsappTitle}</h3>
 
               {waHref === null ? (
-                <p className="mt-xs type-body-sm text-text-secondary">
-                  {copy.contact.whatsappUnavailable}
-                </p>
+                <>
+                  <p className="mt-xs type-body-sm text-text-secondary">
+                    {copy.contact.whatsappUnavailable}
+                  </p>
+                  <ButtonLink
+                    className="mt-md self-start"
+                    href="/kontak#form-sampel"
+                    variant="accent"
+                  >
+                    {copy.contact.formTitle}
+                  </ButtonLink>
+                </>
               ) : (
                 <ButtonLink
                   className="mt-xs self-start"
@@ -59,12 +68,26 @@ export function Contact(): ReactNode {
             <h2 className="type-h2 text-ink">{copy.contact.legalTitle}</h2>
             <p className="mt-md type-body-md text-text-secondary">{copy.contact.legalBody}</p>
 
-            <dl className="mt-lg flex flex-1 flex-col rounded-lg border border-border bg-paper p-lg">
-              <dt className="type-label-md uppercase text-text-secondary">
-                {copy.validation.nppLabel}
-              </dt>
-              <dd className="mt-xs type-body-sm text-ink">{copy.validation.nppStatus}</dd>
-            </dl>
+            <div className="mt-lg flex flex-1 flex-col rounded-lg border border-border bg-paper p-lg">
+              <h3 className="type-h3 text-ink">{copy.contact.identityTitle}</h3>
+
+              <dl className="mt-md flex flex-col">
+                <dt className="type-label-md uppercase text-text-secondary">
+                  {copy.validation.nppLabel}
+                </dt>
+                <dd className="mt-xs type-body-sm text-ink">{copy.validation.nppStatus}</dd>
+
+                <dt className="mt-md type-label-md uppercase text-text-secondary">
+                  {copy.contact.legalNameLabel}
+                </dt>
+                <dd className="mt-xs type-body-sm text-ink">{copy.meta.legalName}</dd>
+
+                <dt className="mt-md type-label-md uppercase text-text-secondary">
+                  {copy.contact.addressLabel}
+                </dt>
+                <dd className="mt-xs type-body-sm text-ink">{copy.footer.address}</dd>
+              </dl>
+            </div>
           </div>
         </div>
 

@@ -93,11 +93,6 @@ export async function Hero(): Promise<ReactNode> {
         <div className="mt-md rounded-sm bg-surface/35 px-sm py-xs">
           <p className="text-center type-caption text-ink-deep">{copy.hero.priceCaption}</p>
         </div>
-
-        <p className="mt-md type-caption text-ink-deep">
-          {copy.hero.standardBadge} • {copy.hero.highlightPaymentLabel}:{" "}
-          {copy.hero.highlightPaymentValue} — {copy.hero.highlightPaymentNote}
-        </p>
       </Container>
     </Section>
   );

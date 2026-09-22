@@ -1,5 +1,4 @@
 import type { CSSProperties, ReactNode } from "react";
-import { CaptionNote } from "@/components/ui/caption-note";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -32,9 +31,6 @@ export async function Problem(): Promise<ReactNode> {
                 <p className="mt-xs type-body-sm text-text-secondary">
                   {item.body}
                 </p>
-                <CaptionNote className="mt-auto pt-sm">
-                  {item.caption}
-                </CaptionNote>
               </Card>
             </li>
           ))}
