@@ -19,6 +19,7 @@
     "test": "npm run test --workspaces --if-present",
     "test:rls": "npm run test:rls --workspace @recobid/backend",
     "test:e2e": "npm run test:e2e --workspace @recobid/web",
+    "e2e": "npm run test:e2e --workspace @recobid/web",
     "db:push": "npm run db:push --workspace @recobid/backend",
     "db:seed": "npm run db:seed --workspace @recobid/backend",
     "db:gen-types": "npm run db:gen-types --workspace @recobid/backend",

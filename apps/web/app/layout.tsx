@@ -28,12 +28,33 @@ export const metadata: Metadata = {
   title: copy.meta.title,
   description: copy.meta.description,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  openGraph: {
+    title: copy.meta.title,
+    description: copy.meta.description,
+    locale: "id_ID",
+    type: "website",
+  },
+};
+
+/** Data terstruktur organisasi; hanya fakta yang sudah pasti, tanpa nomor NPP yang belum terbit. */
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ReCob.id",
+  description: copy.meta.description,
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className={`${rubik.variable} ${jakarta.variable} ${plexMono.variable}`}>
-      <body className="type-body-md bg-surface text-ink">{children}</body>
+      <body className="type-body-md bg-surface text-ink">
+        <script
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          type="application/ld+json"
+        />
+        {children}
+      </body>
     </html>
   );
 }
