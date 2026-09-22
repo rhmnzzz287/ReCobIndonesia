@@ -1,5 +1,5 @@
 import { ShieldCheck } from "lucide-react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { CaptionNoteInverse } from "@/components/ui/caption-note";
 import { Container } from "@/components/ui/container";
@@ -41,7 +41,7 @@ export async function Hero(): Promise<ReactNode> {
         </p>
 
         <div className="mt-2xl grid gap-2xl lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-          <div>
+          <div data-reveal="">
             <p className="type-label-md uppercase text-primary-soft">
               {copy.hero.eyebrow}
             </p>
@@ -61,7 +61,10 @@ export async function Hero(): Promise<ReactNode> {
             </div>
           </div>
 
-          <figure>
+          <figure
+            data-reveal=""
+            style={{ "--reveal-delay": "140ms" } as CSSProperties}
+          >
             <p className="type-metric-lg text-primary-soft">
               {copy.hero.statLeadValue}
             </p>
@@ -80,8 +83,12 @@ export async function Hero(): Promise<ReactNode> {
         </div>
 
         <ul className="mt-2xl grid gap-lg border-t border-surface/30 pt-xl sm:grid-cols-3">
-          {stats.map((stat) => (
-            <li key={stat.label}>
+          {stats.map((stat, index) => (
+            <li
+              data-reveal=""
+              key={stat.label}
+              style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
+            >
               <p className="type-metric-md text-surface">{stat.value}</p>
               <p className="mt-2xs type-body-sm text-surface/90">
                 {stat.label}
@@ -94,8 +101,13 @@ export async function Hero(): Promise<ReactNode> {
         </p>
 
         <dl className="mt-2xl grid gap-md sm:grid-cols-2 lg:grid-cols-4">
-          {priceRows.map((row) => (
-            <div className="rounded-md bg-surface/10 p-lg" key={row.label}>
+          {priceRows.map((row, index) => (
+            <div
+              className="rounded-md bg-surface/10 p-lg transition-colors hover:bg-surface/15"
+              data-reveal=""
+              key={row.label}
+              style={{ "--reveal-delay": `${index * 70}ms` } as CSSProperties}
+            >
               <dt className="type-caption text-surface">{row.label}</dt>
               <dd className="mt-2xs type-h3 text-surface">{row.value}</dd>
             </div>

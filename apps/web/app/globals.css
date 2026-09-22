@@ -2,3 +2,47 @@
 @import "../styles/theme.css";
 
 @source "../";
+
+/* Gulir halus untuk navigasi anchor, mengikuti nufeed.co.id. */
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+ * Pengungkap saat masuk viewport (lihat components/blocks/scroll-reveal.tsx).
+ * Keadaan awal hanya berlaku ketika JavaScript aktif: tanpa `[data-reveal-state]`
+ * elemen langsung tampil, sehingga konten tetap terbaca bila skrip gagal dimuat.
+ */
+[data-reveal-state="hidden"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+[data-reveal] {
+  transition:
+    opacity 0.6s cubic-bezier(0.44, 0, 0.56, 1),
+    transform 0.6s cubic-bezier(0.44, 0, 0.56, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal-state="shown"] {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+ * Gerak yang dikurangi: seluruh transisi transformasi dimatikan dan elemen
+ * diungkap seketika (Docs/DESIGN.md, bagian Motion).
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal],
+  [data-reveal-state="hidden"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

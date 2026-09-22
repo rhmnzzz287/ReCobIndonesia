@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { StickyCta } from "@/components/blocks/sticky-cta";
+import { ScrollReveal } from "@/components/blocks/scroll-reveal";
 import { SiteHeader } from "@/components/blocks/site-header";
+import { StickyCta } from "@/components/blocks/sticky-cta";
 import { CostCompare } from "@/components/sections/cost-compare";
 import { Cta } from "@/components/sections/cta";
 import { Education } from "@/components/sections/education";
@@ -34,6 +35,7 @@ export default function HomePage(): ReactNode {
       </main>
       <Footer />
       <StickyCta />
+      <ScrollReveal />
     </>
   );
 }

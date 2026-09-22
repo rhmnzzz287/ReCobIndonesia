@@ -202,6 +202,8 @@ export const idCopy = {
       "Target jangka menengah pemanfaatan residu pertanian sebagai sumber pakan bernilai gizi tinggi bagi peternakan rakyat.",
     demoBadge: "Data ilustrasi, bukan capaian terverifikasi",
     withheldTitle: "Metrik yang ditahan",
+    withheldBody:
+      "Metrik yang ditahan: emisi pembakaran terbuka yang dihindari belum ditampilkan karena belum ada koefisien emisi resmi yang dapat dikutip. Metrik tanpa sumber tidak pernah muncul di antarmuka (PRD Bagian 7.1).",
   },
   partnership: {
     eyebrow: "Distribusi Terintegrasi",
@@ -418,6 +420,7 @@ export const idCopy = {
     },
   },
   footer: {
+    brand: "ReCob.id",
     tagline:
       "Pionir inovasi biokonversi limbah tongkol jagung menjadi pakan konsentrat fermentasi ruminansia. Solusi sirkular teruji untuk mendongkrak produksi susu dan profitabilitas peternak mandiri serta Koperasi Unit Desa (KUD).",
     badge: "Ekonomi Sirkular Peternakan Berkelanjutan",

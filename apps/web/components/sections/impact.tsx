@@ -13,15 +13,23 @@ export async function Impact(): Promise<ReactNode> {
   return (
     <Section id="dampak" tone="ink">
       <Container>
-        <Badge tone="warn">{copy.impact.demoBadge}</Badge>
-        <p className="mt-md type-label-md uppercase text-accent">{copy.impact.eyebrow}</p>
-        <h2 className="mt-sm type-h2 text-surface">{copy.impact.title}</h2>
-        <p className="mt-md type-body-md text-surface/85">{copy.impact.intro}</p>
-        <div className="mt-xl">
+        <div className="max-w-[68ch]">
+          <Badge tone="warn">{copy.impact.demoBadge}</Badge>
+          <p className="mt-md type-label-md uppercase text-accent">
+            {copy.impact.eyebrow}
+          </p>
+          <h2 className="mt-sm type-h2 text-surface">{copy.impact.title}</h2>
+          <p className="mt-md type-body-lg text-surface/90">
+            {copy.impact.intro}
+          </p>
+        </div>
+
+        <div className="mt-2xl">
           <MetricPanel metrics={metrics} />
         </div>
-        <div className="mt-xl">
-          <Alert>{copy.impact.withheldTitle}</Alert>
+
+        <div className="mt-xl" data-reveal="">
+          <Alert>{copy.impact.withheldBody}</Alert>
         </div>
       </Container>
     </Section>

@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { SampleForm } from "@/components/blocks/sample-form";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -13,8 +13,8 @@ export async function Cta(): Promise<ReactNode> {
   return (
     <Section className="rounded-b-arc" id="form-sampel" tone="primary">
       <Container>
-        <div className="grid gap-2xl lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div>
+        <div className="mt-2xl grid gap-2xl lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div data-reveal="">
             <p className="type-label-md uppercase text-primary-soft">
               {copy.cta.eyebrow}
             </p>
@@ -24,10 +24,14 @@ export async function Cta(): Promise<ReactNode> {
             </p>
 
             <ul className="mt-lg flex flex-col gap-sm">
-              {copy.cta.benefits.map((benefit) => (
+              {copy.cta.benefits.map((benefit, index) => (
                 <li
                   className="flex items-start gap-xs type-body-sm text-surface/90"
+                  data-reveal=""
                   key={benefit}
+                  style={
+                    { "--reveal-delay": `${index * 70}ms` } as CSSProperties
+                  }
                 >
                   <Check
                     aria-hidden="true"
@@ -51,7 +55,11 @@ export async function Cta(): Promise<ReactNode> {
             </div>
           </div>
 
-          <div className="rounded-lg bg-surface p-lg md:p-xl">
+          <div
+            className="rounded-lg bg-surface p-lg md:p-xl"
+            data-reveal=""
+            style={{ "--reveal-delay": "120ms" } as CSSProperties}
+          >
             <h3 className="type-h3 text-ink">{copy.cta.form.title}</h3>
             <p className="mt-xs type-body-sm text-text-secondary">
               {copy.cta.form.intro}

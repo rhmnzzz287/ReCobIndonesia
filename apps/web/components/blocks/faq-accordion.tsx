@@ -40,16 +40,21 @@ export function FaqAccordion({ items }: FaqAccordionProps): ReactNode {
               setOpenIndex(event.currentTarget.open ? index : null);
             }}
           >
-            <summary className="flex cursor-pointer items-center justify-between gap-md type-h3 text-ink">
+            <summary className="flex cursor-pointer items-center justify-between gap-md type-h3 text-ink transition-colors hover:text-primary">
               {item.question}
               <ChevronDown
                 aria-hidden="true"
-                className={cn("shrink-0 transition-transform", isOpen && "rotate-180")}
+                className={cn(
+                  "shrink-0 transition-transform duration-300",
+                  isOpen && "rotate-180",
+                )}
                 size={20}
                 strokeWidth={1.75}
               />
             </summary>
-            <p className="mt-sm type-body-md text-text-secondary">{item.answer}</p>
+            <p className="mt-sm type-body-md text-text-secondary">
+              {item.answer}
+            </p>
           </details>
         );
       })}

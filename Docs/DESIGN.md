@@ -762,15 +762,28 @@ Aturan: animasi harus menjelaskan, bukan menghibur. Total durasi animasi satu ha
 
 | Kejadian | Gerakan | Durasi | Token |
 |---|---|---:|---|
-| Bagian masuk viewport | `opacity 0→1`, `y 12px→0` | 320 ms | `easeOut` |
+| Bagian masuk viewport | `opacity 0→1`, `y 16px→0` | 600 ms, sekali saja | `cubic-bezier(0.44, 0, 0.56, 1)` |
+| Kartu dalam satu baris masuk | Sama, berjenjang 70–90 ms per kartu | 600 ms | `cubic-bezier(0.44, 0, 0.56, 1)` |
 | Angka metrik terlihat | Hitung naik dari 0 ke nilai | 700 ms, sekali saja | `linear` |
 | Klik tombol | Skala 1 → 0,98 → 1 | 120 ms | `easeOut` |
+| Kartu disorot kursor | Naik `4px` (`hover:-translate-y-1`) | 300 ms | `ease` |
 | Akordeon FAQ | Tinggi otomatis + rotasi ikon 180° | 220 ms | `easeInOut` |
 | Bilah CTA lengket muncul | `y 64px→0` | 200 ms | `easeOut` |
 
-Dilarang: animasi berulang tanpa akhir, paralaks saat gulir di perangkat mobile, animasi yang
-menunda LCP. `prefers-reduced-motion: reduce` mematikan seluruh transformasi dan animasi hitung
-naik (nilai langsung tampil).
+Pemicu pengungkapan adalah `IntersectionObserver` di satu komponen (`components/blocks/scroll-reveal.tsx`)
+yang mengamati setiap `[data-reveal]`; ambang 0,15 dengan `rootMargin` bawah −10%. Tanpa JavaScript
+elemen langsung tampil, karena keadaan awal hanya berlaku pada selektor `[data-reveal-state="hidden"]`
+yang disetel skrip.
+
+Kurva `cubic-bezier(0.44, 0, 0.56, 1)` dan jarak 16 px diambil dari perilaku terukur
+locol.company (Framer Motion: `opacity 0→1` + `translateY(194–409px) → 0`) yang diperkecil
+agar sesuai aturan durasi di bawah. Nufeed memakai transisi `background, border, box-shadow,
+transform` 0,3–0,4 s pada 451 elemen — pola itu ditiru hanya pada kartu dan tombol, bukan
+seluruh elemen, karena biaya komputasinya tidak sepadan.
+
+Dilarang: animasi berulang tanpa akhir (mis. `up-down` 1,5 s di nufeed), paralaks saat gulir di
+perangkat mobile, animasi yang menunda LCP. `prefers-reduced-motion: reduce` mematikan seluruh
+transformasi, transisi, gulir halus, dan animasi hitung naik (nilai langsung tampil).
 
 ---
 
@@ -785,10 +798,10 @@ naik (nilai langsung tampil).
 | Berat halaman penuh beranda (compressed) | ≤ 900 KB | 1,5 MB |
 | Font yang diunduh | 3 keluarga, 6 berkas (subset latin) | — |
 
-Cara mencapai: konten dirender server, hanya 3 pulau klien (akordeon, form, bilah lengket),
-gambar `next/image` dengan `sizes` eksplisit dan prioritas hanya untuk gambar hero, font
-lewat `next/font` tanpa permintaan jaringan pihak ketiga, tanpa pustaka animasi di jalur kritis
-(`motion` dimuat dinamis setelah interaksi atau bagian terlihat).
+Cara mencapai: konten dirender server, hanya 4 pulau klien (akordeon, form, bilah lengket,
+pengungkap gulir), gambar `next/image` dengan `sizes` eksplisit dan prioritas hanya untuk gambar
+hero, font lewat `next/font` tanpa permintaan jaringan pihak ketiga, tanpa pustaka animasi di
+jalur kritis — pengungkapan gulir memakai `IntersectionObserver` bawaan, bukan `motion`.
 
 ---
 
