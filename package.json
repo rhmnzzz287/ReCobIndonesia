@@ -30,6 +30,8 @@
     "check:terms": "node scripts/check-foreign-terms.mjs .",
     "check:secrets": "node scripts/check-secrets.mjs",
     "check:env": "node apps/backend/scripts/check-env.mjs",
-    "verify": "npm run lint && npm run typecheck && npm run check:tokens && npm run check:env && npm run check:emoji && npm run check:terms && npm run check:secrets && npm run test && npm run build && npm run test:e2e"
+    "check:alur": "python3 scripts/generate-alur-pelanggan.py --check",
+    "alur:build": "python3 scripts/generate-alur-pelanggan.py && python3 scripts/verify-alur-pelanggan.py",
+    "verify": "npm run lint && npm run typecheck && npm run check:tokens && npm run check:env && npm run check:emoji && npm run check:terms && npm run check:secrets && npm run check:alur && npm run test && npm run build && npm run test:e2e"
   }
 }

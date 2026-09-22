@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alur Pelanggan Utama &mdash; ReCob.id</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Rubik:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface:#FFFFFF; --paper:#F4F8F0; --ink:#0D1216; --ink-deep:#123326;
+    --primary:#0B6E3B; --primary-strong:#084F2A; --primary-soft:#E7F1E4;
+    --accent:#7DBE35; --border:#DDEBD2; --text:#1F2A24; --text-secondary:#4A5A52;
+    --corn:#EDC22E;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--text); line-height:1.6;
+    font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; }
+  .wrap { max-width:1460px; margin:0 auto; padding:44px 26px 68px; }
+  header.top { border-bottom:1px solid var(--border); padding-bottom:26px; margin-bottom:34px; }
+  .eyebrow { font-size:12px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--primary); font-weight:600; margin:0 0 10px; }
+  h1 { font-family:Rubik, ui-sans-serif, sans-serif; font-weight:800; font-size:42px;
+    line-height:1.08; letter-spacing:-.02em; color:var(--ink); margin:0; }
+  .lede { margin:15px 0 0; max-width:80ch; color:var(--text-secondary); }
+  .criterion { display:inline-flex; align-items:center; gap:10px; margin-top:22px;
+    background:var(--primary-soft); border:1px solid var(--border); border-radius:999px;
+    padding:9px 18px; font-size:13px; color:var(--primary-strong); }
+  .criterion b { font-weight:600; }
+  .criterion code { font-size:12.5px; }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:30px; margin-bottom:30px; }
+  .panel > h2 { font-family:Rubik, sans-serif; font-size:20px; font-weight:700;
+    color:var(--ink); margin:0 0 7px; }
+  .panel > p.hint { margin:0 0 24px; color:var(--text-secondary); font-size:13.5px; }
+  /* Diagram punya lebar tetap 1320px agar tipografinya tetap terbaca.
+     Di layar sempit ia digulir mendatar, bukan diperkecil sampai tak terbaca. */
+  .canvas { overflow-x:auto; -webkit-overflow-scrolling:touch;
+    border-radius:12px; }
+  .canvas > svg { display:block; height:auto; min-width:1320px; }
+  .scroll-hint { display:none; margin:14px 0 0; font-size:12.5px; color:var(--text-secondary); }
+  @media (max-width:1400px) { .scroll-hint { display:block; } }
+  .legend { list-style:none; padding:0; margin:26px 0 0; display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:13px 24px; }
+  .legend li { display:flex; align-items:center; gap:10px; font-size:13px; }
+  .legend b { font-weight:600; color:var(--ink); }
+  .legend .muted { color:var(--text-secondary); font-size:12px; }
+  .swatch { width:26px; height:16px; border-radius:4px; border:1.5px solid;
+    display:inline-flex; align-items:center; flex:0 0 auto; }
+  .swatch i { display:block; width:3px; height:16px; border-radius:2px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(330px, 1fr)); gap:22px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    padding:26px; }
+  .card h3 { font-family:Rubik, sans-serif; font-size:15px; font-weight:700; margin:0 0 15px;
+    color:var(--ink); }
+  .card .kdot { display:inline-block; width:9px; height:9px; border-radius:50%;
+    background:var(--accent); margin-right:9px; vertical-align:middle; }
+  .card.gap { border-color:var(--corn); background:#FFFDF6; }
+  .card.gap .kdot { background:var(--corn); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:8px 0; border-bottom:1px solid var(--border); }
+  th { font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--text-secondary); font-weight:600; }
+  td.num { text-align:right; font-family:"IBM Plex Mono", monospace; }
+  td.num.zero { color:var(--text-secondary); }
+  .trail { font-size:13px; line-height:2.5; }
+  .trail .arrow { color:var(--primary); font-weight:600; }
+  ul.plain { margin:0; padding-left:20px; font-size:13px; color:var(--text-secondary); }
+  ul.plain li { margin-bottom:8px; }
+  ul.plain b { color:var(--ink); font-weight:600; }
+  code, td.mono { font-family:"IBM Plex Mono", monospace; font-size:12.5px; }
+  code { background:var(--paper); border:1px solid var(--border); border-radius:5px;
+    padding:2px 6px; color:var(--primary-strong); }
+  .tag { display:inline-block; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    font-weight:600; border-radius:999px; padding:3px 11px; margin-bottom:12px; }
+  .tag.ok { background:var(--primary-soft); color:var(--primary-strong); }
+  .tag.gap { background:#FFF3D1; color:#7A5C12; }
+  footer.bot { margin-top:36px; padding-top:22px; border-top:1px solid var(--border);
+    font-size:12px; color:var(--text-secondary); line-height:1.9; }
+  @media print { body { background:#fff; } .panel, .card { break-inside:avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">ReCob.id &mdash; Artefak Kriteria Penerimaan Prototipe</p>
+    <h1>Alur Pelanggan Utama</h1>
+    <p class="lede">
+      Alur dari kanal perolehan sampai tindak lanjut lapangan pada prototipe enam halaman.
+      Setiap simpul dilacak ke berkas sumbernya dan setiap angka berasal dari probe pada
+      peramban sungguhan, bukan perkiraan. Kerangka tahap mengikuti
+      <code>Docs/PRD.md</code> Bagian 6.
+    </p>
+    <p class="criterion"><b>Kriteria:</b> <code>Show the main customer flow</code></p>
+  </header>
+
+  <section class="panel">
+    <h2>Peta Alur</h2>
+    <p class="hint">Tujuh tahap berurutan. Panah menunjukkan perpindahan pengunjung, bukan pemanggilan jaringan.</p>
+    <div class="canvas">
+<svg viewBox="0 0 1320 2016" width="100%" role="img" preserveAspectRatio="xMidYMin meet" aria-labelledby="flow-title flow-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="flow-title">Alur pelanggan utama ReCob.id</title>
+<desc id="flow-desc">Tujuh tahap alur pelanggan: kesadaran, pertimbangan, eksplorasi, aksi dan interaksi, titik konversi, pemrosesan server, tindak lanjut.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0B6E3B"/></marker></defs>
+<line x1="757" y1="257" x2="757" y2="287" stroke="#0B6E3B" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="757" y1="609" x2="757" y2="639" stroke="#0B6E3B" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="757" y1="883" x2="757" y2="913" stroke="#0B6E3B" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="757" y1="1157" x2="757" y2="1187" stroke="#0B6E3B" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="757" y1="1431" x2="757" y2="1461" stroke="#0B6E3B" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="757" y1="1705" x2="757" y2="1735" stroke="#0B6E3B" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="224" y="100" width="1066" height="150" rx="14" fill="#FFFFFF" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="30" y="108" width="188" height="62" rx="10" fill="#0B6E3B"/>
+<text x="124.0" y="131" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#B9E6A0">TAHAP 1</text>
+<text x="124.0" y="153" text-anchor="middle" font-size="15.5" font-weight="700" fill="#FFFFFF">Kesadaran</text>
+<text x="248" y="140" font-size="12.5" fill="#4A5A52">Kanal luar membawa pengunjung masuk; atribusi memakai utm tanpa data pribadi</text>
+<rect x="248.0" y="160.0" width="502.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="248.0" y="161.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="265.0" y="188.0" font-size="12.5" font-weight="600" fill="#1F2A24">TikTok, Instagram, Facebook, WhatsApp</text>
+<text x="265.0" y="207.0" font-size="10.5" fill="#1F2A24" opacity="0.74">tautan bio menuju beranda</text>
+<rect x="764.0" y="160.0" width="502.0" height="66" rx="9" fill="#FFF8EE" stroke="#EDC22E" stroke-width="1.5"/>
+<rect x="764.0" y="161.0" width="4" height="64" rx="2" fill="#EDC22E"/>
+<text x="781.0" y="188.0" font-size="12.5" font-weight="600" fill="#7A5C12">utm_source → page_view</text>
+<text x="781.0" y="207.0" font-size="10.5" fill="#7A5C12" opacity="0.74">nama event tetap lintas fase</text>
+<rect x="224" y="296" width="1066" height="306" rx="14" fill="#FFFFFF" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="30" y="304" width="188" height="62" rx="10" fill="#0B6E3B"/>
+<text x="124.0" y="327" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#B9E6A0">TAHAP 2</text>
+<text x="124.0" y="349" text-anchor="middle" font-size="15.5" font-weight="700" fill="#FFFFFF">Pertimbangan</text>
+<text x="248" y="336" font-size="12.5" fill="#4A5A52">Beranda / — sembilan bagian berurutan (page.tsx:73–81)</text>
+<rect x="248.0" y="356.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="248.0" y="357.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="265.0" y="384.0" font-size="12.5" font-weight="600" fill="#1F2A24">Hero</text>
+<text x="265.0" y="403.0" font-size="10.5" fill="#1F2A24" opacity="0.74">2 ajakan + jangkar harga</text>
+<rect x="592.0" y="356.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="592.0" y="357.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="609.0" y="384.0" font-size="12.5" font-weight="600" fill="#1F2A24">Garis Dampak</text>
+<text x="609.0" y="403.0" font-size="10.5" fill="#1F2A24" opacity="0.74">3 angka ringkas</text>
+<rect x="936.0" y="356.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="936.0" y="357.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="953.0" y="384.0" font-size="12.5" font-weight="600" fill="#1F2A24">Masalah</text>
+<text x="953.0" y="403.0" font-size="10.5" fill="#1F2A24" opacity="0.74">3 kartu keluhan</text>
+<rect x="248.0" y="434.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="248.0" y="435.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="265.0" y="462.0" font-size="12.5" font-weight="600" fill="#1F2A24">Solusi</text>
+<text x="265.0" y="481.0" font-size="10.5" fill="#1F2A24" opacity="0.74">3 pilar</text>
+<rect x="592.0" y="434.0" width="330.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="592.0" y="435.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="609.0" y="462.0" font-size="12.5" font-weight="600" fill="#084F2A">Produk Ringkas</text>
+<text x="609.0" y="481.0" font-size="10.5" fill="#084F2A" opacity="0.74">menuju /produk</text>
+<rect x="936.0" y="434.0" width="330.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="936.0" y="435.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="953.0" y="462.0" font-size="12.5" font-weight="600" fill="#084F2A">Kisi Tautan</text>
+<text x="953.0" y="481.0" font-size="10.5" fill="#084F2A" opacity="0.74">4 rute sekunder</text>
+<rect x="248.0" y="512.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="248.0" y="513.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="265.0" y="540.0" font-size="12.5" font-weight="600" fill="#1F2A24">Kendali Mutu</text>
+<text x="265.0" y="559.0" font-size="10.5" fill="#1F2A24" opacity="0.74">3 kartu bukti</text>
+<rect x="592.0" y="512.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="592.0" y="513.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="609.0" y="540.0" font-size="12.5" font-weight="600" fill="#1F2A24">FAQ</text>
+<text x="609.0" y="559.0" font-size="10.5" fill="#1F2A24" opacity="0.74">akordeon tanya-jawab</text>
+<rect x="936.0" y="512.0" width="330.0" height="66" rx="9" fill="#0B6E3B" stroke="#084F2A" stroke-width="1.5"/>
+<rect x="936.0" y="513.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="953.0" y="540.0" font-size="12.5" font-weight="600" fill="#FFFFFF">Cta Akhir</text>
+<text x="953.0" y="559.0" font-size="10.5" fill="#FFFFFF" opacity="0.74">formulir sampel</text>
+<rect x="224" y="648" width="1066" height="228" rx="14" fill="#FFFFFF" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="30" y="656" width="188" height="62" rx="10" fill="#0B6E3B"/>
+<text x="124.0" y="679" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#B9E6A0">TAHAP 3</text>
+<text x="124.0" y="701" text-anchor="middle" font-size="15.5" font-weight="700" fill="#FFFFFF">Eksplorasi</text>
+<text x="248" y="688" font-size="12.5" fill="#4A5A52">Empat rute sekunder, semuanya terdaftar di sitemap.ts:11–16</text>
+<rect x="248.0" y="708.0" width="502.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="248.0" y="709.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="265.0" y="736.0" font-size="12.5" font-weight="600" fill="#084F2A">/produk</text>
+<text x="265.0" y="755.0" font-size="10.5" fill="#084F2A" opacity="0.74">3 bahan, karung 50 kg, Rp160.000</text>
+<rect x="764.0" y="708.0" width="502.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="764.0" y="709.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="781.0" y="736.0" font-size="12.5" font-weight="600" fill="#084F2A">/kalkulator</text>
+<text x="781.0" y="755.0" font-size="10.5" fill="#084F2A" opacity="0.74">tabel statis + kalkulator 3 asumsi</text>
+<rect x="248.0" y="786.0" width="502.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="248.0" y="787.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="265.0" y="814.0" font-size="12.5" font-weight="600" fill="#084F2A">/mitra</text>
+<text x="265.0" y="833.0" font-size="10.5" fill="#084F2A" opacity="0.74">4 langkah potong setoran susu</text>
+<rect x="764.0" y="786.0" width="502.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="764.0" y="787.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="781.0" y="814.0" font-size="12.5" font-weight="600" fill="#084F2A">/edukasi</text>
+<text x="781.0" y="833.0" font-size="10.5" fill="#084F2A" opacity="0.74">4 panduan kandang</text>
+<rect x="224" y="922" width="1066" height="228" rx="14" fill="#FFFFFF" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="30" y="930" width="188" height="62" rx="10" fill="#0B6E3B"/>
+<text x="124.0" y="953" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#B9E6A0">TAHAP 4</text>
+<text x="124.0" y="975" text-anchor="middle" font-size="15.5" font-weight="700" fill="#FFFFFF">Aksi &amp; Interaksi</text>
+<text x="248" y="962" font-size="12.5" fill="#4A5A52">Angka dapat diuji sendiri; masukan di luar rentang ditolak, bukan dihitung</text>
+<rect x="248.0" y="982.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="248.0" y="983.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="265.0" y="1010.0" font-size="12.5" font-weight="600" fill="#1F2A24">3 asumsi pengunjung</text>
+<text x="265.0" y="1029.0" font-size="10.5" fill="#1F2A24" opacity="0.74">jumlah sapi, harga pakan, asupan harian</text>
+<rect x="592.0" y="982.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="592.0" y="983.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="609.0" y="1010.0" font-size="12.5" font-weight="600" fill="#1F2A24">Harga ReCob.id dari data</text>
+<text x="609.0" y="1029.0" font-size="10.5" fill="#1F2A24" opacity="0.74">calculator.tsx:37 membaca product.priceIdr</text>
+<rect x="936.0" y="982.0" width="330.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="936.0" y="983.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="953.0" y="1010.0" font-size="12.5" font-weight="600" fill="#1F2A24">4 nilai hasil</text>
+<text x="953.0" y="1029.0" font-size="10.5" fill="#1F2A24" opacity="0.74">bulan, tahun, per ekor, persentase</text>
+<rect x="248.0" y="1060.0" width="330.0" height="66" rx="9" fill="#FFF3D1" stroke="#EDC22E" stroke-width="1.5"/>
+<rect x="248.0" y="1061.0" width="4" height="64" rx="2" fill="#EDC22E"/>
+<text x="265.0" y="1088.0" font-size="12.5" font-weight="600" fill="#7A5C12">Rentang ditolak</text>
+<text x="265.0" y="1107.0" font-size="10.5" fill="#7A5C12" opacity="0.74">harga pakan Rp50.000–Rp1.000.000</text>
+<rect x="592.0" y="1060.0" width="330.0" height="66" rx="9" fill="#FFF3D1" stroke="#EDC22E" stroke-width="1.5"/>
+<rect x="592.0" y="1061.0" width="4" height="64" rx="2" fill="#EDC22E"/>
+<text x="609.0" y="1088.0" font-size="12.5" font-weight="600" fill="#7A5C12">Validasi form</text>
+<text x="609.0" y="1107.0" font-size="10.5" fill="#7A5C12" opacity="0.74">4 kolom wajib, 2 opsional, persetujuan</text>
+<rect x="936.0" y="1060.0" width="330.0" height="66" rx="9" fill="#FFF3D1" stroke="#EDC22E" stroke-width="1.5"/>
+<rect x="936.0" y="1061.0" width="4" height="64" rx="2" fill="#EDC22E"/>
+<text x="953.0" y="1088.0" font-size="12.5" font-weight="600" fill="#7A5C12">Honeypot</text>
+<text x="953.0" y="1107.0" font-size="10.5" fill="#7A5C12" opacity="0.74">kolom tersembunyi dijawab seolah sukses</text>
+<rect x="224" y="1196" width="1066" height="228" rx="14" fill="#FFFFFF" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="30" y="1204" width="188" height="62" rx="10" fill="#0B6E3B"/>
+<text x="124.0" y="1227" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#B9E6A0">TAHAP 5</text>
+<text x="124.0" y="1249" text-anchor="middle" font-size="15.5" font-weight="700" fill="#FFFFFF">Titik Konversi</text>
+<text x="248" y="1236" font-size="12.5" fill="#4A5A52">Lima pintu menuju satu formulir di /kontak#form-sampel</text>
+<rect x="248.0" y="1256.0" width="330.0" height="66" rx="9" fill="#0B6E3B" stroke="#084F2A" stroke-width="1.5"/>
+<rect x="248.0" y="1257.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="265.0" y="1284.0" font-size="12.5" font-weight="600" fill="#FFFFFF">Header, semua halaman</text>
+<text x="265.0" y="1303.0" font-size="10.5" fill="#FFFFFF" opacity="0.74">Klaim Sampel Gratis 2-3 kg</text>
+<rect x="592.0" y="1256.0" width="330.0" height="66" rx="9" fill="#0B6E3B" stroke="#084F2A" stroke-width="1.5"/>
+<rect x="592.0" y="1257.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="609.0" y="1284.0" font-size="12.5" font-weight="600" fill="#FFFFFF">Hero + Cta akhir</text>
+<text x="609.0" y="1303.0" font-size="10.5" fill="#FFFFFF" opacity="0.74">di beranda</text>
+<rect x="936.0" y="1256.0" width="330.0" height="66" rx="9" fill="#0B6E3B" stroke="#084F2A" stroke-width="1.5"/>
+<rect x="936.0" y="1257.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="953.0" y="1284.0" font-size="12.5" font-weight="600" fill="#FFFFFF">Bilah lengket</text>
+<text x="953.0" y="1303.0" font-size="10.5" fill="#FFFFFF" opacity="0.74">muncul setelah 640 px</text>
+<rect x="248.0" y="1334.0" width="330.0" height="66" rx="9" fill="#0B6E3B" stroke="#084F2A" stroke-width="1.5"/>
+<rect x="248.0" y="1335.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="265.0" y="1362.0" font-size="12.5" font-weight="600" fill="#FFFFFF">Kalkulator</text>
+<text x="265.0" y="1381.0" font-size="10.5" fill="#FFFFFF" opacity="0.74">membawa jumlah sapi terisi</text>
+<rect x="592.0" y="1334.0" width="330.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="592.0" y="1335.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="609.0" y="1362.0" font-size="12.5" font-weight="600" fill="#084F2A">Formulir sampel</text>
+<text x="609.0" y="1381.0" font-size="10.5" fill="#084F2A" opacity="0.74">8 kolom termasuk honeypot</text>
+<rect x="936.0" y="1334.0" width="330.0" height="66" rx="9" fill="#FFF8EE" stroke="#EDC22E" stroke-width="1.5"/>
+<rect x="936.0" y="1335.0" width="4" height="64" rx="2" fill="#EDC22E"/>
+<text x="953.0" y="1362.0" font-size="12.5" font-weight="600" fill="#7A5C12">sample_form_submit</text>
+<text x="953.0" y="1381.0" font-size="10.5" fill="#7A5C12" opacity="0.74">peristiwa kirim</text>
+<rect x="224" y="1470" width="1066" height="228" rx="14" fill="#FFFFFF" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="30" y="1478" width="188" height="62" rx="10" fill="#0B6E3B"/>
+<text x="124.0" y="1501" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#B9E6A0">TAHAP 6</text>
+<text x="124.0" y="1523" text-anchor="middle" font-size="15.5" font-weight="700" fill="#FFFFFF">Pemrosesan</text>
+<text x="248" y="1510" font-size="12.5" fill="#4A5A52">Server Action: honeypot → validasi ketat → batas laju → simpan</text>
+<rect x="248.0" y="1530.0" width="330.0" height="66" rx="9" fill="#123326" stroke="#123326" stroke-width="1.5"/>
+<rect x="248.0" y="1531.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="265.0" y="1558.0" font-size="12.5" font-weight="600" fill="#E7F1E4">submitLeadAction</text>
+<text x="265.0" y="1577.0" font-size="10.5" fill="#E7F1E4" opacity="0.74">honeypot diperiksa paling awal</text>
+<rect x="592.0" y="1530.0" width="330.0" height="66" rx="9" fill="#123326" stroke="#123326" stroke-width="1.5"/>
+<rect x="592.0" y="1531.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="609.0" y="1558.0" font-size="12.5" font-weight="600" fill="#E7F1E4">Skema .strict()</text>
+<text x="609.0" y="1577.0" font-size="10.5" fill="#E7F1E4" opacity="0.74">kolom di luar kontrak ditolak</text>
+<rect x="936.0" y="1530.0" width="330.0" height="66" rx="9" fill="#123326" stroke="#123326" stroke-width="1.5"/>
+<rect x="936.0" y="1531.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="953.0" y="1558.0" font-size="12.5" font-weight="600" fill="#E7F1E4">checkRateLimit</text>
+<text x="953.0" y="1577.0" font-size="10.5" fill="#E7F1E4" opacity="0.74">kunci dari x-forwarded-for</text>
+<rect x="248.0" y="1608.0" width="330.0" height="66" rx="9" fill="#123326" stroke="#123326" stroke-width="1.5"/>
+<rect x="248.0" y="1609.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="265.0" y="1636.0" font-size="12.5" font-weight="600" fill="#E7F1E4">Supabase + RLS</text>
+<text x="265.0" y="1655.0" font-size="10.5" fill="#E7F1E4" opacity="0.74">kode 23505 = duplikat WhatsApp</text>
+<rect x="592.0" y="1608.0" width="330.0" height="66" rx="9" fill="#123326" stroke="#123326" stroke-width="1.5"/>
+<rect x="592.0" y="1609.0" width="4" height="64" rx="2" fill="#7DBE35"/>
+<text x="609.0" y="1636.0" font-size="12.5" font-weight="600" fill="#E7F1E4">Notifikasi internal</text>
+<text x="609.0" y="1655.0" font-size="10.5" fill="#E7F1E4" opacity="0.74">HMAC-SHA256, gagal tidak menggagalkan lead</text>
+<rect x="936.0" y="1608.0" width="330.0" height="66" rx="9" fill="#FFF8EE" stroke="#EDC22E" stroke-width="1.5"/>
+<rect x="936.0" y="1609.0" width="4" height="64" rx="2" fill="#EDC22E"/>
+<text x="953.0" y="1636.0" font-size="12.5" font-weight="600" fill="#7A5C12">lead_created / duplicate</text>
+<text x="953.0" y="1655.0" font-size="10.5" fill="#7A5C12" opacity="0.74">dua keadaan sukses terpisah</text>
+<rect x="224" y="1744" width="1066" height="228" rx="14" fill="#FFFFFF" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="30" y="1752" width="188" height="62" rx="10" fill="#0B6E3B"/>
+<text x="124.0" y="1775" text-anchor="middle" font-size="10.5" letter-spacing="1.5" fill="#B9E6A0">TAHAP 7</text>
+<text x="124.0" y="1797" text-anchor="middle" font-size="15.5" font-weight="700" fill="#FFFFFF">Tindak Lanjut</text>
+<text x="248" y="1784" font-size="12.5" fill="#4A5A52">Tim lapangan menghubungi, lalu jalur kemitraan koperasi</text>
+<rect x="248.0" y="1804.0" width="502.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="248.0" y="1805.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="265.0" y="1832.0" font-size="12.5" font-weight="600" fill="#1F2A24">Tim lapangan menghubungi</text>
+<text x="265.0" y="1851.0" font-size="10.5" fill="#1F2A24" opacity="0.74">lewat WhatsApp yang diisi</text>
+<rect x="764.0" y="1804.0" width="502.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="764.0" y="1805.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="781.0" y="1832.0" font-size="12.5" font-weight="600" fill="#1F2A24">Sampel 2–3 kg + panduan</text>
+<text x="781.0" y="1851.0" font-size="10.5" fill="#1F2A24" opacity="0.74">panduan takaran hari 1–7</text>
+<rect x="248.0" y="1882.0" width="502.0" height="66" rx="9" fill="#E7F1E4" stroke="#0B6E3B" stroke-width="1.5"/>
+<rect x="248.0" y="1883.0" width="4" height="64" rx="2" fill="#0B6E3B"/>
+<text x="265.0" y="1910.0" font-size="12.5" font-weight="600" fill="#084F2A">/mitra: potong setoran</text>
+<text x="265.0" y="1929.0" font-size="10.5" fill="#084F2A" opacity="0.74">tagihan dipotong dari slip susu mingguan</text>
+<rect x="764.0" y="1882.0" width="502.0" height="66" rx="9" fill="#F4F8F0" stroke="#DDEBD2" stroke-width="1.5"/>
+<rect x="764.0" y="1883.0" width="4" height="64" rx="2" fill="#C7DCB8"/>
+<text x="781.0" y="1910.0" font-size="12.5" font-weight="600" fill="#1F2A24">Phase 2: portal peternak</text>
+<text x="781.0" y="1929.0" font-size="10.5" fill="#1F2A24" opacity="0.74">di luar lingkup prototype</text>
+</svg>
+    </div>
+    <p class="scroll-hint">Diagram dapat digulir mendatar pada layar sempit.</p>
+    <ul class="legend">
+      <li><span class="swatch" style="background:#E7F1E4;border-color:#0B6E3B"><i style="background:#0B6E3B"></i></span><b>Rute halaman</b><span class="muted">punya alamat, judul, dan kanonik sendiri</span></li>
+<li><span class="swatch" style="background:#0B6E3B;border-color:#084F2A"><i style="background:#7DBE35"></i></span><b>Titik konversi</b><span class="muted">tautan menuju formulir sampel</span></li>
+<li><span class="swatch" style="background:#F4F8F0;border-color:#DDEBD2"><i style="background:#C7DCB8"></i></span><b>Seksi / langkah</b><span class="muted">bagian di dalam halaman</span></li>
+<li><span class="swatch" style="background:#FFF8EE;border-color:#EDC22E"><i style="background:#EDC22E"></i></span><b>Peristiwa analitik</b><span class="muted">nama tetap dari funnel-events.ts</span></li>
+<li><span class="swatch" style="background:#123326;border-color:#123326"><i style="background:#7DBE35"></i></span><b>Proses server</b><span class="muted">Server Action dan basis data</span></li>
+<li><span class="swatch" style="background:#FFF3D1;border-color:#EDC22E"><i style="background:#EDC22E"></i></span><b>Batas / validasi</b><span class="muted">masukan di luar rentang ditolak</span></li>
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h2>Bukti Terukur</h2>
+    <p class="hint">Diambil dari peramban pada enam rute yang berjalan.</p>
+    <div class="cards">
+      <div class="card">
+        <h3><span class="kdot"></span>Jejak Navigasi</h3>
+        <p class="trail"><code>/</code> <span class="arrow">&rarr;</span> <code>/produk</code> <span class="arrow">&rarr;</span> <code>/kalkulator</code> <span class="arrow">&rarr;</span> <code>/mitra</code> <span class="arrow">&rarr;</span> <code>/edukasi</code> <span class="arrow">&rarr;</span> <code>/kontak</code></p>
+        <p style="font-size:12.5px;color:var(--text-secondary);margin:14px 0 0">
+          Menu utama diklik berurutan; setiap perpindahan mengubah alamat peramban.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3><span class="kdot"></span>Titik Konversi per Halaman</h3>
+        <table>
+          <thead><tr><th>Halaman</th><th style="text-align:right">Tautan</th>
+          <th style="text-align:right">Dalam konten</th></tr></thead>
+          <tbody>
+<tr><td class="mono">/</td><td class="num">5</td><td class="num">1</td></tr>
+<tr><td class="mono">/produk</td><td class="num">4</td><td class="num zero">0</td></tr>
+<tr><td class="mono">/kalkulator</td><td class="num">5</td><td class="num">1</td></tr>
+<tr><td class="mono">/mitra</td><td class="num">4</td><td class="num zero">0</td></tr>
+<tr><td class="mono">/edukasi</td><td class="num">4</td><td class="num zero">0</td></tr>
+<tr><td class="mono">/kontak</td><td class="num">4</td><td class="num zero">0</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12.5px;color:var(--text-secondary);margin:14px 0 0">
+          Kolom pertama menghitung seluruh tautan ke <code>/kontak#form-sampel</code> termasuk
+          header dan bilah lengket; kolom kedua hanya yang berada di dalam konten halaman.
+          Nol berarti halaman itu mengandalkan header, bukan berarti tidak ada jalan konversi.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3><span class="kdot"></span>Bukti Interaksi</h3>
+        <ul class="plain">
+          <li>Kalkulator diisi <b>12 ekor</b> menghasilkan hemat bulanan <b>Rp1.152.000</b>
+              dan tahunan <b>Rp13.824.000</b>.</li>
+          <li>Ajakan di kalkulator mendarat di <b>/kontak#form-sampel</b> dengan kolom jumlah
+              sapi <b>terisi 12</b>.</li>
+          <li>Jumlah sapi <b>tidak masuk URL</b>: dibawa lewat penyimpanan sesi
+              (<code>recob:cattleCount</code>), bukan kueri atau hash.</li>
+          <li>Formulir tanpa persetujuan ditolak dengan pesan
+              <b>Persetujuan penggunaan data wajib dicentang.</b></li>
+        </ul>
+      </div>
+
+      <div class="card gap">
+        <h3><span class="kdot"></span>Celah yang Belum Ditutup</h3>
+        <ul class="plain">
+          <li>Kedelapan nama peristiwa <b>sudah dideklarasikan</b> di
+              <code>packages/shared/src/constants/funnel-events.ts</code>, dan
+              <code>app/actions/track-event.ts</code> sudah ada, tetapi
+              <b>tidak ada komponen yang memanggilnya</b>.</li>
+          <li>Akibatnya kriteria <b>S8</b> (PRD baris 125), yaitu <code>cta_click</code>,
+              <code>sample_form_start</code>, dan <code>sample_form_submit</code> terekam,
+              <b>belum terpenuhi</b> walau rangka kerjanya sudah siap.</li>
+          <li>Perbaikan terkecil: panggil <code>trackEventAction</code> dari tiga tempat, yaitu
+              klik ajakan, mulai mengisi, dan kirim formulir.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bot">
+    Sumber: <code>apps/web/app/page.tsx</code>,
+    <code>apps/web/app/*/page.tsx</code>,
+    <code>apps/web/components/blocks/savings-calculator.tsx</code>,
+    <code>apps/web/components/blocks/sample-form.tsx</code>,
+    <code>apps/web/app/actions/submit-lead.ts</code>,
+    <code>apps/web/lib/utils/cattle-prefill.ts</code>,
+    <code>packages/shared/src/constants/funnel-events.ts</code>,
+    <code>apps/web/app/sitemap.ts</code>, <code>Docs/PRD.md</code> Bagian 6 dan 7.
+    Berkas ini dihasilkan oleh skrip; jangan disunting tangan.
+  </footer>
+</div>
+</body>
+</html>

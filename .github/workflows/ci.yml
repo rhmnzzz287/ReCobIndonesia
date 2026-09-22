@@ -23,6 +23,7 @@ jobs:
       - run: npm run check:emoji
       - run: npm run check:terms
       - run: npm run check:secrets
+      - run: npm run check:alur
       - run: npm run test
       - run: npm run build
       - name: Simpan artefak laporan token
