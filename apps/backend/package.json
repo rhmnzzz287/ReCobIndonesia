@@ -17,7 +17,9 @@
     "dev-db:reset": "node scripts/dev-db.mjs reset",
     "demo:export": "node scripts/export-demo-data.mjs",
     "db:gen-types:local": "node scripts/gen-types-local.mjs",
-    "test:e2e": "vitest run tests/e2e"
+    "test:e2e": "vitest run tests/e2e",
+    "fn:secrets": "node scripts/fn-secrets.mjs",
+    "fn:test": "vitest run tests/unit/notify-signature.test.ts"
   },
   "devDependencies": {
     "@types/node": "26.6.2",

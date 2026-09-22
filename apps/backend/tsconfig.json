@@ -8,5 +8,9 @@
     }
   },
   "include": ["tests/**/*.ts", "scripts/**/*.mjs"],
-  "exclude": ["node_modules", "supabase"]
+  "exclude": [
+    "node_modules",
+    "supabase/functions",
+    "tests/unit/notify-handler.test.ts"
+  ]
 }
