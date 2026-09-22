@@ -20,31 +20,33 @@ colors:
   border: "#DDEBD2"
   amber-soft: "#FFF3D1"
   amber-ink: "#7A5C12"
+  lime: "#8FBF4E"
+  lime-deep: "#6FA337"
 typography:
   display:
     fontFamily: Rubik
-    fontSize: clamp(2.5rem, 8vw, 4.5rem)
+    fontSize: clamp(2.75rem, 9vw, 5.5rem)
+    fontWeight: 800
+    lineHeight: 0.95
+    letterSpacing: "-0.04em"
+  display-xl:
+    fontFamily: Rubik
+    fontSize: clamp(2.25rem, 6.5vw, 4.5rem)
     fontWeight: 800
     lineHeight: 1
     letterSpacing: "-0.035em"
-  display-xl:
+  h1:
     fontFamily: Rubik
-    fontSize: clamp(2rem, 5.5vw, 3.5rem)
+    fontSize: clamp(2.25rem, 6.5vw, 4.5rem)
     fontWeight: 800
     lineHeight: 1.05
     letterSpacing: "-0.03em"
-  h1:
-    fontFamily: Rubik
-    fontSize: clamp(2rem, 5.5vw, 3.5rem)
-    fontWeight: 800
-    lineHeight: 1.1
-    letterSpacing: "-0.02em"
   h2:
     fontFamily: Rubik
-    fontSize: clamp(1.625rem, 4vw, 2.5rem)
+    fontSize: clamp(1.75rem, 4.5vw, 2.75rem)
     fontWeight: 700
-    lineHeight: 1.15
-    letterSpacing: "-0.01em"
+    lineHeight: 1.1
+    letterSpacing: "-0.02em"
   h3:
     fontFamily: Rubik
     fontSize: 1.25rem
@@ -78,14 +80,14 @@ typography:
     lineHeight: 1.45
   metric-lg:
     fontFamily: Rubik
-    fontSize: clamp(2.5rem, 8vw, 4.5rem)
+    fontSize: clamp(2.75rem, 9vw, 5.5rem)
     fontWeight: 800
-    lineHeight: 1
-    letterSpacing: "-0.03em"
+    lineHeight: 0.95
+    letterSpacing: "-0.04em"
     fontFeature: "tnum"
   metric-md:
     fontFamily: Rubik
-    fontSize: clamp(1.75rem, 4.5vw, 2rem)
+    fontSize: clamp(1.75rem, 4.5vw, 2.5rem)
     fontWeight: 700
     lineHeight: 1.05
     fontFeature: "tnum"
@@ -100,7 +102,7 @@ rounded:
   md: 12px
   lg: 18px
   xl: 28px
-  arc: 48px
+  arc: clamp(48px, 12vw, 120px)
   pill: 999px
 spacing:
   2xs: 4px
@@ -368,23 +370,27 @@ seragam tanpa serif, jadi tipografi pun memakai sans yang tegas tanpa lekukan de
 
 | Token | Ukuran | Berat | Penggunaan |
 |---|---:|---:|---|
-| `display` | 40–72 px | 800 | Angka pahlawan di hero beranda, satu per halaman |
-| `display-xl` | 32–56 px | 800 | Judul bagian besar, satu per halaman |
-| `h1` | 32–56 px | 800 | Judul halaman bagian dalam |
-| `h2` | 26–40 px | 700 | Judul bagian beranda |
+| `display` | 44–88 px | 800 | Angka pahlawan di hero beranda, satu per halaman |
+| `display-xl` | 36–72 px | 800 | Judul bagian besar, satu per halaman |
+| `h1` | 36–72 px | 800 | Judul halaman bagian dalam |
+| `h2` | 28–44 px | 700 | Judul bagian beranda |
 | `h3` | 20 px | 600 | Judul kartu, pertanyaan FAQ |
 | `body-lg` | 18 px | 400 | Paragraf pembuka bagian, jawaban FAQ |
 | `body-md` | 16 px | 400 | Teks isi standar; ukuran minimum untuk teks panjang |
 | `body-sm` | 14 px | 400 | Keterangan tabel, catatan kaki, meta artikel |
 | `label-md` | 13 px | 600 | Tombol dan label huruf kapital dengan `letter-spacing: 0.08em` |
 | `caption` | 12 px | 500 | Sumber metrik, asumsi, stempel waktu |
-| `metric-lg` | 40–72 px | 800 | Angka utama panel dampak |
-| `metric-md` | 28–32 px | 700 | Angka sekunder, angka dalam kartu |
+| `metric-lg` | 44–88 px | 800 | Angka utama panel dampak |
+| `metric-md` | 28–40 px | 700 | Angka sekunder, angka dalam kartu |
 | `mono-data` | 13 px | 500 | NPP, KODE, nomor rujukan |
 
 Ukuran judul dan angka memakai `clamp()` sehingga menyusut proporsional di lebar 360 px;
 batas bawah adalah nilai di ponsel, batas atas nilai di desktop ≥1024 px. Tanpa ini judul
 56 px meluap keluar viewport pada layar ponsel.
+
+Skala desktop sengaja dinaikkan mendekati kedua situs rujukan: locol.company memakai h1 60 px
+dan angka 88–125 px, nufeed.co.id memakai judul 48 px. Sebelumnya ReCob berhenti di 56/72 px
+sehingga beranda terasa lebih kecil dari keduanya meski strukturnya sudah sama.
 
 Aturan: maksimum 65 karakter per baris untuk teks isi; `caption` tidak pernah dipakai untuk
 paragraf panjang; angka tidak pernah ditulis dalam bentuk huruf ("dua puluh" salah, "20" benar).
@@ -435,8 +441,13 @@ Keadaan fokus tidak boleh dihapus. Fokus di atas bidang gelap memakai warna `acc
 ## Shapes
 
 - Sudut: `xs` 4 px untuk elemen sebaris kecil, `sm` 8 px untuk input dan lencana persegi,
-  `md` 12 px untuk tombol, `lg` 18 px untuk kartu, `xl` 28 px untuk panel metrik, `arc` 48 px
-  untuk bidang besar (hero, pita ajakan) sebagai lengkung bawah, `pill` untuk lencana status.
+  `md` 12 px untuk tombol, `lg` 18 px untuk kartu, `xl` 28 px untuk panel metrik, `arc`
+  `clamp(48px, 12vw, 120px)` untuk lengkung bidang besar, `pill` untuk lencana status.
+
+  Lengkung `arc` meniru nufeed.co.id yang memakai `0 0 194px` pada tepi bawah hero dan
+  panel produk. Nilai 194 px terlalu besar untuk lebar konten 1200 px dan akan memotong
+  isi, jadi ReCob memakai batas atas 120 px — cukup untuk terbaca sebagai lengkung yang
+  disengaja, bukan sudut membulat biasa.
 - Ikon: `lucide-react`, `strokeWidth` 1,75 (konsisten di seluruh aplikasi), ukuran 20 px dalam
   teks/daftar, 24 px dalam tombol, 32 px dalam kartu fitur.
 - Motif emblem: lingkaran bergaris dan kepala sapi bergaris dipakai sebagai elemen dekoratif

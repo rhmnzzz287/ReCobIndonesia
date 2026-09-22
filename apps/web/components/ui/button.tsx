@@ -60,6 +60,7 @@ export interface ButtonLinkProps extends ButtonStyleProps {
   ariaLabel?: string;
 }
 
+/** Tombol di atas bidang limau/terang: `secondary` memakai latar putih agar tetap terbaca. */
 export function ButtonLink({
   ariaLabel,
   className,

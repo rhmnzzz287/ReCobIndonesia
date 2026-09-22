@@ -30,6 +30,7 @@ export const idCopy = {
     statLeadUnit: "lebih hemat per karung 50 kg",
     statLeadCaption:
       "Perbandingan Rp160.000 dengan rentang Rp180.000–Rp200.000 konsentrat komersial umum di sentra susu Jawa.",
+    statStripTitle: "Skala Operasi Fase Awal",
     statKudValue: "1.200+",
     statKudUnit: "karung terkirim",
     statCattleValue: "480",

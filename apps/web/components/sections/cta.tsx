@@ -11,9 +11,13 @@ export async function Cta(): Promise<ReactNode> {
   const regions = await getRegions();
 
   return (
-    <Section className="rounded-b-arc" id="form-sampel" tone="primary">
+    <Section
+      className="rounded-t-arc rounded-b-arc"
+      id="form-sampel"
+      tone="primary"
+    >
       <Container>
-        <div className="mt-2xl grid gap-2xl lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <div className="grid gap-2xl lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div data-reveal="">
             <p className="type-label-md uppercase text-primary-soft">
               {copy.cta.eyebrow}

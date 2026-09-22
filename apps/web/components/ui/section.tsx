@@ -9,6 +9,7 @@ const sectionStyles = cva("px-lg py-2xl lg:py-section", {
       cream: "bg-cream text-ink",
       paper: "bg-paper text-ink",
       primary: "bg-primary text-surface",
+      lime: "bg-lime text-ink",
       ink: "bg-ink-deep text-surface",
     },
   },

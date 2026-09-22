@@ -9,6 +9,7 @@ import { Faq } from "@/components/sections/faq";
 import { Footer } from "@/components/sections/footer";
 import { Hero } from "@/components/sections/hero";
 import { Impact } from "@/components/sections/impact";
+import { ImpactStrip } from "@/components/sections/impact-strip";
 import { Partnership } from "@/components/sections/partnership";
 import { Problem } from "@/components/sections/problem";
 import { Product } from "@/components/sections/product";
@@ -22,6 +23,7 @@ export default function HomePage(): ReactNode {
       <SiteHeader faqLabel={copy.faq.eyebrow} nav={copy.nav} />
       <main id="konten">
         <Hero />
+        <ImpactStrip />
         <Problem />
         <Solution />
         <Product />
