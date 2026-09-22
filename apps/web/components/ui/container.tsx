@@ -1,0 +1,11 @@
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils/cn";
+
+export interface ContainerProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function Container({ children, className }: ContainerProps): ReactNode {
+  return <div className={cn("mx-auto w-full max-w-[1200px] px-lg", className)}>{children}</div>;
+}
