@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans, Rubik } from "next/font/google";
 import { copy } from "@/content/copy";
+import { env } from "@/lib/env";
 import "./globals.css";
 
 const rubik = Rubik({
@@ -27,7 +28,11 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: copy.meta.title,
   description: copy.meta.description,
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  // Memakai `env.siteUrl`, bukan `process.env` langsung: variabel lingkungan yang ADA tetapi
+  // KOSONG ("" dari build arg Docker atau env Vercel yang belum diisi) lolos dari `??`,
+  // sehingga `new URL("")` melempar ERR_INVALID_URL dan build gagal. `env.siteUrl` sudah
+  // menormalkan nilai kosong menjadi null lalu jatuh ke bawaan.
+  metadataBase: new URL(env.siteUrl),
   openGraph: {
     title: copy.meta.title,
     description: copy.meta.description,
@@ -42,7 +47,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "ReCob.id",
   description: copy.meta.description,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: env.siteUrl,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

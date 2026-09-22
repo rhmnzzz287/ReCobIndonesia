@@ -1,0 +1,104 @@
+# syntax=docker/dockerfile:1.7
+#
+# Dockerfile.vercel — image kontainer untuk Vercel.
+#
+# Vercel mendeteksi berkas ini di ROOT proyek lalu mengarahkan seluruh trafik ke image
+# hasilnya (dijalankan sebagai Vercel Function). Karena itu Root Directory Vercel dibiarkan
+# pada akar repositori — justru inilah keuntungannya untuk monorepo npm workspaces
+# (apps/web + apps/backend + packages/shared): seluruh resolusi workspace ditangani di sini,
+# tanpa konfigurasi Root Directory dan tanpa `transpilePackages` lintas direktori.
+#
+# Hanya `apps/web` yang berjalan di kontainer. Backend adalah Supabase (migrasi, RLS, Edge
+# Function) sesuai ADR-002, bukan layanan yang di-deploy terpisah.
+#
+# Uji lokal — Docker tidak terpasang di mesin ini; podman adalah penggantinya:
+#   podman build -f Dockerfile.vercel -t recobid-web .
+#   podman run --rm -p 3000:3000 recobid-web
+#
+# ==== VARIABEL NEXT_PUBLIC_* — DIBACA SAAT RUNTIME, BUKAN BUILD ====
+# Bukti terukur (Next.js 16.3.5, podman): `process.env.NEXT_PUBLIC_SUPABASE_URL` TIDAK
+# diganti literal saat build — referensinya dipertahankan di bundel, dan nilainya dibaca
+# saat proses berjalan. Dibuktikan dengan menjalankan image hasil build arg kosong:
+#   podman run -e NEXT_PUBLIC_SUPABASE_URL=... -e NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+#   -> GET /api/health menjawab {"db":"down"}, bukan {"db":"ok","mode":"demo"}
+# Artinya demoMode memang MATI saat kredensial diberikan lewat runtime.
+#
+# Konsekuensi operasional:
+#   1. Variabel NEXT_PUBLIC_* TIDAK perlu build arg. Cukup diberikan sebagai environment
+#      Vercel. Mengganti nilainya tidak memerlukan build ulang.
+#   2. Build arg di bawah tetap disediakan untuk keperluan khusus (mis. build lokal yang
+#      ingin membekukan nilai di dalam image); mengosongkannya tidak merusak apa pun.
+#
+# Yang WAJIB diberikan di environment Vercel: NEXT_PUBLIC_SUPABASE_URL,
+# NEXT_PUBLIC_SUPABASE_ANON_KEY, NEXT_PUBLIC_SITE_URL, DEMO_MODE=false.
+# Tanpa keduanya yang pertama, aplikasi berjalan dalam mode demo — beranda tetap utuh
+# (data bundel), tetapi formulir tidak menyimpan lead.
+#
+# Variabel sisi server lainnya (LEAD_RATE_LIMIT_*, NOTIFY_HOOK_*, APP_ENV) juga runtime.
+
+# ---------- tahap 1: dependensi ----------
+# Hanya manifes yang disalin lebih dulu agar lapisan cache npm tidak batal setiap kali kode berubah.
+#
+# Basis Debian slim, bukan Alpine: Tailwind v4 memakai lightningcss dengan binari native
+# per-platform. `npm ci` mengambil varian sesuai sistem yang menjalankannya, dan varian musl
+# tidak tersedia di lockfile yang dihasilkan di mesin glibc ini — build Alpine gagal dengan
+# "Cannot find module '../lightningcss.linux-x64-musl.node'". Debian/glibc menyelesaikannya
+# tanpa menambah langkah pemasangan.
+FROM node:26-slim AS deps
+WORKDIR /repo
+COPY package.json package-lock.json .npmrc ./
+COPY apps/web/package.json apps/web/
+COPY apps/backend/package.json apps/backend/
+COPY packages/shared/package.json packages/shared/
+# --ignore-scripts: postinstall npm 12 diblokir kebijakan allowScripts (lihat catatan di README);
+# tidak satu pun dibutuhkan untuk build maupun runtime.
+RUN npm ci --ignore-scripts --no-audit --no-fund
+
+# ---------- tahap 2: build ----------
+FROM node:26-slim AS build
+WORKDIR /repo
+ENV NEXT_TELEMETRY_DISABLED=1
+# outputFileTracingRoot diset ke akar repo oleh BUILD_STANDALONE agar packages/shared ikut tertelusur.
+ENV BUILD_STANDALONE=true
+
+ARG NEXT_PUBLIC_SUPABASE_URL=""
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY=""
+ARG NEXT_PUBLIC_SITE_URL=""
+ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+
+COPY --from=deps /repo/node_modules ./node_modules
+COPY --from=deps /repo/apps/web/node_modules ./apps/web/node_modules
+# packages/shared/node_modules tidak disalin: npm workspaces melakukan hoisting, sehingga
+# dependensinya (zod) berada di root node_modules. Menyalin direktori yang tidak ada
+# menggagalkan build dengan "no such file or directory".
+COPY . .
+
+# Gerbang token dijalankan di dalam build: image yang keluar selalu sejalan dengan Docs/DESIGN.md.
+RUN node scripts/export-design-tokens.mjs --check
+RUN npm run build --workspace @recobid/web
+
+# ---------- tahap 3: runtime ----------
+FROM node:26-slim AS runner
+WORKDIR /repo
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+RUN groupadd --system --gid 1001 nodejs && useradd --system --uid 1001 --gid nodejs nextjs
+
+# Hanya keluaran standalone: server minimal + node_modules yang benar-benar tertelusur.
+COPY --from=build --chown=nextjs:nodejs /repo/apps/web/.next/standalone ./
+COPY --from=build --chown=nextjs:nodejs /repo/apps/web/.next/static ./apps/web/.next/static
+COPY --from=build --chown=nextjs:nodejs /repo/apps/web/public ./apps/web/public
+
+USER nextjs
+EXPOSE 3000
+
+# Dipakai podman/docker; Vercel memakai pemeriksaan kesiapannya sendiri lewat /api/health.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+CMD ["node", "apps/web/server.js"]

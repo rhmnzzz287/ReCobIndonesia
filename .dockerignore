@@ -1,0 +1,43 @@
+# Konteks build untuk Dockerfile.vercel.
+#
+# Menjaga konteks tetap kecil: node_modules (862 MB) dan .next (108 MB) dibangun di dalam image,
+# bukan dikirim dari mesin ini. Ini juga mencegah berkas lokal dan artefak uji ikut terkirim.
+
+# Dependensi dan artefak build
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Kontrol versi dan sistem
+.git/
+.gitignore
+.gitattributes
+
+# Uji dan laporan
+test-results/
+playwright-report/
+blob-report/
+.dev-db/
+
+# Dokumentasi: sebagian besar tidak dibutuhkan untuk build maupun runtime.
+# Docs/DESIGN.md DIKECUALIKAN dari pengecualian — `export-design-tokens.mjs --check`
+# membacanya saat build untuk membuktikan theme.css masih sejalan dengan sumbernya.
+# Docs/stitch (1,5 MB, artefak desain) dan rencana/spec tidak diperlukan di image.
+Docs/
+!Docs/DESIGN.md
+*.zip
+
+# Editor dan OS
+.vscode/
+.idea/
+.DS_Store
+
+# Rahasia — pertahanan berlapis; berkas ini juga diabaikan git.
+.env
+.env.*
+!.env.example
+!.env.*.example

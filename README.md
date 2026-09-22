@@ -32,6 +32,36 @@ npm run dev                                          # http://localhost:3000
 Tanpa kredensial Supabase, jalankan dengan `DEMO_MODE=true` di `apps/web/.env.local`: beranda
 dirender dari data seed yang dibundel saat build, dan formulir menampilkan pesan mode demo.
 
+## Deploy kontainer (Docker / Vercel)
+
+`Dockerfile.vercel` di akar repositori membangun image untuk Vercel. Vercel mendeteksi berkas
+itu dan mengarahkan seluruh trafik ke image hasilnya, dijalankan sebagai Vercel Function.
+
+```bash
+# Docker tidak terpasang di mesin pengembangan ini; podman adalah penggantinya.
+podman build -f Dockerfile.vercel -t recobid-web .
+podman run --rm -p 3000:3000 -e DEMO_MODE=true recobid-web
+```
+
+Karena image dibangun dari akar repo, **Root Directory Vercel dibiarkan pada akar** — justru
+inilah keuntungannya untuk monorepo npm workspaces: resolusi `apps/web`, `apps/backend`, dan
+`packages/shared` ditangani di dalam image, tanpa konfigurasi Root Directory dan tanpa
+`transpilePackages` lintas direktori. Hanya `apps/web` yang berjalan di kontainer; backend
+adalah Supabase (ADR-002), bukan layanan terpisah.
+
+**Variabel `NEXT_PUBLIC_*` dibaca saat RUNTIME, bukan build.** Dibuktikan terukur pada Next.js
+16.3.5: referensi `process.env.NEXT_PUBLIC_SUPABASE_URL` dipertahankan di bundel, tidak diganti
+literal. Menjalankan image hasil build arg kosong dengan `-e NEXT_PUBLIC_SUPABASE_URL=...`
+membuat `/api/health` menjawab `{"db":"down"}` (bukan `{"db":"ok","mode":"demo"}`), yang berarti
+`demoMode` memang mati. Konsekuensinya: cukup berikan variabelnya sebagai environment Vercel,
+tanpa build arg dan tanpa build ulang saat nilainya berubah.
+
+Wajib diberikan di environment Vercel: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+`NEXT_PUBLIC_SITE_URL`, `DEMO_MODE=false`. Tanpa dua yang pertama, aplikasi berjalan dalam mode
+demo — beranda tetap utuh, tetapi formulir tidak menyimpan lead.
+
+Ukuran image: 295 MB (multi-stage, keluaran `standalone`, berjalan sebagai pengguna non-root).
+
 ## Variabel lingkungan (terpisah per aplikasi)
 
 ### `apps/web/.env.local`

@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import type { NextConfig } from "next";
 
 const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
@@ -29,6 +30,16 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ["@recobid/shared"],
+  // Keluaran standalone hanya dibangun untuk image kontainer (Dockerfile.vercel).
+  // Build biasa tetap memakai keluaran default agar `npm run verify` tidak berubah.
+  ...(process.env.BUILD_STANDALONE === "true"
+    ? {
+        output: "standalone" as const,
+        // Wajib di monorepo: tanpa ini Next hanya menelusuri apps/web, sehingga
+        // packages/shared tidak ikut masuk keluaran standalone dan image gagal saat start.
+        outputFileTracingRoot: fileURLToPath(new URL("../../", import.meta.url)),
+      }
+    : {}),
   images: {
     formats: ["image/avif", "image/webp"],
   },
