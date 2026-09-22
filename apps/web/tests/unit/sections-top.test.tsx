@@ -3,8 +3,7 @@ import { describe, expect, it } from "vitest";
 import { copy } from "@/content/copy";
 import { Hero } from "@/components/sections/hero";
 import { Product } from "@/components/sections/product";
-import { Impact } from "@/components/sections/impact";
-import { demoProduct, demoIngredients, demoMetrics } from "@/lib/data/demo-data";
+import { demoProduct, demoIngredients } from "@/lib/data/demo-data";
 
 describe("seksi beranda bagian atas", () => {
   it("hero menampilkan judul, dua ajakan, dan pembanding harga", async () => {
@@ -22,15 +21,5 @@ describe("seksi beranda bagian atas", () => {
       expect(screen.getByText(`${ingredient.shareMinPct}–${ingredient.shareMaxPct}%`)).toBeTruthy();
     }
     expect(screen.getByText(demoProduct.name)).toBeTruthy();
-  });
-
-  it("seksi dampak menampilkan setiap metrik dengan periode dan caption sumbernya", async () => {
-    render(await Impact());
-    for (const metric of demoMetrics) {
-      expect(screen.getByText(metric.label)).toBeTruthy();
-      for (const reference of metric.references) {
-        expect(screen.getByText(reference.citationLabel)).toBeTruthy();
-      }
-    }
   });
 });

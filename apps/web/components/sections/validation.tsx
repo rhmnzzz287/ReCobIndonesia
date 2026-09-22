@@ -1,10 +1,18 @@
 import type { CSSProperties, ReactNode } from "react";
-import { Alert } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { copy } from "@/content/copy";
 
+/**
+ * Seksi kendali mutu.
+ *
+ * Daftar "Sumber Rujukan", blok status NPP, dan catatan batas klaim dihapus dari beranda atas
+ * keputusan pemilik produk: ketiganya tidak dipakai di alur beranda. Naskahnya tetap hidup di
+ * `copy.validation` karena masih dibaca `/kontak` (status NPP) dan `/llms.txt` (batas klaim dan
+ * daftar sumber) — menghapusnya dari sana akan menghilangkan label klaim yang diwajibkan PRD
+ * Bagian 8.
+ */
 export async function Validation(): Promise<ReactNode> {
   return (
     <Section id="mutu" tone="paper">
@@ -28,7 +36,7 @@ export async function Validation(): Promise<ReactNode> {
               style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
             >
               <Card className="flex h-full flex-col" tone="surface">
-                <p className="type-metric-md text-primary">{item.metric}</p>
+                <p className="type-metric-md break-words text-primary">{item.metric}</p>
                 <h3 className="mt-xs type-h3 text-ink">{item.title}</h3>
                 <p className="mt-xs type-body-sm text-text-secondary">
                   {item.body}
@@ -40,33 +48,6 @@ export async function Validation(): Promise<ReactNode> {
             </li>
           ))}
         </ul>
-
-        <div className="mt-2xl grid gap-xl lg:grid-cols-2">
-          <div data-reveal="">
-            <h3 className="type-h3 text-ink">
-              {copy.validation.citationTitle}
-            </h3>
-            <ul className="mt-md flex list-disc flex-col gap-sm pl-lg type-body-sm text-text-secondary">
-              {copy.validation.citations.map((citation) => (
-                <li key={citation}>{citation}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div data-reveal="">
-            <dl className="rounded-lg border border-border bg-surface p-lg">
-              <dt className="type-label-md uppercase text-text-secondary">
-                {copy.validation.nppLabel}
-              </dt>
-              <dd className="mt-xs type-body-sm text-ink">
-                {copy.validation.nppStatus}
-              </dd>
-            </dl>
-            <div className="mt-md">
-              <Alert>{copy.validation.claimNotice}</Alert>
-            </div>
-          </div>
-        </div>
       </Container>
     </Section>
   );

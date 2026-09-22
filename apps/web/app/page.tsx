@@ -1,43 +1,85 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { ScrollReveal } from "@/components/blocks/scroll-reveal";
-import { SiteHeader } from "@/components/blocks/site-header";
-import { StickyCta } from "@/components/blocks/sticky-cta";
-import { CostCompare } from "@/components/sections/cost-compare";
+import { JsonLd } from "@/components/blocks/json-ld";
 import { Cta } from "@/components/sections/cta";
-import { Education } from "@/components/sections/education";
 import { Faq } from "@/components/sections/faq";
-import { Footer } from "@/components/sections/footer";
 import { Hero } from "@/components/sections/hero";
-import { Impact } from "@/components/sections/impact";
 import { ImpactStrip } from "@/components/sections/impact-strip";
-import { Partnership } from "@/components/sections/partnership";
 import { Problem } from "@/components/sections/problem";
-import { Product } from "@/components/sections/product";
+import { ProductSummary } from "@/components/sections/product-summary";
 import { Solution } from "@/components/sections/solution";
+import { ToolLinks } from "@/components/sections/tool-links";
 import { Validation } from "@/components/sections/validation";
-import { copy } from "@/content/copy";
+import { getPrimaryProduct } from "@/lib/data/products";
+import { env } from "@/lib/env";
+import {
+  buildFaqPageJsonLd,
+  buildHowToJsonLd,
+  buildOrganizationJsonLd,
+  buildProductJsonLd,
+  buildWebSiteJsonLd,
+} from "@/lib/seo/structured-data";
 
-export default function HomePage(): ReactNode {
+/**
+ * Kanonik beranda.
+ *
+ * Sejak kerangka situs pindah ke `app/layout.tsx`, `canonical` sengaja TIDAK lagi ditetapkan di
+ * akar: nilai absolut di sana akan diwarisi lima halaman sekunder dan membuat semuanya menunjuk
+ * ke beranda. Karena itu setiap halaman — termasuk beranda ini — menetapkan kanoniknya sendiri.
+ */
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+/**
+ * Beranda: halaman naratif.
+ *
+ * Sejak prototipe dipecah menjadi enam halaman, isi berat (katalog produk, kalkulator, kemitraan,
+ * panduan, kontak) tinggal di rutenya masing-masing dan beranda menyusut menjadi alur kesadaran:
+ * masalah, solusi, penawaran, lalu jalan masuk ke empat halaman lain. Kerangka situs (header,
+ * footer, bilah ajakan) kini diwarisi dari `app/layout.tsx`.
+ *
+ * Data terstruktur: entitas (Organization, WebSite), tanya jawab (FAQPage), prosedur (HowTo), dan
+ * penawaran (Product). Semuanya diturunkan dari lapisan konten dan data produk resmi, sehingga
+ * tidak ada klaim yang tidak tampil di halaman. Penggabungan menjadi satu blok `@graph` dipilih
+ * agar setiap node dapat saling menunjuk lewat `@id` (penerbit situs = organisasi yang sama,
+ * penjual produk = organisasi yang sama) — inilah yang membuat mesin generatif mengenali satu
+ * entitas, bukan potongan terpisah.
+ */
+export default async function HomePage(): Promise<ReactNode> {
+  const { product } = await getPrimaryProduct();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      buildOrganizationJsonLd(env.siteUrl),
+      buildWebSiteJsonLd(env.siteUrl),
+      buildFaqPageJsonLd(),
+      buildHowToJsonLd(),
+      buildProductJsonLd(env.siteUrl, {
+        name: product.name,
+        description: product.description,
+        priceIdr: product.priceIdr,
+        packWeightKg: product.packWeightKg,
+        comparePriceIdr: product.comparePriceIdr,
+      }),
+    ],
+  };
+
   return (
     <>
-      <SiteHeader faqLabel={copy.faq.eyebrow} nav={copy.nav} />
+      <JsonLd data={jsonLd} />
       <main id="konten">
         <Hero />
         <ImpactStrip />
         <Problem />
         <Solution />
-        <Product />
-        <CostCompare />
-        <Impact />
-        <Partnership />
+        <ProductSummary product={product} />
+        <ToolLinks />
         <Validation />
-        <Education />
         <Faq />
         <Cta />
       </main>
-      <Footer />
-      <StickyCta />
-      <ScrollReveal />
     </>
   );
 }

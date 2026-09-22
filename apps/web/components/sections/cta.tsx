@@ -6,9 +6,12 @@ import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { copy } from "@/content/copy";
 import { getRegions } from "@/lib/data/regions";
+import { env } from "@/lib/env";
+import { whatsappHref } from "@/lib/utils/whatsapp";
 
 export async function Cta(): Promise<ReactNode> {
   const regions = await getRegions();
+  const waHref = whatsappHref(env.whatsappUrl, { text: copy.contact.whatsappText });
 
   return (
     <Section
@@ -49,13 +52,13 @@ export async function Cta(): Promise<ReactNode> {
             </ul>
 
             <div className="mt-lg">
-              <ButtonLink
-                external
-                href="https://wa.me/6281200000000"
-                variant="accent"
-              >
-                {copy.cta.whatsappHelp}
-              </ButtonLink>
+              {waHref === null ? (
+                <p className="type-body-sm text-surface/80">{copy.cta.whatsappUnavailable}</p>
+              ) : (
+                <ButtonLink external href={waHref} variant="accent">
+                  {copy.cta.whatsappHelp}
+                </ButtonLink>
+              )}
             </div>
           </div>
 

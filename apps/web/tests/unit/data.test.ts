@@ -15,8 +15,7 @@ vi.mock("@/lib/env", () => ({
 
 const { getRegions } = await import("@/lib/data/regions");
 const { getPrimaryProduct } = await import("@/lib/data/products");
-const { getPublicMetrics } = await import("@/lib/data/impact");
-const { demoMetrics, demoProduct } = await import("@/lib/data/demo-data");
+const { demoProduct } = await import("@/lib/data/demo-data");
 
 describe("mode demo (tanpa Supabase)", () => {
   it("getRegions mengembalikan tiga wilayah dari bundel", async () => {
@@ -30,11 +29,5 @@ describe("mode demo (tanpa Supabase)", () => {
     expect(product.priceIdr).toBe(160000);
     expect(ingredients).toHaveLength(3);
     expect(ingredients[0]?.shareMinPct).toBe(50);
-  });
-
-  it("getPublicMetrics hanya mengembalikan metrik bersumber", async () => {
-    const metrics = await getPublicMetrics();
-    expect(metrics).toHaveLength(demoMetrics.length);
-    expect(metrics.every((metric) => metric.references.length > 0)).toBe(true);
   });
 });

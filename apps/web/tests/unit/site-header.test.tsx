@@ -4,27 +4,32 @@ import { SiteHeader } from "@/components/blocks/site-header";
 import { copy } from "@/content/copy";
 
 function renderHeader(): void {
-  render(<SiteHeader faqLabel={copy.faq.eyebrow} nav={copy.nav} />);
+  render(<SiteHeader />);
 }
 
 describe("SiteHeader", () => {
-  it("menampilkan merek, tautan seksi, dan ajakan sampel", () => {
+  it("menampilkan merek, tautan halaman, dan ajakan sampel", () => {
     renderHeader();
     expect(screen.getByText(copy.nav.brand)).toBeTruthy();
     for (const label of [
       copy.nav.product,
-      copy.nav.impact,
+      copy.nav.calculator,
       copy.nav.partnership,
       copy.nav.education,
-      copy.faq.eyebrow,
+      copy.nav.contact,
     ]) {
-      expect(
-        screen.getAllByRole("link", { name: label }).length,
-      ).toBeGreaterThan(0);
+      expect(screen.getAllByRole("link", { name: label }).length).toBeGreaterThan(0);
     }
-    expect(
-      screen.getAllByRole("link", { name: copy.nav.sampleCta }).length,
-    ).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: copy.nav.sampleCta }).length).toBeGreaterThan(0);
+  });
+
+  it("menautkan setiap halaman sekunder lewat rute, bukan anchor", () => {
+    renderHeader();
+    for (const href of ["/produk", "/kalkulator", "/mitra", "/edukasi", "/kontak"]) {
+      expect(document.querySelectorAll(`a[href="${href}"]`).length).toBeGreaterThan(0);
+    }
+    // Ajakan sampel harus menunjuk ke formulir di halaman kontak.
+    expect(document.querySelectorAll('a[href="/kontak#form-sampel"]').length).toBeGreaterThan(0);
   });
 
   it("menu seluler tertutup secara bawaan dan terbuka lewat tombol", () => {

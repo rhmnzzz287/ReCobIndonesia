@@ -686,33 +686,34 @@ dengan seed terpisah.
 ```text
 recobid-web/
 ├─ app/
-│  ├─ layout.tsx                  # font, tema, metadata dasar, JSON-LD Organization
-│  ├─ page.tsx                    # S1 beranda (statis + revalidasi tag)
-│  ├─ (marketing)/
-│  │  ├─ produk/page.tsx          # S2
-│  │  ├─ dampak/page.tsx          # S3
-│  │  ├─ mitra/page.tsx           # S5
-│  │  ├─ kontak/page.tsx          # S7
-│  │  └─ privasi/page.tsx         # S7
-│  ├─ edukasi/
-│  │  ├─ page.tsx                 # daftar artikel
-│  │  └─ [slug]/page.tsx          # artikel MDX + metadata OG
+│  ├─ layout.tsx                  # font, tema, metadata dasar, KERANGKA SITUS (header, footer, sticky CTA, reveal)
+│  ├─ page.tsx                    # S1 beranda (statis) + JSON-LD @graph
+│  ├─ produk/page.tsx             # S2
+│  ├─ kalkulator/page.tsx         # S9 (tabel statis + kalkulator)
+│  ├─ mitra/page.tsx              # S5
+│  ├─ edukasi/page.tsx            # S4 (kartu topik; artikel MDX menyusul)
+│  ├─ kontak/page.tsx             # S7 + formulir sampel (S6)
 │  ├─ api/
 │  │  ├─ lead/route.ts            # fallback bila JS mati (progressive enhancement)
 │  │  └─ health/route.ts          # cek siap pakai untuk pemantauan
 │  ├─ actions/
 │  │  └─ submit-lead.ts           # Server Action: validasi Zod, rate limit, RPC Supabase
-│  ├─ sitemap.ts
-│  ├─ robots.ts
-│  └─ opengraph-image.tsx
+│  ├─ sitemap.ts                  # enam rute
+│  ├─ robots.ts                   # kebijakan per agen, termasuk crawler mesin jawaban (AEO/GEO)
+│  ├─ llms.txt/route.ts           # ringkasan mesin jawaban, diturunkan dari lapisan konten
+│  ├─ opengraph-image.tsx         # kartu pratinjau 1200x630 (next/og)
+│  ├─ icon.tsx, apple-icon.tsx    # favicon dari lambang merek
 ├─ components/
-│  ├─ ui/                         # button, badge, input, card, alert (CVA + cn)
-│  ├─ sections/                   # hero, problem, solution, product, cost-compare,
-│  │                              # impact, partnership, validation, education, faq, cta, footer
-│  └─ blocks/                     # site-header, composition-bar, metric-panel, kud-map, sample-form
-├─ content/edukasi/*.mdx          # artikel + front matter tervalidasi
+│  ├─ ui/                         # button, badge, input, card, alert, section, container (CVA + cn)
+│  ├─ sections/                   # hero, problem, solution, product, product-summary, cost-compare,
+│  │                              # calculator, tool-links, partnership, validation, education,
+│  │                              # contact, faq, cta, footer
+│  └─ blocks/                     # site-header, page-header, json-ld, composition-bar, kud-flow,
+│                                 # savings-calculator, sample-form, sticky-cta, scroll-reveal
+├─ content/copy/id.ts             # seluruh naskah tampilan (Bahasa Indonesia)
 ├─ lib/
-│  ├─ data/                       # products.ts, impact.ts, kud.ts, leads.ts  (satu pintu ke Supabase)
+│  ├─ data/                       # products.ts, kud.ts, leads.ts, regions.ts  (satu pintu ke Supabase)
+│  ├─ seo/structured-data.ts      # JSON-LD: Organization, WebSite, WebPage, Product, FAQPage, HowTo
 │  ├─ supabase/                   # client.ts (browser), server.ts (RSC/Action), types.ts (digenerate)
 │  ├─ schema/                     # zod: lead.ts, content.ts
 │  ├─ analytics.ts                # track() -> lead_event + Vercel Analytics
@@ -740,7 +741,7 @@ menjadi pekerjaan satu modul.
 | Baca artikel | `content/edukasi/*.mdx` dibaca saat build | Tidak menyentuh basis data |
 | Kirim form sampel | Komponen klien (Zod klien) → Server Action → Zod server → rate limit → `submit_sample_lead` → respons + notifikasi | Balasan idempoten: pengiriman kedua mengembalikan sukses dengan `created: false` |
 | Event funnel | `lib/analytics.ts` → `insert lead_event` (anon, INSERT-saja) | `session_id` anonim di `sessionStorage`; tanpa PII |
-| Perubahan konten dampak | Operator memperbarui `impact_metric` → revalidasi tag `impact` | Tanpa deploy ulang |
+| Perubahan konten dampak | Operator memperbarui `impact_metric` → revalidasi tag `impact` | Tanpa deploy ulang. **Tidak dipakai di prototype**: tabel tetap ada di skema, tetapi tidak ada permukaan yang membacanya setelah S3 dihapus |
 
 Penanganan galat: setiap panggilan keluar (Supabase, notifikasi, Sentry) memakai `AbortSignal`
 dengan batas waktu 5 detik. Bila Supabase gagal saat kirim form, pengguna menerima pesan yang
@@ -757,7 +758,8 @@ dapat ditindaklanjuti beserta tautan WhatsApp — form tidak pernah gagal dalam 
 | 3 | Solusi | `sections/solution` | `cream` | 3 pilar dengan ikon 32 px (`recycle`, `flask-conical`, `wallet`) |
 | 4 | Produk & formulasi | `sections/product` + `blocks/composition-bar` | `cream` | Bilah proporsi 55/38/7 ternormalisasi, `card-cream` |
 | 5 | Perbandingan biaya | `sections/cost-compare` | `surface` | Tabel dua kolom + kolom asumsi `caption`; nominal `mono-data` |
-| 6 | Dampak | `sections/impact` + `blocks/metric-panel` | `ink-deep` | `stat-panel` dengan `metric-lg` `accent`; setiap angka punya `caption` sumber |
+| 5a | Kalkulator penghematan (halaman `/kalkulator`) | `sections/cost-compare` + `sections/calculator` + `blocks/savings-calculator` | `cream` | Tabel perbandingan statis di atas kalkulator; tiga kolom asumsi bertipe angka + panel hasil `metric-md` dengan `break-words`; aritmetika terbuka `mono-data`; masukan di luar rentang ditandai `FieldError` dan hasilnya tidak dihitung. Bernomor 5a agar penomoran bagian 6-12 tetap merujuk bagian yang sama seperti semula |
+| 6 | ~~Dampak~~ **DIHAPUS** | ~~`sections/impact` + `blocks/metric-panel`~~ | — | Dihapus atas keputusan pemilik produk, 22 September 2026: bagian "Metrik Dampak & Skala Misi Berkelanjutan" tidak dipakai pada prototype landing page |
 | 7 | Kemitraan KUD | `sections/partnership` + `blocks/kud-map` | `paper` | Diagram 4 langkah alur potong setoran; lencana `badge-partner` |
 | 8 | Validasi | `sections/validation` | `paper` | Status NPP dengan `alert-warn` bila masih diproses; daftar sitasi `mono-data` |
 | 9 | Edukasi | `sections/education` | `surface` | 4 `card` artikel |

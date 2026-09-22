@@ -85,7 +85,7 @@ from (values
   ('corn_cob_potential_national', 'BPS (2022), Analisis produktivitas jagung dan kedelai di Indonesia 2021',
    'https://www.bps.go.id', 'Rentang nasional 3,45-4,6 juta ton per tahun; angka yang ditampilkan memakai batas atas.'),
   ('saving_per_sack_50kg', 'Harga dokumen sumber: Rp160.000 vs Rp180.000-200.000 per karung 50 kg',
-   null, 'Selisih harga loco gudang KUD mitra di sentra susu Jawa Barat dan Jawa Tengah, karung netto 50 kg.'),
+   null, 'Selisih harga di gudang KUD mitra di sentra susu Jawa Barat dan Jawa Tengah, karung neto 50 kg.'),
   ('saving_per_cow_month', 'Turunan dari penghematan per karung', null,
    'Asumsi konsumsi konsentrat 4 kg per ekor per hari selama 30 hari.'),
   ('saving_per_10_cow_month', 'Turunan dari penghematan per ekor per bulan', null,

@@ -27,8 +27,9 @@
     "fn:deploy": "npm run fn:deploy --workspace @recobid/backend",
     "check:tokens": "node scripts/export-design-tokens.mjs --check",
     "check:emoji": "NO_EMOJI_EXTRA_IGNORE=Docs node scripts/check-no-emoji.mjs .",
+    "check:terms": "node scripts/check-foreign-terms.mjs .",
     "check:secrets": "node scripts/check-secrets.mjs",
     "check:env": "node apps/backend/scripts/check-env.mjs",
-    "verify": "npm run lint && npm run typecheck && npm run check:tokens && npm run check:env && npm run check:emoji && npm run check:secrets && npm run test && npm run build && npm run test:e2e"
+    "verify": "npm run lint && npm run typecheck && npm run check:tokens && npm run check:env && npm run check:emoji && npm run check:terms && npm run check:secrets && npm run test && npm run build && npm run test:e2e"
   }
 }

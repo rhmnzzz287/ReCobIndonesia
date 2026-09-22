@@ -17,23 +17,51 @@ function collectStrings(value: unknown, path = "copy"): Array<{ path: string; te
 const strings = collectStrings(copy);
 
 describe("lapisan konten", () => {
-  it("memuat 12 bagian beranda", () => {
+  it("memuat naskah setiap bagian dan setiap halaman", () => {
     for (const section of [
       "hero",
       "problem",
       "solution",
       "product",
       "costCompare",
-      "impact",
+      "calculator",
       "partnership",
       "validation",
       "education",
       "faq",
       "cta",
       "footer",
+      "nav",
+      "meta",
+      "pages",
+      "productSummary",
+      "toolLinks",
+      "contact",
     ]) {
       expect(copy).toHaveProperty(section);
     }
+  });
+
+  it("menyediakan naskah untuk lima halaman sekunder", () => {
+    for (const key of ["produk", "kalkulator", "mitra", "edukasi", "kontak"] as const) {
+      expect(copy.pages[key].title.length).toBeGreaterThan(3);
+      expect(copy.pages[key].intro.length).toBeGreaterThan(20);
+    }
+  });
+
+  it("memakai bahasa sederhana pada label yang dulu teknis", () => {
+    expect(copy.costCompare.title).toBe("Perbandingan Harga Pakan");
+    expect(copy.calculator.title).toBe("Hitung Penghematan Anda");
+    expect(copy.calculator.inputsTitle).toBe("Angka yang Bisa Anda Ubah");
+    expect(copy.calculator.comparePriceLabel).toBe("Harga Pakan Pabrik");
+    expect(copy.product.transitionTitle).toBe("Cara Ganti Pakan (7 Hari)");
+  });
+
+  it("tidak lagi menyimpan naskah metrik dampak", () => {
+    // Bagian "Metrik Dampak & Skala Misi Berkelanjutan" dihapus atas keputusan pemilik produk;
+    // sisa naskahnya tidak boleh hidup kembali tanpa sengaja.
+    expect("impact" in copy).toBe(false);
+    expect("impact" in copy.nav).toBe(false);
   });
 
   it("tidak memuat emoji", () => {

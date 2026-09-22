@@ -9,6 +9,28 @@ html {
 }
 
 /*
+ * Tautan "lewati ke konten": tersembunyi sampai fokus keyboard tiba, lalu muncul di atas
+ * header. Tanpa ini pengguna papan tik harus menekan Tab melewati seluruh navigasi di
+ * setiap halaman.
+ */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+
+.skip-link:focus-visible {
+  left: var(--spacing-lg, 1.5rem);
+  top: var(--spacing-sm, 0.5rem);
+  border-radius: 0.5rem;
+  background: var(--color-surface, #fff);
+  padding: 0.75rem 1rem;
+  color: var(--color-ink, #0d1216);
+  outline: 3px solid var(--color-accent, #d7f36a);
+}
+
+/*
  * Pengungkap saat masuk viewport (lihat components/blocks/scroll-reveal.tsx).
  * Keadaan awal hanya berlaku ketika JavaScript aktif: tanpa `[data-reveal-state]`
  * elemen langsung tampil, sehingga konten tetap terbaca bila skrip gagal dimuat.

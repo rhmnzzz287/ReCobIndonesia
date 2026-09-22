@@ -80,7 +80,7 @@ export async function Product(): Promise<ReactNode> {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className="mt-2xs type-label-md text-ink">{step.day}</p>
-                <p className="mt-2xs type-metric-md text-primary">
+                <p className="mt-2xs type-metric-md break-words text-primary">
                   {step.share}
                 </p>
                 <p className="mt-auto pt-2xs type-caption text-text-secondary">

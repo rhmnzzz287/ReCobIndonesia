@@ -27,7 +27,7 @@ export async function Problem(): Promise<ReactNode> {
               style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
             >
               <Card className="flex h-full flex-col" tone="paper">
-                <p className="type-metric-md text-primary">{item.metric}</p>
+                <p className="type-metric-md break-words text-primary">{item.metric}</p>
                 <h3 className="mt-xs type-h3 text-ink">{item.title}</h3>
                 <p className="mt-xs type-body-sm text-text-secondary">
                   {item.body}

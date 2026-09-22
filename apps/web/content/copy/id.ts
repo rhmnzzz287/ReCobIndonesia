@@ -18,18 +18,18 @@ export const idCopy = {
     badge:
       "Status Legalitas: Nomor Pendaftaran Pakan (NPP) Kementerian Pertanian RI dalam proses pendaftaran resmi",
     standardBadge: "SNI 3148-1:2017 Ruminansia",
-    eyebrow: "Biokonversi Pakan Ruminansia",
+    eyebrow: "Pakan Sapi Perah",
     title:
-      "Pakan Konsentrat Sapi Perah Hemat 11%–20%, Kepastian Pasokan Sepanjang Tahun",
+      "Pakan Konsentrat Sapi Perah Hemat 11%–20%, Pasokan Pasti Sepanjang Tahun",
     subtitle:
-      "Pelet konsentrat protein tinggi dari limbah bonggol jagung dan ampas tahu terfermentasi. Rp160.000 per karung 50 kg melalui kemitraan KUD penampung susu dengan sistem potong setoran mingguan.",
+      "Pelet pakan sapi perah dari bonggol jagung dan ampas tahu yang difermentasi. Rp160.000 per karung 50 kg lewat kemitraan KUD penampung susu, dibayar dengan potong setoran susu mingguan.",
     ctaPrimary: "Klaim Sampel Gratis 2-3 kg",
-    ctaSecondary: "Pelajari Formulasi & Nutrisi",
-    statLeadLabel: "Margin Penghematan",
+    ctaSecondary: "Lihat Bahan & Cara Pakai",
+    statLeadLabel: "Penghematan",
     statLeadValue: "20%",
     statLeadUnit: "lebih hemat per karung 50 kg",
     statLeadCaption:
-      "Perbandingan Rp160.000 dengan rentang Rp180.000–Rp200.000 konsentrat komersial umum di sentra susu Jawa.",
+      "Perbandingan Rp160.000 dengan harga pakan pabrik Rp180.000–Rp200.000 di sentra susu Jawa.",
     statStripTitle: "Skala Operasi Fase Awal",
     statKudValue: "1.200+",
     statKudUnit: "karung terkirim",
@@ -39,47 +39,47 @@ export const idCopy = {
     statFarmerUnit: "peternak anggota KUD",
     statScaleCaption:
       "Ilustrasi skala operasi fase awal, bukan capaian terverifikasi. Sumber: proyeksi internal ReCob.id 2026.",
-    priceAnchorLabel: "Harga Jangkar Resmi",
+    priceAnchorLabel: "Harga Resmi",
     priceAnchorUnit: "Karung 50 kg",
     priceAnchorValue: "Rp160.000",
-    priceCompareLabel: "Rata-rata Konsentrat Lain:",
+    priceCompareLabel: "Harga Pakan Pabrik:",
     priceCompareValue: "Rp180.000 - Rp200.000",
-    priceSavingLabel: "Margin Penghematan:",
+    priceSavingLabel: "Penghematan:",
     priceSavingValue: "Hemat Rp20.000 - Rp40.000",
     priceCaption:
-      "Asumsi: Harga loco gudang KUD mitra di sentra susu Jawa Barat & Jawa Tengah per karung netto 50 kg.",
-    highlightFormulationLabel: "Formulasi Teruji",
+      "Angka ini dihitung dari harga di gudang KUD mitra di sentra susu Jawa Barat dan Jawa Tengah, per karung isi 50 kg.",
+    highlightFormulationLabel: "Bahan",
     highlightFormulationValue: "3 Bahan",
-    highlightFormulationNote: "Bonggol, tahu, molase",
-    highlightPaymentLabel: "Sistem Bayar",
+    highlightFormulationNote: "Bonggol, tahu, tetes tebu",
+    highlightPaymentLabel: "Cara Bayar",
     highlightPaymentValue: "Potong KUD",
     highlightPaymentNote: "Tanpa uang muka",
     imageAlt:
       "Karung pakan konsentrat ReCob.id 50 kg dan pelet hasil fermentasi bonggol jagung",
   },
   problem: {
-    eyebrow: "Dilema Ruminansia Nasional",
-    title: "Tantangan Nyata Peternak Sapi Perah Tradisional",
+    eyebrow: "Masalah Peternak",
+    title: "Tiga Masalah yang Dihadapi Peternak Sapi Perah",
     intro:
-      "Berdasarkan kajian lapangan dan telaah literatur sosial-ekonomi peternakan rakyat di sentra produksi susu nasional.",
+      "Tiga masalah ini muncul berulang di kajian lapangan dan literatur peternakan rakyat di sentra susu.",
     items: [
       {
-        title: "Beban Biaya Konsentrat Menyerap 60%–65%",
-        body: "Struktur pengeluaran pakan komersial mendominasi biaya produksi harian susu, menekan marjin laba bersih peternak anggota koperasi saat harga bahan baku impor merangkak naik.",
+        title: "Biaya Pakan Menyerap 60%–65%",
+        body: "Pakan jadi pengeluaran terbesar peternak setiap hari. Saat harga bahan baku impor naik, keuntungan peternak ikut tertekan.",
         metric: "60%–65%",
         caption:
           "Sumber Data: Hajar (2025), telaah elastisitas biaya ransum terhadap margin susu peternakan rakyat.",
       },
       {
-        title: "Kelangkaan & Fluktuasi Pakan di Musim Kemarau",
-        body: "Ketersediaan hijauan segar merosot drastis hingga 40% setiap musim kering, memaksa peternak membeli jerami berkualitas rendah dengan harga spekulatif yang memicu asidosis rumen.",
+        title: "Pakan Hijauan Langka di Musim Kemarau",
+        body: "Saat kemarau, rumput segar turun sampai 40%. Peternak terpaksa membeli jerami murah, dan itu bisa mengganggu pencernaan sapi.",
         metric: "40%",
         caption:
           "Sumber Data: Zulaikhah et al. (2026), dinamika defisit biomassa basah ruminansia tropis laktasi.",
       },
       {
-        title: "3,45–4,6 Juta Ton Bonggol Terbuang & Dibakar",
-        body: "Biomassa tongkol jagung pascapanen menjadi polutan pembakaran terbuka di ladang tanpa nilai tambah ekonomis, menghasilkan emisi karbon dan partikulat asap bagi lingkungan perdesaan.",
+        title: "3,45–4,6 Juta Ton Bonggol Jagung Terbuang",
+        body: "Setiap tahun bonggol jagung dibuang dan dibakar di ladang. Padahal bahan ini bisa diolah jadi pakan, dan asapnya mencemari udara desa.",
         metric: "3,45–4,6 Juta Ton",
         caption:
           "Sumber Data: BPS RI (2022), Neraca Biomassa Jagung dan Serealia Agrikultur Nasional.",
@@ -87,57 +87,58 @@ export const idCopy = {
     ],
   },
   solution: {
-    eyebrow: "Inovasi Bioproses Terpadu",
-    title: "ReCob.id: Nutrisi dari Limbah Jadi",
+    eyebrow: "Solusi ReCob.id",
+    title: "Limbah Jagung Jadi Pakan Bernutrisi",
     intro:
-      "Mengubah biomassa pertanian yang melimpah menjadi pelet konsentrat bernutrisi stabil melalui proses fermentasi terstandar.",
+      "Bonggol jagung yang biasanya dibuang kami olah jadi pelet pakan dengan proses fermentasi yang terukur.",
     assurance: "Aman • Stabil • Terukur",
     pillars: [
       {
-        title: "Arus Kas Aman",
-        body: "Mekanisme pembayaran terintegrasi lewat pemotongan slip rekapitulasi setoran susu mingguan di KUD. Peternak memperoleh pakan tanpa membebani likuiditas kas operasional rumah tangga harian.",
-        note: "Skema Nol Rupiah di Awal",
+        title: "Tidak Perlu Uang di Awal",
+        body: "Pembayaran pakan dipotong langsung dari slip setoran susu mingguan di KUD. Peternak tidak perlu menyiapkan uang tunai untuk membeli pakan.",
+        note: "Bayar Lewat Setoran Susu",
       },
       {
-        title: "Nutrisi Terukur & Palatabilitas Tinggi",
-        body: "Teknologi inokulasi mikrobial mengurai lignin keras bonggol jagung. Menghasilkan aroma karamel fermentasi molase yang harum sehingga langsung direspons lahap oleh sapi perah sejak transisi awal.",
+        title: "Disukai Sapi, Nutrisi Terukur",
+        body: "Proses fermentasi memecah serat keras bonggol jagung dan menghasilkan aroma manis tetes tebu, sehingga sapi langsung mau makan sejak hari pertama.",
         note: "Kadar Serat ADF/NDF Terkelola",
       },
       {
-        title: "Sirkularitas Berdampak",
-        body: "Memutus pembakaran terbuka limbah jagung sekaligus menyerap ampas industri tahu lokal. Menciptakan siklus nilai ekonomi baru bagi gabungan kelompok tani dan menjaga kelestarian hulu DAS.",
-        note: "Mitigasi Emisi Metana & Partikulat",
+        title: "Mengurangi Limbah dan Asap",
+        body: "Bonggol jagung yang biasanya dibakar kini jadi pakan, dan ampas tahu dari pabrik lokal ikut terpakai. Limbah jadi bernilai.",
+        note: "Mengurangi Asap Pembakaran",
       },
     ],
   },
   product: {
-    eyebrow: "Formulasi Terstandar",
-    title: "Komposisi Presisi & Spesifikasi Produk",
+    eyebrow: "Bahan & Kemasan",
+    title: "Isi Karung ReCob.id",
     intro:
-      "Dikembangkan atas integrasi riset biokonversi limbah lignoselulosa untuk ransum komplit ruminansia perah produktif.",
-    compositionTitle: "Rasio Proporsi Formulasi Utama",
+      "Pakan ini dibuat dari tiga bahan yang difermentasi, lalu dicetak jadi pelet.",
+    compositionTitle: "Tiga Bahan Utama",
     compositionCaption: "Total Formula: 100% Terfermentasi",
     compositionReference:
       "Rujukan Ilmiah: Mengacu pada metodologi biokonversi Rumondang et al. (2023) dan evaluasi efektivitas ampas tahu terfermentasi Halawa (2026).",
     specTitle: "Kemasan & Daya Simpan",
     specs: [
       {
-        label: "Netto Karung:",
-        value: "50 kg karung anyaman PP terlaminasi inner seal kedap udara.",
-      },
-      {
-        label: "Masa Simpan Optimal:",
-        value: "Hingga 6 bulan pada gudang pakan terlindung dan berventilasi.",
-      },
-      {
-        label: "Ketahanan Jamur:",
+        label: "Isi Karung:",
         value:
-          "Kadar air akhir < 12% mencegah pertumbuhan mikotoksin & aflatoksin.",
+          "50 kg dalam karung anyaman plastik berlapis kedap udara.",
+      },
+      {
+        label: "Masa Simpan:",
+        value: "Sampai 6 bulan di gudang pakan yang terlindung dan berventilasi.",
+      },
+      {
+        label: "Tahan Jamur:",
+        value:
+          "Kadar air akhir di bawah 12%, sehingga tidak ditumbuhi jamur beracun.",
       },
     ],
-    transitionTitle: "Prosedur Transisi Pakan 7 Hari",
+    transitionTitle: "Cara Ganti Pakan (7 Hari)",
     transitionIntro:
-      "Wajib diterapkan demi adaptasi populasi mikroba rumen tanpa fluktuasi produksi susu:",
+      "Ganti pakan bertahap supaya mikroba rumen sapi terbiasa dulu:",
     transitionSteps: [
       { day: "H 1–2", share: "25%", label: "ReCob" },
       { day: "H 3–4", share: "50%", label: "ReCob" },
@@ -146,15 +147,15 @@ export const idCopy = {
     ],
   },
   costCompare: {
-    eyebrow: "Aritmetika Penghematan Nyata",
-    title: "Aritmetika Penghematan Transparan",
+    eyebrow: "Harga Pakan Dibandingkan",
+    title: "Perbandingan Harga Pakan",
     intro:
-      "Komparasi berbasis data empiris biaya pakan per karung dan simulasi riil beban operasional kandang peternak rakyat.",
+      "Harga ReCob.id dibandingkan pakan pabrik, dihitung per karung, per kilogram, dan per ekor sapi.",
     tableHead: {
-      criteria: "Parameter Pakan Konsentrat",
-      recob: "ReCob.id (Tongkol Jagung)",
-      conventional: "Konsentrat Komersial Umum",
-      difference: "Selisih Penghematan",
+      criteria: "Yang Dibandingkan",
+      recob: "ReCob.id (Bonggol Jagung)",
+      conventional: "Pakan Pabrik",
+      difference: "Selisih",
     },
     rows: [
       {
@@ -188,29 +189,66 @@ export const idCopy = {
         difference: "Hemat Rp480.000 – Rp960.000 / bln",
       },
     ],
-    assumptionTitle: "Asumsi Simulasi",
+    assumptionTitle: "Angka yang Dipakai",
     assumptions: [
-      "Rata-rata asupan konsentrat 4 kg per ekor laktasi per hari (120 kg/ekor/bulan).",
-      "Periode uji 30 hari kalender.",
-      "Harga loco pos penampung susu KUD di Pulau Jawa.",
+      "Sapi makan konsentrat 4 kg per ekor per hari (120 kg per ekor per bulan).",
+      "Perhitungan memakai 30 hari per bulan.",
+      "Harga diambil dari titik penampungan susu KUD di Pulau Jawa.",
     ],
     closing: "STATUS: KALKULASI RESMI",
   },
-  impact: {
-    eyebrow: "Ilustrasi Berbasis Asumsi (Kajian Rujukan Ilmiah)",
-    title: "Metrik Dampak & Skala Misi Berkelanjutan",
+  calculator: {
+    eyebrow: "Hitung Sendiri",
+    title: "Hitung Penghematan Anda",
     intro:
-      "Target jangka menengah pemanfaatan residu pertanian sebagai sumber pakan bernilai gizi tinggi bagi peternakan rakyat.",
-    demoBadge: "Data ilustrasi, bukan capaian terverifikasi",
-    withheldTitle: "Metrik yang ditahan",
-    withheldBody:
-      "Metrik yang ditahan: emisi pembakaran terbuka yang dihindari belum ditampilkan karena belum ada koefisien emisi resmi yang dapat dikutip. Metrik tanpa sumber tidak pernah muncul di antarmuka (PRD Bagian 7.1).",
+      "Isi jumlah sapi dan harga pakan pabrik di kandang Anda. Harga ReCob.id tetap, jadi Anda bisa memeriksa sendiri hasilnya.",
+    cattleLabel: "Jumlah Sapi Perah Produktif",
+    cattleUnit: "ekor",
+    comparePriceLabel: "Harga Pakan Pabrik",
+    comparePriceUnit: "per karung 50 kg",
+    intakeLabel: "Asupan Konsentrat per Ekor",
+    intakeUnit: "kg/ekor/hari",
+    anchorTitle: "Harga ReCob.id (tetap)",
+    inputsTitle: "Angka yang Bisa Anda Ubah",
+    anchorPriceLabel: "Harga ReCob.id",
+    anchorPriceUnit: "per karung 50 kg",
+    anchorPricePerKgLabel: "Setara per kilogram",
+    anchorNote:
+      "Harga ReCob.id tidak bisa diubah di sini. Angkanya diambil dari data produk resmi.",
+    resultTitle: "Hasil",
+    savingPerCowLabel: "Hemat per ekor per bulan",
+    savingMonthlyLabel: "Hemat total per bulan",
+    savingYearlyLabel: "Hemat per tahun",
+    savingPctLabel: "Persentase penghematan",
+    recobCostLabel: "Biaya ReCob.id per bulan",
+    compareCostLabel: "Biaya pakan pabrik per bulan",
+    resultUnit: "per bulan",
+    noSavingTitle: "Pakan pabrik lebih murah pada angka ini",
+    noSavingBody:
+      "Dengan harga yang Anda isi, ReCob.id belum lebih hemat. Angkanya tetap kami tampilkan apa adanya supaya Anda bisa memeriksa sendiri.",
+    invalidTitle: "Angka belum lengkap",
+    invalidBody: "Isi jumlah sapi, harga pakan pabrik, dan asupan harian dengan angka lebih dari nol.",
+    mathTitle: "Cara Hitungnya",
+    mathLine:
+      "{kg} kg/ekor/bulan x {recobPerKg}/kg = {recobPerCow} per ekor per bulan, dibandingkan {comparePerKg}/kg = {comparePerCow}.",
+    mathNote:
+      "Silakan cek dengan kalkulator ponsel Anda. Semua angka berasal dari isian Anda sendiri.",
+    errors: {
+      compareRange: "Harga pakan pabrik antara Rp50.000 dan Rp1.000.000 per karung.",
+      cattleRange: "Jumlah sapi antara 1 dan 10.000 ekor.",
+      intakeRange: "Asupan harian antara 0,5 dan 15 kg per ekor.",
+    },
+    claimNotice:
+      "Simulasi ini menghitung selisih biaya pakan, bukan jaminan kenaikan produksi susu. Klaim produksi susu masih menunggu uji lapangan.",
+    ctaLabel: "Klaim Sampel Gratis 2-3 kg",
+    ctaNote: "Jumlah sapi yang Anda isi akan dibawa ke formulir permintaan sampel.",
+    kudNote: "Perhitungan ini belum menghitung biaya hijauan dan tenaga kerja kandang.",
   },
   partnership: {
-    eyebrow: "Distribusi Terintegrasi",
-    title: "Jalur Distribusi & Skema Potong Setoran Susu",
+    eyebrow: "Alur Kemitraan",
+    title: "Cara Bermitra dengan KUD",
     intro:
-      "Mekanisme kemitraan mutualisme bersama Koperasi Unit Desa penampung susu perah tanpa risiko likuiditas peternak.",
+      "ReCob.id bekerja sama dengan KUD penampung susu, sehingga peternak tidak perlu menyiapkan uang tunai di awal.",
     steps: [
       {
         title: "Registrasi Peternak",
@@ -218,7 +256,7 @@ export const idCopy = {
       },
       {
         title: "Pengiriman Karung",
-        body: "Drop-point logistik langsung ke titik Pos Penampungan Susu (PPS) terdekat saat jadwal peternak menyetor susu pagi.",
+        body: "Pengantaran langsung ke titik Pos Penampungan Susu (PPS) terdekat saat jadwal peternak menyetor susu pagi.",
       },
       {
         title: "Potong Setoran Susu",
@@ -226,7 +264,7 @@ export const idCopy = {
       },
       {
         title: "Pendampingan Rumen",
-        body: "Monitoring mingguan oleh tim lapangan ReCob.id bersama penyuluh KUD untuk mengukur berat jenis susu dan kesehatan feses.",
+        body: "Pemantauan mingguan oleh tim lapangan ReCob.id bersama penyuluh KUD untuk mengukur berat jenis susu dan kesehatan feses.",
       },
     ],
     kudTitle: "Wilayah Fokus Fase Awal Kemitraan",
@@ -241,31 +279,33 @@ export const idCopy = {
     ],
   },
   validation: {
-    eyebrow: "Integritas Metodologi",
-    title: "Kendali Mutu & Transparansi QC",
+    eyebrow: "Kendali Mutu",
+    title: "Cara Kami Menjaga Mutu",
     intro:
-      "ReCob.id berkomitmen mempublikasikan setiap batch produksi pakan secara berkala demi menjamin keamanan biologis dan keandalan nutrisi ternak perah.",
+      "Setiap bets produksi pakan diperiksa dan hasilnya kami buka, supaya mutu pakan bisa Anda lacak sendiri.",
     qcItems: [
       {
-        title: "Uji Kadar Air Harian",
-        metric: "Batas Aman < 12% Moisture",
-        body: "Pengukuran moisture content pelet harian secara berulang untuk menjamin daya tahan penyimpanan hingga 6 bulan dan mencegah perkembangbiakan kapang.",
+        title: "Pemeriksaan Kadar Air Harian",
+        metric: "Batas Aman < 12% Kadar Air",
+        body: "Kadar air pelet diukur setiap hari supaya pakan tahan disimpan sampai 6 bulan dan tidak berjamur.",
         note: "Bebas Risiko Jamur Simpan",
       },
       {
-        title: "Uji Organoleptik Aroma Molase",
+        title: "Pemeriksaan Aroma Tetes Tebu",
         metric: "100% Bebas Bau Tengik / Amonia",
-        body: "Pemeriksaan sensori aroma manis karamel khas tetes tebu fermentasi guna memastikan tingkat palatabilitas optimal saat pakan dikonsumsi sapi perah.",
+        body: "Aroma manis karamel diperiksa untuk memastikan pakan disukai sapi perah saat dimakan.",
         note: "Tingkat Palatabilitas Teruji",
       },
       {
-        title: "Pendampingan Adaptasi Rumen 7 Hari",
+        title: "Pendampingan Ganti Pakan 7 Hari",
         metric: "Protokol Transisi Terstandarisasi",
-        body: "Metode pergantian ransum bertahap dengan pendampingan teknis di kandang untuk mencegah gangguan pencernaan dan menjaga kestabilan debit susu.",
+        body: "Pakan diganti bertahap dengan pendampingan langsung di kandang supaya pencernaan sapi tidak kaget dan produksi susu tetap stabil.",
         note: "Tanpa Penurunan Produksi Susu",
       },
     ],
-    citationTitle: "Rujukan & Standar",
+    // Dipakai `/llms.txt` sebagai daftar sumber untuk mesin jawaban. Blok "Sumber Rujukan" di
+    // beranda dihapus atas keputusan pemilik produk, tetapi daftarnya tetap jadi bagian lapisan
+    // konten selama ringkasan mesin masih mengutipnya.
     citations: [
       "SNI 3148-1:2017 Ruminansia — standar pakan konsentrat sapi perah.",
       "BPS RI (2022), Neraca Biomassa Jagung dan Serealia Agrikultur Nasional.",
@@ -281,11 +321,11 @@ export const idCopy = {
       "Klaim peningkatan produksi susu 1–2 liter per ekor per hari adalah klaim berbasis kajian (Rumondang, 2023), bukan capaian terbukti, dan masih menunggu validasi lapangan multi-kandang.",
   },
   education: {
-    eyebrow: "Praktik Kandang Higienis",
-    title: "Edukasi Manajemen Ruminansia",
+    eyebrow: "Panduan Kandang",
+    title: "Panduan Beternak Sapi Perah",
     intro:
-      "Panduan teknis bagi anggota KUD untuk memaksimalkan efisiensi ransum dan menjaga kesehatan ambing susu.",
-    ctaLabel: "Lihat Seluruh Modul",
+      "Empat panduan praktis dari tim lapangan ReCob.id untuk anggota KUD.",
+    ctaLabel: "Lihat Semua Panduan",
     items: [
       {
         title: "Panduan 7 Hari Uji Palatabilitas",
@@ -295,7 +335,7 @@ export const idCopy = {
       {
         title: "Menghitung HPP Pakan Mandiri",
         body: "Formula kalkulasi biaya riil pakan per liter susu yang dihasilkan, memisahkan biaya hijauan dan konsentrat harian.",
-        action: "Unduh Template Hitung",
+        action: "Unduh Lembar Hitung",
       },
       {
         title: "Pakan di Musim Kemarau",
@@ -309,11 +349,71 @@ export const idCopy = {
       },
     ],
   },
+  pages: {
+    produk: {
+      eyebrow: "Produk",
+      title: "Pakan ReCob.id",
+      intro: "Bahan pembuat, isi karung, dan cara mengganti pakan lama ke ReCob.id.",
+    },
+    kalkulator: {
+      eyebrow: "Hitung Sendiri",
+      title: "Hitung Penghematan Anda",
+      intro:
+        "Bandingkan harga pakan pabrik dengan ReCob.id memakai jumlah sapi Anda sendiri. Semua angkanya bisa Anda periksa.",
+    },
+    mitra: {
+      eyebrow: "Kemitraan",
+      title: "Cara Bermitra dengan KUD",
+      intro: "Alur pengambilan karung dan pemotongan setoran susu mingguan.",
+    },
+    edukasi: {
+      eyebrow: "Panduan",
+      title: "Panduan Beternak Sapi Perah",
+      intro: "Empat panduan praktis dari tim lapangan ReCob.id untuk anggota KUD.",
+    },
+    kontak: {
+      eyebrow: "Kontak",
+      title: "Hubungi ReCob.id",
+      intro: "Ajukan sampel gratis atau tanyakan ransum sapi Anda lewat WhatsApp.",
+    },
+  },
+  productSummary: {
+    eyebrow: "Produk",
+    title: "Pakan Konsentrat dari Bonggol Jagung",
+    intro: "Tiga bahan, satu karung 50 kg, satu harga tetap.",
+    ctaLabel: "Lihat Detail Produk",
+  },
+  toolLinks: {
+    title: "Yang Bisa Anda Lakukan di Sini",
+    intro: "Empat halaman berikut menjawab pertanyaan yang paling sering ditanyakan peternak.",
+    items: [
+      { href: "/produk", title: "Produk", body: "Bahan, isi karung, dan cara pakainya." },
+      {
+        href: "/kalkulator",
+        title: "Kalkulator",
+        body: "Hitung sendiri penghematan pakan Anda.",
+      },
+      { href: "/mitra", title: "Kemitraan KUD", body: "Alur potong setoran susu mingguan." },
+      { href: "/kontak", title: "Kontak", body: "Ajukan sampel gratis lewat WhatsApp." },
+    ],
+  },
+  contact: {
+    channelsTitle: "Kanal Resmi",
+    whatsappTitle: "WhatsApp Kemitraan",
+    whatsappBody: "Tanya ransum, jadwal pengiriman, atau status permintaan sampel Anda.",
+    whatsappCta: "Tanya via WhatsApp",
+    whatsappText: "Halo ReCob.id, saya ingin bertanya soal pakan sapi perah.",
+    whatsappUnavailable:
+      "Nomor WhatsApp resmi belum tersedia. Isi formulir sampel di bawah, tim lapangan akan menghubungi Anda.",
+    legalTitle: "Legalitas",
+    legalBody: "Status izin edar dan standar mutu yang kami pegang.",
+    formTitle: "Ajukan Sampel Gratis",
+  },
   faq: {
     eyebrow: "Pertanyaan Peternak",
-    title: "Tanya Jawab Seputar ReCob.id",
+    title: "Pertanyaan yang Sering Ditanya",
     intro:
-      "Jawaban komprehensif atas aspek mutu pakan, skema pembayaran KUD, dan adaptasi sapi perah di kandang.",
+      "Jawaban soal mutu pakan, cara pembayaran lewat KUD, dan adaptasi sapi di kandang.",
     items: [
       {
         question: "Bagaimana jaminan bebas racun aflatoksin dan kapang?",
@@ -361,6 +461,8 @@ export const idCopy = {
     ],
     whatsappHelp:
       "Butuh bantuan pendaftaran? Hubungi Admin WhatsApp Kemitraan KUD",
+    whatsappUnavailable:
+      "Nomor WhatsApp resmi belum tersedia. Isi formulir di samping, tim lapangan akan menghubungi Anda.",
     form: {
       title: "Formulir Permintaan Sampel Uji Coba",
       intro:
@@ -469,13 +571,14 @@ export const idCopy = {
     brand: "ReCob.id",
     home: "Beranda",
     product: "Produk",
-    impact: "Dampak",
+    calculator: "Kalkulator",
     partnership: "Kemitraan KUD",
-    education: "Edukasi",
+    education: "Panduan",
     contact: "Kontak",
     sampleCta: "Klaim Sampel Gratis",
     menuLabel: "Buka menu navigasi",
     closeLabel: "Tutup menu navigasi",
+    skipLabel: "Lewati ke konten utama",
   },
   meta: {
     title:
@@ -483,6 +586,21 @@ export const idCopy = {
     description:
       "Pelet konsentrat sapi perah dari bonggol jagung dan ampas tahu terfermentasi. Rp160.000 per karung 50 kg dengan skema potong setoran susu melalui kemitraan KUD di Jawa Barat, Jawa Tengah, dan Jawa Timur.",
     ogAlt: "Karung pakan konsentrat ReCob.id 50 kg untuk sapi perah",
+    /** Identitas entitas untuk structured data (GEO). Hanya fakta yang sudah pasti. */
+    legalName: "PT Biomasa Nutrisi Nusantara",
+    shortName: "ReCob.id",
+    /** Ringkasan satu kalimat untuk `llms.txt`; dibaca mesin jawaban, bukan pengunjung. */
+    summary:
+      "ReCob.id memproduksi pelet konsentrat sapi perah dari limbah bonggol jagung dan ampas tahu terfermentasi, dijual Rp160.000 per karung 50 kg melalui kemitraan KUD dengan skema potong setoran susu mingguan.",
+    /** Topik yang dikuasai entitas; memperkuat pencocokan semantik di mesin generatif. */
+    knowsAbout: [
+      "Pakan konsentrat sapi perah",
+      "Fermentasi limbah bonggol jagung",
+      "Ampas tahu terfermentasi",
+      "Ekonomi sirkular peternakan",
+      "Kemitraan Koperasi Unit Desa",
+      "Potong setoran susu mingguan",
+    ],
   },
 } as const;
 

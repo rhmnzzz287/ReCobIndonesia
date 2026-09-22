@@ -35,7 +35,7 @@ export async function ImpactStrip(): Promise<ReactNode> {
               key={stat.label}
               style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
             >
-              <p className="type-metric-md text-accent">{stat.value}</p>
+              <p className="type-metric-md break-words text-accent">{stat.value}</p>
               <p className="mt-2xs type-body-sm text-surface/90">
                 {stat.label}
               </p>

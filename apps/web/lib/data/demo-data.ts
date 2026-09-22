@@ -128,7 +128,7 @@ export const demoMetrics: ReadonlyArray<DemoMetric> = [
       {
         "citationLabel": "Harga dokumen sumber: Rp160.000 vs Rp180.000-200.000 per karung 50 kg",
         "citationUrl": null,
-        "assumptionNote": "Selisih harga loco gudang KUD mitra di sentra susu Jawa Barat dan Jawa Tengah, karung netto 50 kg."
+        "assumptionNote": "Selisih harga di gudang KUD mitra di sentra susu Jawa Barat dan Jawa Tengah, karung neto 50 kg."
       }
     ]
   },

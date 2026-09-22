@@ -26,10 +26,10 @@ export function StickyCta(): ReactNode {
       }`}
     >
       <div className="flex gap-xs">
-        <ButtonLink className="flex-1" href="#form-sampel" variant="accent">
+        <ButtonLink className="flex-1" href="/kontak#form-sampel" variant="accent">
           {copy.cta.sticky.ctaLabel}
         </ButtonLink>
-        <ButtonLink className="flex-1" href="#form-sampel" variant="secondary">
+        <ButtonLink className="flex-1" href="/kontak#form-sampel" variant="secondary">
           {copy.cta.sticky.whatsappLabel}
         </ButtonLink>
       </div>

@@ -112,18 +112,20 @@ Di luar sistem KUD; sensitif terhadap harga per kg dan konsistensi nutrisi. Dila
 
 ### 5.1 Termasuk lingkup
 
-Fokus Phase 1 ditetapkan tunggal: **landing marketing + metrik dampak + edukasi**, sesuai keputusan pemilik produk.
+Fokus Phase 1 ditetapkan tunggal: **prototipe enam halaman** — beranda, produk, kalkulator, kemitraan KUD, panduan, dan kontak. Arahan penilaian prototype menetapkan minimum 5 halaman, alur pelanggan lintas halaman, fungsi bisnis utama yang terlihat, interaksi pelanggan, dan titik konversi; keputusan pemilik produk 22 September 2026 memecah satu beranda panjang menjadi enam rute.
 
 | Kode | Permukaan | Isi wajib | Kriteria penerimaan |
 |---|---|---|---|
-| S1 | Beranda | Hero, masalah, solusi, produk, dampak, kemitraan KUD, validasi, edukasi, FAQ, CTA | Semua bagian dapat di-scroll tanpa layout shift > 0,1 CLS; CTA muncul ≥ 3 kali |
-| S2 | Produk | Komposisi formulasi, spesifikasi karung 50 kg, harga Rp160.000, perbandingan harga pabrikan, cara pakai/transisi pakan | Tabel komposisi menampilkan 3 bahan dengan proporsi dan fungsi; harga terbaca sebagai perbandingan, bukan klaim absolut |
-| S3 | Dampak | Metrik bergaya LOCOL (angka besar), tonase limbah, penghematan kolektif, emisi yang dihindari, sumber tiap angka | Setiap metrik menampilkan satuan, periode, dan sumber/asumsi |
-| S4 | Edukasi | Artikel MDX (uji palatabilitas, hitung biaya pakan, silase musim kemarau, penyimpanan pakan anti jamur) | Minimal 4 artikel, terindeks sitemap, punya metadata OG |
-| S5 | Mitra/KUD | Alur konsinyasi, potong setoran susu, rekonsiliasi; daftar KUD target | Menjelaskan 4 langkah operasional; menyebut KPBS Pangalengan, KUD Mojosongo/Cepogo, KUD Setia Kawan |
+| S1 | Beranda | Hero, masalah, solusi, ringkasan produk, kisi tautan ke halaman lain, validasi, FAQ, CTA | Semua bagian dapat di-scroll tanpa layout shift > 0,1 CLS; CTA muncul ≥ 3 kali |
+| S2 | Produk (`/produk`) | Komposisi formulasi, spesifikasi karung 50 kg, harga Rp160.000, perbandingan harga pabrikan, cara pakai/transisi pakan | Tabel komposisi menampilkan 3 bahan dengan proporsi dan fungsi; harga terbaca sebagai perbandingan, bukan klaim absolut |
+| S4 | Edukasi (`/edukasi`) | Empat kartu topik panduan kandang (uji palatabilitas, hitung biaya pakan, pakan musim kemarau, penyimpanan anti jamur) | Minimal 4 topik, terindeks sitemap, punya metadata OG. Artikel MDX ditunda ke Siklus B |
+| S5 | Mitra/KUD (`/mitra`) | Alur konsinyasi, potong setoran susu, rekonsiliasi; daftar KUD target | Menjelaskan 4 langkah operasional; menyebut KPBS Pangalengan, KUD Mojosongo/Cepogo, KUD Setia Kawan |
 | S6 | Permintaan sampel gratis (lead) | Form 2–3 kg sampel, validasi input, simpan ke Supabase, notifikasi internal | Data tersimpan dengan RLS aktif; duplikat WhatsApp di-dedupe; respons < 1,5 s |
-| S7 | Kontak & legal | WhatsApp, email, alamat, status NPP, kebijakan privasi | Nomor WhatsApp dapat diklik dari mobile; status NPP dinyatakan apa adanya (lihat Bagian 8) |
+| S7 | Kontak & legal (`/kontak`) | Kanal kontak, status NPP, kebijakan privasi, formulir sampel | Status NPP dinyatakan apa adanya; tombol WhatsApp hanya muncul bila nomor resmi tersedia (lihat Bagian 8) |
 | S8 | Instrumen pengukuran | Vercel Analytics, Speed Insights, Sentry, event funnel | Event `cta_click`, `sample_form_start`, `sample_form_submit` terekam |
+| S9 | Kalkulator penghematan (`/kalkulator`) | Tabel perbandingan harga statis, lalu kalkulator dengan tiga asumsi yang dapat diubah pengunjung (jumlah sapi, harga pakan pabrik, asupan harian) di atas harga tetap ReCob.id; aritmetika terbuka; tombol membawa jumlah sapi ke form sampel | Angka kalkulator identik dengan tabel statis pada asumsi yang sama (dikunci uji silang); harga tetap dibaca dari data produk, bukan ditulis di komponen; jumlah sapi tidak pernah masuk URL; masukan di luar rentang wajar ditolak, bukan dihitung |
+
+**Catatan penghapusan:** permukaan **S3 (Dampak)** dihapus atas keputusan pemilik produk, 22 September 2026 — bagian "Metrik Dampak & Skala Misi Berkelanjutan" tidak akan dipakai pada prototype landing page, sehingga seksi, komponen, dan naskahnya dibuang seluruhnya. Rujukan ke S3 di dokumen ini bersifat historis dan tidak lagi menjadi lingkup.
 
 ### 5.2 Di luar lingkup Phase 1 (eksplisit)
 
@@ -131,7 +133,6 @@ Fokus Phase 1 ditetapkan tunggal: **landing marketing + metrik dampak + edukasi*
 |---|---|---|---|
 | X1 | Portal peternak (login, riwayat potong setoran, referral) | Membutuhkan data ledger nyata; demo tanpa data = kosong dan melemahkan pitch | Phase 2 |
 | X2 | Dashboard KUD (stok konsinyasi, rekonsiliasi) | Bergantung integrasi operasional KUD dan kesepakatan data | Phase 2 |
-| X3 | Kalkulator biaya pakan interaktif | Bernilai tinggi tetapi bukan syarat demo; dikerjakan hanya jika waktu tersisa | Stretch Phase 1, penuh di Phase 2 |
 | X4 | E-commerce / pembayaran online | Model bisnis memakai konsinyasi dan potong setoran, bukan check-out | Phase 3 |
 | X5 | Aplikasi mobile native | Web responsif sudah menutup kebutuhan; biaya pemeliharaan ganda tidak sepadan | Dievaluasi Phase 4 |
 | X6 | Multi-bahasa penuh (EN) | Pasar utama berbahasa Indonesia; struktur i18n disiapkan, terjemahan menyusul | Phase 3 |
@@ -222,7 +223,9 @@ Ini bagian paling berisiko pada produk pakan ternak. Aturan yang mengikat seluru
 | Performa | LCP ≤ 2,0 s (mobile 4G), INP ≤ 200 ms, CLS ≤ 0,1, JS terkirim halaman beranda ≤ 180 KB gzip | Lighthouse CI + Speed Insights |
 | Rendering | Konten marketing di-prerender statis dengan revalidasi berkala; hanya form dan data dinamis yang di-render server | inspeksi build output |
 | Aksesibilitas | WCAG 2.1 AA: kontras ≥ 4,5:1 untuk teks normal, navigasi keyboard penuh, target sentuh ≥ 44 px, `prefers-reduced-motion` dihormati | axe + Lighthouse + checklist manual |
-| SEO | Metadata per halaman, Open Graph, JSON-LD `Organization` + `Product`, `sitemap.xml`, `robots.txt` | audit Lighthouse SEO ≥ 95 |
+| SEO | Metadata per halaman, Open Graph + kartu pratinjau 1200x630, kanonik per halaman, JSON-LD `@graph` (`Organization` + `WebSite` + `Product` + `FAQPage` + `HowTo`), `sitemap.xml`, `robots.txt`, ikon `icon`/`apple-icon` | audit Lighthouse SEO ≥ 95 |
+| AEO/GEO | Ringkasan `/llms.txt` yang diturunkan dari lapisan konten, kebijakan crawler eksplisit untuk GPTBot/PerplexityBot/ClaudeBot/Google-Extended, data terstruktur bertaut `@id` | audit manual: `curl /llms.txt`, periksa `robots.txt`, validasi blok `@graph` |
+| Batas structured data | Dilarang memuat `aggregateRating`, `review`, `sameAs`, `contactPoint`, atau nomor NPP selama datanya belum nyata (PRD Bagian 8). Pelanggaran ini justru menurunkan kepercayaan mesin generatif | uji unit `structured-data.test.ts` + E2E |
 | Keamanan | RLS aktif di setiap tabel, kunci `service_role` hanya di server, validasi input ganda (klien + server) dengan Zod, rate limit endpoint form | uji coba insert ilegal ditolak |
 | Privasi | Hanya data minimum (nama, WhatsApp, jumlah ternak, lokasi); tidak ada token analitik pihak ketiga yang menjual data; halaman Kebijakan Privasi | review manual |
 | Ketahanan | Pemakaian eksternal (Supabase, WhatsApp, Sentry) memiliki timeout eksplisit dan jalur gagal yang ramah (pesan error + tautan WhatsApp) | uji matikan jaringan/kunci salah |

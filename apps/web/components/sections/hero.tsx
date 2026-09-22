@@ -48,10 +48,10 @@ export async function Hero(): Promise<ReactNode> {
               {copy.hero.subtitle}
             </p>
             <div className="mt-xl flex flex-wrap gap-sm">
-              <ButtonLink href="#form-sampel" size="lg" variant="primary">
+              <ButtonLink href="/kontak#form-sampel" size="lg" variant="primary">
                 {copy.hero.ctaPrimary}
               </ButtonLink>
-              <ButtonLink href="#formulasi" size="lg" variant="secondary">
+              <ButtonLink href="/produk" size="lg" variant="secondary">
                 {copy.hero.ctaSecondary}
               </ButtonLink>
             </div>

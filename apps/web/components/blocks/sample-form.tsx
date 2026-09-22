@@ -1,12 +1,13 @@
 "use client";
 
 import { submitLeadInput, type SubmitLeadInput } from "@recobid/shared/contracts/lead";
-import { useState, type ReactNode } from "react";
+import { useState, useSyncExternalStore, type ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { FieldError, Input, Label } from "@/components/ui/input";
 import { copy } from "@/content/copy";
 import type { RegionOption } from "@/lib/data/regions";
+import { readCattleCount, subscribeCattleCount } from "@/lib/utils/cattle-prefill";
 
 export interface SampleFormProps {
   regions: ReadonlyArray<RegionOption>;
@@ -27,6 +28,18 @@ type FormState =
 export function SampleForm({ regions }: SampleFormProps): ReactNode {
   const [state, setState] = useState<FormState>({ kind: "idle" });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  /**
+   * Jumlah ternak dari kalkulator dibaca lewat `useSyncExternalStore`, bukan efek: server tidak
+   * memiliki `sessionStorage`, sehingga nilai render pertama wajib "" agar markup server dan
+   * klien identik (tanpa hydration mismatch). Kolom tetap tak-terkendali; nilainya dibaca dari
+   * `FormData` saat kirim.
+   */
+  const cattlePrefill = useSyncExternalStore(
+    subscribeCattleCount,
+    readCattleCount,
+    () => "",
+  );
 
   async function handleSubmit(formData: FormData): Promise<void> {
     const honeypot = String(formData.get("companyWebsite") ?? "");
@@ -147,9 +160,11 @@ export function SampleForm({ regions }: SampleFormProps): ReactNode {
           {copy.cta.form.cattleLabel}
         </Label>
         <Input
+          defaultValue={cattlePrefill}
           id="cattleCount"
           inputMode="numeric"
           invalid={fieldErrors.cattleCount !== undefined}
+          key={cattlePrefill}
           name="cattleCount"
           placeholder={copy.cta.form.cattlePlaceholder}
           type="number"
