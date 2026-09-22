@@ -45,7 +45,11 @@ jobs:
       - run: npm run test --workspace @recobid/backend
       - run: npm run typecheck --workspace @recobid/backend
       - name: Tes RLS terhadap project tertaut
-        if: ${{ secrets.SUPABASE_DB_URL != '' }}
+        # `secrets` tidak tersedia pada `steps[*].if` (hanya env, github, inputs, job, matrix,
+        # needs, runner, steps, strategy, vars). Menulisnya di sana membuat SELURUH workflow
+        # ditolak GitHub: run gagal dalam 0 detik tanpa satu pun job. Pola yang benar adalah
+        # menaruh rahasianya di `env` lalu memeriksa `env` di `if`.
+        if: ${{ env.SUPABASE_DB_URL != '' }}
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: npm run test:rls --workspace @recobid/backend
