@@ -74,4 +74,15 @@ describe("Section", () => {
     expect(section?.className).toContain("bg-ink-deep");
     expect(section?.getAttribute("id")).toBe("dampak");
   });
+
+  it("tone primary memakai bidang hijau dengan teks permukaan", () => {
+    const { container } = render(
+      <Section id="form-sampel" tone="primary">
+        <p>Ajakan</p>
+      </Section>,
+    );
+    const section = container.querySelector("section");
+    expect(section?.className).toContain("bg-primary");
+    expect(section?.className).toContain("text-surface");
+  });
 });

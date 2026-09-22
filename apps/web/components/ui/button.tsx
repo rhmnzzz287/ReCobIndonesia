@@ -8,11 +8,14 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        primary: "bg-primary type-label-md uppercase text-surface hover:bg-primary-strong",
-        accent: "bg-accent type-label-md uppercase text-ink hover:bg-accent-ink",
+        primary:
+          "bg-primary type-label-md uppercase text-surface hover:bg-primary-strong",
+        accent:
+          "bg-accent type-label-md uppercase text-ink hover:bg-accent-ink",
         secondary:
           "border border-text-secondary bg-surface type-label-md text-primary hover:bg-primary-soft",
-        ghost: "bg-transparent type-label-md text-primary hover:bg-primary-soft",
+        ghost:
+          "bg-transparent type-label-md text-primary hover:bg-primary-soft",
       },
       size: {
         md: "",
@@ -25,11 +28,18 @@ const buttonStyles = cva(
 
 export type ButtonStyleProps = VariantProps<typeof buttonStyles>;
 
-export interface ButtonProps extends Omit<ComponentProps<"button">, "className">, ButtonStyleProps {
+export interface ButtonProps
+  extends Omit<ComponentProps<"button">, "className">, ButtonStyleProps {
   className?: string;
 }
 
-export function Button({ variant, size, className, type, ...props }: ButtonProps): ReactNode {
+export function Button({
+  variant,
+  size,
+  className,
+  type,
+  ...props
+}: ButtonProps): ReactNode {
   return (
     <button
       className={cn(buttonStyles({ variant, size }), className)}
@@ -44,6 +54,8 @@ export interface ButtonLinkProps extends ButtonStyleProps {
   className?: string;
   external?: boolean;
   children?: ReactNode;
+  /** Penangan klik opsional; dipakai menu seluler untuk menutup panel setelah navigasi. */
+  onClick?: () => void;
   /** Label aksesibilitas untuk tautan yang teksnya tidak deskriptif. */
   ariaLabel?: string;
 }
@@ -53,6 +65,7 @@ export function ButtonLink({
   className,
   external = false,
   href,
+  onClick,
   size,
   variant,
   children,
@@ -65,6 +78,7 @@ export function ButtonLink({
         aria-label={ariaLabel}
         className={classes}
         href={href}
+        onClick={onClick}
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -74,7 +88,12 @@ export function ButtonLink({
   }
 
   return (
-    <Link aria-label={ariaLabel} className={classes} href={href}>
+    <Link
+      aria-label={ariaLabel}
+      className={classes}
+      href={href}
+      {...(onClick === undefined ? {} : { onClick })}
+    >
       {children}
     </Link>
   );

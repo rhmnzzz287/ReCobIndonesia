@@ -21,9 +21,12 @@ export function MetricValue({
 }: MetricValueProps): ReactNode {
   return (
     <figure className={cn("flex flex-col gap-xs", className)}>
-      <div className="flex items-baseline gap-xs">
+      <div className="flex flex-wrap items-baseline gap-xs">
         <span
-          className={cn("type-metric-lg", tone === "dark" ? "text-accent" : "text-primary-strong")}
+          className={cn(
+            "type-metric-lg",
+            tone === "dark" ? "text-accent" : "text-primary-strong",
+          )}
         >
           {value}
         </span>

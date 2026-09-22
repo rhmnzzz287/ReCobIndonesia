@@ -15,14 +15,29 @@
 
 export const idCopy = {
   hero: {
-    badge: "Status Legalitas: Nomor Pendaftaran Pakan (NPP) Kementerian Pertanian RI dalam proses pendaftaran resmi",
+    badge:
+      "Status Legalitas: Nomor Pendaftaran Pakan (NPP) Kementerian Pertanian RI dalam proses pendaftaran resmi",
     standardBadge: "SNI 3148-1:2017 Ruminansia",
     eyebrow: "Biokonversi Pakan Ruminansia",
-    title: "Pakan Konsentrat Sapi Perah Hemat 11%–20%, Kepastian Pasokan Sepanjang Tahun",
+    title:
+      "Pakan Konsentrat Sapi Perah Hemat 11%–20%, Kepastian Pasokan Sepanjang Tahun",
     subtitle:
       "Pelet konsentrat protein tinggi dari limbah bonggol jagung dan ampas tahu terfermentasi. Rp160.000 per karung 50 kg melalui kemitraan KUD penampung susu dengan sistem potong setoran mingguan.",
     ctaPrimary: "Klaim Sampel Gratis 2-3 kg",
     ctaSecondary: "Pelajari Formulasi & Nutrisi",
+    statLeadLabel: "Margin Penghematan",
+    statLeadValue: "20%",
+    statLeadUnit: "lebih hemat per karung 50 kg",
+    statLeadCaption:
+      "Perbandingan Rp160.000 dengan rentang Rp180.000–Rp200.000 konsentrat komersial umum di sentra susu Jawa.",
+    statKudValue: "1.200+",
+    statKudUnit: "karung terkirim",
+    statCattleValue: "480",
+    statCattleUnit: "ekor sapi perah terlayani",
+    statFarmerValue: "320",
+    statFarmerUnit: "peternak anggota KUD",
+    statScaleCaption:
+      "Ilustrasi skala operasi fase awal, bukan capaian terverifikasi. Sumber: proyeksi internal ReCob.id 2026.",
     priceAnchorLabel: "Harga Jangkar Resmi",
     priceAnchorUnit: "Karung 50 kg",
     priceAnchorValue: "Rp160.000",
@@ -38,7 +53,8 @@ export const idCopy = {
     highlightPaymentLabel: "Sistem Bayar",
     highlightPaymentValue: "Potong KUD",
     highlightPaymentNote: "Tanpa uang muka",
-    imageAlt: "Karung pakan konsentrat ReCob.id 50 kg dan pelet hasil fermentasi bonggol jagung",
+    imageAlt:
+      "Karung pakan konsentrat ReCob.id 50 kg dan pelet hasil fermentasi bonggol jagung",
   },
   problem: {
     eyebrow: "Dilema Ruminansia Nasional",
@@ -64,7 +80,8 @@ export const idCopy = {
         title: "3,45–4,6 Juta Ton Bonggol Terbuang & Dibakar",
         body: "Biomassa tongkol jagung pascapanen menjadi polutan pembakaran terbuka di ladang tanpa nilai tambah ekonomis, menghasilkan emisi karbon dan partikulat asap bagi lingkungan perdesaan.",
         metric: "3,45–4,6 Juta Ton",
-        caption: "Sumber Data: BPS RI (2022), Neraca Biomassa Jagung dan Serealia Agrikultur Nasional.",
+        caption:
+          "Sumber Data: BPS RI (2022), Neraca Biomassa Jagung dan Serealia Agrikultur Nasional.",
       },
     ],
   },
@@ -113,7 +130,8 @@ export const idCopy = {
       },
       {
         label: "Ketahanan Jamur:",
-        value: "Kadar air akhir < 12% mencegah pertumbuhan mikotoksin & aflatoksin.",
+        value:
+          "Kadar air akhir < 12% mencegah pertumbuhan mikotoksin & aflatoksin.",
       },
     ],
     transitionTitle: "Prosedur Transisi Pakan 7 Hari",
@@ -210,7 +228,8 @@ export const idCopy = {
     ],
     kudTitle: "Wilayah Fokus Fase Awal Kemitraan",
     kudSubtitle: "Sentra Sapi Perah Dataran Tinggi Jawa",
-    kudNote: "Kesiapan logistik terverifikasi di Jawa Barat, Jawa Tengah, dan Jawa Timur",
+    kudNote:
+      "Kesiapan logistik terverifikasi di Jawa Barat, Jawa Tengah, dan Jawa Timur",
     kudNames: [
       "KPBS Pangalengan (Bandung)",
       "KUD Mojosongo (Boyolali)",
@@ -299,7 +318,8 @@ export const idCopy = {
           "ReCob.id menerapkan proses dehidrasi terstandar dengan kadar air akhir konsisten di bawah 12%. Selain itu, kemasan karung laminasi kedap udara mencegah kondensasi kelembapan selama transit gudang, memastikan total aflatoksin di bawah ambang batas ketat SNI (< 20 ppb).",
       },
       {
-        question: "Apakah sapi akan mengalami stres pakan atau diare saat transisi?",
+        question:
+          "Apakah sapi akan mengalami stres pakan atau diare saat transisi?",
         answer:
           "Tidak, selama peternak mematuhi Prosedur Transisi 7 Hari yang disyaratkan. Fermentasi mikroba pendegradasi serat telah memecah serat kasar menjadi bentuk yang mudah dicerna, didukung aroma molase harum yang merangsang sekresi saliva sapi perah.",
       },
@@ -319,7 +339,8 @@ export const idCopy = {
           "Setiap peternak yang memiliki minimal 2 ekor sapi perah produktif dan terdaftar sebagai anggota koperasi berhak mendapatkan 1 paket sampel gratis 2–3 kg untuk uji respons palatabilitas selama 2–3 hari pertama.",
       },
       {
-        question: "Apakah ReCob.id dapat menggantikan hijauan segar seluruhnya?",
+        question:
+          "Apakah ReCob.id dapat menggantikan hijauan segar seluruhnya?",
         answer:
           "Tidak. ReCob.id berfungsi sebagai konsentrat penguat sumber energi dan protein fermentasi. Sapi ruminansia tetap membutuhkan hijauan serat panjang (seperti rumput gajah atau tebon) minimal 10% dari bobot badan untuk memelihara fungsi fisiologis rumen.",
       },
@@ -335,10 +356,12 @@ export const idCopy = {
       "Disertai lembar panduan takaran transisi hari ke-1 hingga ke-7",
       "Konsultasi ransum via WhatsApp bersama formulator nutrisi ternak",
     ],
-    whatsappHelp: "Butuh bantuan pendaftaran? Hubungi Admin WhatsApp Kemitraan KUD",
+    whatsappHelp:
+      "Butuh bantuan pendaftaran? Hubungi Admin WhatsApp Kemitraan KUD",
     form: {
       title: "Formulir Permintaan Sampel Uji Coba",
-      intro: "Lengkapi data kandang Anda untuk verifikasi pengiriman sampel gratis 2–3 kg.",
+      intro:
+        "Lengkapi data kandang Anda untuk verifikasi pengiriman sampel gratis 2–3 kg.",
       nameLabel: "Nama Lengkap Peternak",
       namePlaceholder: "Nama sesuai kartu anggota KUD",
       phoneLabel: "Nomor WhatsApp Aktif",
@@ -353,7 +376,8 @@ export const idCopy = {
       kudPlaceholder: "Pilih KUD Domisili",
       kudOther: "Lainnya / Non-KUD Terdaftar",
       messageLabel: "Catatan untuk Tim Lapangan",
-      messagePlaceholder: "Kondisi kandang, jadwal penyerahan, atau pertanyaan ransum",
+      messagePlaceholder:
+        "Kondisi kandang, jadwal penyerahan, atau pertanyaan ransum",
       consentLabel:
         "Saya menyetujui data ini digunakan untuk verifikasi keanggotaan KUD dan penjadwalan pengiriman sampel.",
       submitLabel: "Kirim Permintaan Sampel Gratis",
@@ -408,7 +432,10 @@ export const idCopy = {
     companyTitle: "Wilayah Kemitraan KUD",
     regions: [
       { name: "KPBS Pangalengan", location: "Kabupaten Bandung, Jawa Barat" },
-      { name: "KUD Mojosongo Boyolali", location: "Kawasan Sentra Sapi Perah Jawa Tengah" },
+      {
+        name: "KUD Mojosongo Boyolali",
+        location: "Kawasan Sentra Sapi Perah Jawa Tengah",
+      },
       { name: "KUD Cepogo Boyolali", location: "Lereng Merapi - Boyolali" },
       { name: "KUD Setia Kawan Pasuruan", location: "Nongkojajar, Jawa Timur" },
     ],
@@ -428,11 +455,14 @@ export const idCopy = {
     ],
     contactNotice:
       "Nomor telepon, alamat surel resmi, dan alamat kantor menyusul sebelum rilis publik.",
-    address: "Sentra Agribisnis Biokonversi Jawa Barat & Jawa Tengah, Indonesia",
+    address:
+      "Sentra Agribisnis Biokonversi Jawa Barat & Jawa Tengah, Indonesia",
     nppStatus: "NPP Kementan RI: dalam proses pendaftaran",
-    copyright: "© 2025 ReCob.id • PT Biomasa Nutrisi Nusantara. Seluruh hak cipta dilindungi undang-undang.",
+    copyright:
+      "© 2025 ReCob.id • PT Biomasa Nutrisi Nusantara. Seluruh hak cipta dilindungi undang-undang.",
   },
   nav: {
+    brand: "ReCob.id",
     home: "Beranda",
     product: "Produk",
     impact: "Dampak",
@@ -440,9 +470,12 @@ export const idCopy = {
     education: "Edukasi",
     contact: "Kontak",
     sampleCta: "Klaim Sampel Gratis",
+    menuLabel: "Buka menu navigasi",
+    closeLabel: "Tutup menu navigasi",
   },
   meta: {
-    title: "ReCob.id — Pakan Konsentrat Sapi Perah dari Bonggol Jagung Terfermentasi",
+    title:
+      "ReCob.id — Pakan Konsentrat Sapi Perah dari Bonggol Jagung Terfermentasi",
     description:
       "Pelet konsentrat sapi perah dari bonggol jagung dan ampas tahu terfermentasi. Rp160.000 per karung 50 kg dengan skema potong setoran susu melalui kemitraan KUD di Jawa Barat, Jawa Tengah, dan Jawa Timur.",
     ogAlt: "Karung pakan konsentrat ReCob.id 50 kg untuk sapi perah",

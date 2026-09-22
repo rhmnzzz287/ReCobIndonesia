@@ -2,12 +2,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
 
-const sectionStyles = cva("px-lg py-3xl", {
+const sectionStyles = cva("px-lg py-2xl lg:py-section", {
   variants: {
     tone: {
       surface: "bg-surface text-ink",
       cream: "bg-cream text-ink",
       paper: "bg-paper text-ink",
+      primary: "bg-primary text-surface",
       ink: "bg-ink-deep text-surface",
     },
   },
@@ -21,7 +22,13 @@ export interface SectionProps extends VariantProps<typeof sectionStyles> {
   labelledBy?: string;
 }
 
-export function Section({ children, className, id, labelledBy, tone }: SectionProps): ReactNode {
+export function Section({
+  children,
+  className,
+  id,
+  labelledBy,
+  tone,
+}: SectionProps): ReactNode {
   return (
     <section
       aria-labelledby={labelledBy}

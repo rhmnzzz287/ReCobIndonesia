@@ -15,6 +15,10 @@ playwright-report/
 test-results/
 *.tsbuildinfo
 
+# Berkas panduan agen yang ditulis ulang otomatis oleh `next dev`
+apps/web/AGENTS.md
+apps/web/CLAUDE.md
+
 # Rahasia: abaikan seluruh berkas .env, kecualikan berkas contoh
 .env
 .env.*

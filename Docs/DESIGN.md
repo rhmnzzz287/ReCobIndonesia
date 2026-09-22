@@ -21,21 +21,27 @@ colors:
   amber-soft: "#FFF3D1"
   amber-ink: "#7A5C12"
 typography:
+  display:
+    fontFamily: Rubik
+    fontSize: clamp(2.5rem, 8vw, 4.5rem)
+    fontWeight: 800
+    lineHeight: 1
+    letterSpacing: "-0.035em"
   display-xl:
     fontFamily: Rubik
-    fontSize: 3.5rem
+    fontSize: clamp(2rem, 5.5vw, 3.5rem)
     fontWeight: 800
     lineHeight: 1.05
     letterSpacing: "-0.03em"
   h1:
     fontFamily: Rubik
-    fontSize: 2.5rem
+    fontSize: clamp(2rem, 5.5vw, 3.5rem)
     fontWeight: 800
     lineHeight: 1.1
     letterSpacing: "-0.02em"
   h2:
     fontFamily: Rubik
-    fontSize: 1.875rem
+    fontSize: clamp(1.625rem, 4vw, 2.5rem)
     fontWeight: 700
     lineHeight: 1.15
     letterSpacing: "-0.01em"
@@ -72,14 +78,14 @@ typography:
     lineHeight: 1.45
   metric-lg:
     fontFamily: Rubik
-    fontSize: 3.25rem
+    fontSize: clamp(2.5rem, 8vw, 4.5rem)
     fontWeight: 800
     lineHeight: 1
     letterSpacing: "-0.03em"
     fontFeature: "tnum"
   metric-md:
     fontFamily: Rubik
-    fontSize: 2rem
+    fontSize: clamp(1.75rem, 4.5vw, 2rem)
     fontWeight: 700
     lineHeight: 1.05
     fontFeature: "tnum"
@@ -94,6 +100,7 @@ rounded:
   md: 12px
   lg: 18px
   xl: 28px
+  arc: 48px
   pill: 999px
 spacing:
   2xs: 4px
@@ -287,9 +294,12 @@ dikunci di bawah ini — aturan ini yang mencegah warna aksen bocor menjadi warn
 - **`primary` (#0B6E3B):** Hijau pekat. Tombol utama, tautan, dan ikon pada permukaan terang.
   Dibandingkan lambang (#4E8B3A) warna ini digelapkan agar lolos kontras teks putih 6,35:1.
 - **`primary-strong` (#084F2A):** Keadaan `:hover`/`:active` tombol utama.
-- **`primary-soft` (#E7F1E4):** Latar lencana dan blok sorotan.
+- **`primary-soft` (#E7F1E4):** Latar lencana dan blok sorotan. Juga satu-satunya warna teks
+  aksen di atas bidang `primary` (5,47:1) — dipakai untuk label mata dan angka pahlawan di
+  pita hero serta pita ajakan.
 - **`accent` (#7DBE35):** Hijau jerami cerah. Tombol aksen (klaim sampel gratis) dan angka besar
-  di panel gelap. **Tidak pernah** dipakai sebagai warna teks di atas putih (2,26:1).
+  di panel `ink-deep`. **Tidak pernah** dipakai sebagai warna teks di atas putih (2,26:1),
+  dan **tidak pernah** di atas `primary` (2,81:1 — gagal ambang teks besar 3:1).
 - **`accent-ink` (#61A33C):** Hanya untuk `:hover` tombol aksen dan garis grafik (bukan teks di
   atas putih — 3,08:1).
 
@@ -318,9 +328,13 @@ dikunci di bawah ini — aturan ini yang mencegah warna aksen bocor menjadi warn
 | `text-secondary` di atas `paper` (keterangan) | 6,93:1 | Ya |
 | `amber-ink` di atas `amber-soft` (peringatan) | 5,64:1 | Ya |
 | `accent` di atas `ink-deep` (angka metrik) | 6,08:1 | Ya |
+| `primary-soft` di atas `primary` (label mata, angka pahlawan) | 5,47:1 | Ya |
+| `surface/90` di atas `primary` (teks pita hero) | 5,46:1 | Ya |
+| `surface/85` di atas `primary` (teks pita hero) | 5,06:1 | Ya |
 | `primary` di atas `surface` (tautan, tombol sekunder) | 6,35:1 | Ya |
 | `surface` di atas `ink-deep` (footer) | 13,75:1 | Ya |
 | `accent` sebagai teks di atas `surface` | 2,26:1 | **Tidak** |
+| `accent` sebagai teks di atas `primary` | 2,81:1 | **Tidak** — pakai `primary-soft` |
 | `corn` sebagai teks di atas `surface` | 1,70:1 | **Tidak** |
 | `border` sebagai batas input | 1,24:1 | **Tidak** — pakai `text-secondary` |
 | Hijau lambang mentah (#4E8B3A) sebagai teks | 4,14:1 | **Tidak** — pakai `primary` |
@@ -354,18 +368,23 @@ seragam tanpa serif, jadi tipografi pun memakai sans yang tegas tanpa lekukan de
 
 | Token | Ukuran | Berat | Penggunaan |
 |---|---:|---:|---|
-| `display-xl` | 56 px | 800 | Hanya di hero beranda, satu per halaman |
-| `h1` | 40 px | 800 | Judul halaman bagian dalam |
-| `h2` | 30 px | 700 | Judul bagian beranda |
+| `display` | 40–72 px | 800 | Angka pahlawan di hero beranda, satu per halaman |
+| `display-xl` | 32–56 px | 800 | Judul bagian besar, satu per halaman |
+| `h1` | 32–56 px | 800 | Judul halaman bagian dalam |
+| `h2` | 26–40 px | 700 | Judul bagian beranda |
 | `h3` | 20 px | 600 | Judul kartu, pertanyaan FAQ |
 | `body-lg` | 18 px | 400 | Paragraf pembuka bagian, jawaban FAQ |
 | `body-md` | 16 px | 400 | Teks isi standar; ukuran minimum untuk teks panjang |
 | `body-sm` | 14 px | 400 | Keterangan tabel, catatan kaki, meta artikel |
 | `label-md` | 13 px | 600 | Tombol dan label huruf kapital dengan `letter-spacing: 0.08em` |
 | `caption` | 12 px | 500 | Sumber metrik, asumsi, stempel waktu |
-| `metric-lg` | 52 px | 800 | Angka utama panel dampak |
-| `metric-md` | 32 px | 700 | Angka sekunder, angka dalam kartu |
+| `metric-lg` | 40–72 px | 800 | Angka utama panel dampak |
+| `metric-md` | 28–32 px | 700 | Angka sekunder, angka dalam kartu |
 | `mono-data` | 13 px | 500 | NPP, KODE, nomor rujukan |
+
+Ukuran judul dan angka memakai `clamp()` sehingga menyusut proporsional di lebar 360 px;
+batas bawah adalah nilai di ponsel, batas atas nilai di desktop ≥1024 px. Tanpa ini judul
+56 px meluap keluar viewport pada layar ponsel.
 
 Aturan: maksimum 65 karakter per baris untuk teks isi; `caption` tidak pernah dipakai untuk
 paragraf panjang; angka tidak pernah ditulis dalam bentuk huruf ("dua puluh" salah, "20" benar).
@@ -378,6 +397,9 @@ paragraf panjang; angka tidak pernah ditulis dalam bentuk huruf ("dua puluh" sal
 - **Ritme bagian:** padding vertikal `section` (96 px) di desktop, 64 px di tablet, 48 px di
   mobile. Irama warna bagian: `surface` → `cream` → `surface` → `ink-deep` (dampak) →
   `paper` → `surface`.
+- **Pita hero:** bidang `primary` penuh lebar dengan lengkung bawah `arc` (48 px), tipografi
+  `display` untuk angka pahlawan, dan lencana kredibilitas di bawahnya. Pita ini pengganti
+  foto hero: identitas dibawa oleh bidang warna dan tipografi, bukan citra.
 - **Titik henti:** 480 / 768 / 1024 / 1280 px. Rentang 768–1024 px adalah prioritas karena
   perangkat lapangan sering berada di ukuran tablet kecil dan ponsel lanskap.
 - **Grid kartu:** 3 kolom ≥1024 px, 2 kolom 768–1023 px, 1 kolom <768 px. Ketinggian kartu
@@ -413,8 +435,8 @@ Keadaan fokus tidak boleh dihapus. Fokus di atas bidang gelap memakai warna `acc
 ## Shapes
 
 - Sudut: `xs` 4 px untuk elemen sebaris kecil, `sm` 8 px untuk input dan lencana persegi,
-  `md` 12 px untuk tombol, `lg` 18 px untuk kartu, `xl` 28 px untuk panel metrik, `pill` untuk
-  lencana status.
+  `md` 12 px untuk tombol, `lg` 18 px untuk kartu, `xl` 28 px untuk panel metrik, `arc` 48 px
+  untuk bidang besar (hero, pita ajakan) sebagai lengkung bawah, `pill` untuk lencana status.
 - Ikon: `lucide-react`, `strokeWidth` 1,75 (konsisten di seluruh aplikasi), ukuran 20 px dalam
   teks/daftar, 24 px dalam tombol, 32 px dalam kartu fitur.
 - Motif emblem: lingkaran bergaris dan kepala sapi bergaris dipakai sebagai elemen dekoratif
@@ -676,7 +698,7 @@ recobid-web/
 │  ├─ ui/                         # button, badge, input, card, alert (CVA + cn)
 │  ├─ sections/                   # hero, problem, solution, product, cost-compare,
 │  │                              # impact, partnership, validation, education, faq, cta, footer
-│  └─ blocks/                     # composition-bar, metric-panel, kud-map, sample-form
+│  └─ blocks/                     # site-header, composition-bar, metric-panel, kud-map, sample-form
 ├─ content/edukasi/*.mdx          # artikel + front matter tervalidasi
 ├─ lib/
 │  ├─ data/                       # products.ts, impact.ts, kud.ts, leads.ts  (satu pintu ke Supabase)
