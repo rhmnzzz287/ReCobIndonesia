@@ -2,7 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ES2023"],
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@/*": ["../web/*"]
+    }
   },
   "include": ["tests/**/*.ts", "scripts/**/*.mjs"],
   "exclude": ["node_modules", "supabase"]

@@ -16,7 +16,8 @@
     "dev-db": "node scripts/dev-db.mjs",
     "dev-db:reset": "node scripts/dev-db.mjs reset",
     "demo:export": "node scripts/export-demo-data.mjs",
-    "db:gen-types:local": "node scripts/gen-types-local.mjs"
+    "db:gen-types:local": "node scripts/gen-types-local.mjs",
+    "test:e2e": "vitest run tests/e2e"
   },
   "devDependencies": {
     "@types/node": "26.6.2",
