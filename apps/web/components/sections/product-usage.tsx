@@ -11,7 +11,8 @@ import { formatIdr } from "@/lib/utils/format";
  *
  * Ketiga blok ini berada di bidang terang supaya seluruh halaman produk terbaca sebagai satu alur
  * editorial; jeda gelapnya sudah dibawa pita alur tepat di atasnya. Foto gudang memakai
- * `object-cover` pada kotak bersisi tetap, bukan `fill`, karena tingginya ditentukan tata letak.
+ * `object-contain`, bukan `object-cover`: berkas fotonya sekarang punya alfa, dan `cover` akan
+ * memotong siluet subjek yang justru jadi alasan foto ini dipakai.
  */
 export async function ProductUsage(): Promise<ReactNode> {
   const { product } = await getPrimaryProduct();
@@ -20,10 +21,10 @@ export async function ProductUsage(): Promise<ReactNode> {
     <Section id="cara-pakai" tone="paper">
       <Container>
         <div className="grid gap-2xl lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-          <figure className="overflow-hidden rounded-lg" data-reveal="">
+          <figure data-reveal="">
             <Image
               alt={copy.productStory.usagePhotoAlt}
-              className="h-full w-full object-cover"
+              className="h-auto w-full object-contain"
               height={1153}
               sizes="(min-width: 1024px) 460px, 90vw"
               src="/img/produk/produk-gudang.webp"
@@ -55,7 +56,7 @@ export async function ProductUsage(): Promise<ReactNode> {
 
         <div className="mt-3xl grid gap-2xl lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
           <figure
-            className="flex flex-col items-center justify-center rounded-lg bg-surface p-lg"
+            className="flex flex-col items-center justify-center"
             data-reveal=""
           >
             <Image

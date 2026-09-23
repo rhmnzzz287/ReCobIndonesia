@@ -111,6 +111,76 @@ test.describe("prototipe ReCob.id", () => {
       .toBeGreaterThan((await hero.getByRole("heading", { level: 1 }).boundingBox())?.y ?? 0);
   });
 
+  test("foto produk tampil transparan tanpa kotak di belakangnya", async ({ page }) => {
+    await page.goto("/produk");
+
+    for (const seksi of ["#produk-hero", "#cara-pakai"]) {
+      const foto = page.locator(`${seksi} img`);
+      const jumlah = await foto.count();
+      expect(jumlah, `${seksi} tidak memuat foto`).toBeGreaterThan(0);
+
+      for (let index = 0; index < jumlah; index += 1) {
+        const gambar = foto.nth(index);
+
+        // Foto di bawah lipatan memakai muatan malas: ukur setelah benar-benar terbit.
+        await gambar.scrollIntoViewIfNeeded();
+        await expect
+          .poll(async () =>
+            gambar.evaluate((node) => {
+              const img = node as HTMLImageElement;
+              return img.complete ? img.naturalWidth : 0;
+            }),
+          )
+          .toBeGreaterThan(0);
+
+        /*
+         * Diukur pada hasil akhir setelah pengoptimal Next, bukan berkas di repo: tanpa alfa,
+         * berkas sumber yang transparan pun bisa disajikan kembali sebagai kotak hitam.
+         *
+         * Yang diperiksa porsi piksel tembus pandang, bukan satu piksel sudut. AVIF lossy masih
+         * menggeser satu-dua piksel di tepi, sehingga pemeriksaan sudut tunggal gagal-berhasil
+         * bergantian; porsi tembus pandang tidak.
+         */
+        const porsiTembus = await gambar.evaluate((node) => {
+          const img = node as HTMLImageElement;
+          const kanvas = document.createElement("canvas");
+          kanvas.width = img.naturalWidth;
+          kanvas.height = img.naturalHeight;
+          const ctx = kanvas.getContext("2d");
+          if (ctx === null) return -1;
+          ctx.drawImage(img, 0, 0);
+          const data = ctx.getImageData(0, 0, kanvas.width, kanvas.height).data;
+          let tembus = 0;
+          for (let i = 3; i < data.length; i += 4) {
+            if (data[i] !== 0) continue;
+            tembus += 1;
+          }
+          return tembus / (kanvas.width * kanvas.height);
+        });
+        expect(porsiTembus, `${seksi} foto ${String(index)} disajikan tanpa alfa`).toBeGreaterThan(
+          0.02,
+        );
+
+        // Tidak ada panel yang dilukis di belakang foto: tanpa latar, tanpa bingkai, tanpa bayangan.
+        const pembungkus = await gambar.evaluate((node) => {
+          const figure = node.closest("figure");
+          if (figure === null) return null;
+          const gaya = getComputedStyle(figure);
+          return {
+            latar: gaya.backgroundColor,
+            bingkai: gaya.borderTopWidth,
+            bayangan: gaya.boxShadow,
+          };
+        });
+        expect(pembungkus?.latar, `${seksi} melukis latar di belakang foto`).toMatch(
+          /rgba\(0, 0, 0, 0\)|transparent/u,
+        );
+        expect(pembungkus?.bingkai, `${seksi} memakai bingkai`).toBe("0px");
+        expect(pembungkus?.bayangan, `${seksi} memakai bayangan`).toBe("none");
+      }
+    }
+  });
+
   test("alur editorial produk: hero, pita, manfaat, penawaran", async ({ page }) => {
     await page.goto("/produk");
 

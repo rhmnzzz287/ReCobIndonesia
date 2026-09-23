@@ -52,13 +52,12 @@ export function ProductHero(): ReactNode {
           </div>
 
           <figure
-            className="overflow-hidden rounded-xl border border-border bg-surface"
             data-reveal=""
             style={{ "--reveal-delay": "120ms" } as CSSProperties}
           >
             <Image
               alt={copy.productStory.heroPhotoAlt}
-              className="h-auto w-full object-cover"
+              className="h-auto w-full object-contain"
               height={932}
               priority
               sizes="(min-width: 1024px) 560px, 92vw"
