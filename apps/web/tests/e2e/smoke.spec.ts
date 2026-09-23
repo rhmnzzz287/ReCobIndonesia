@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { copy } from "../../content/copy";
 
 test.describe("prototipe ReCob.id", () => {
   test("enam halaman balas 200 dan punya judul utama", async ({ page }) => {
@@ -103,6 +104,27 @@ test.describe("prototipe ReCob.id", () => {
     await expect
       .poll(async () => (await photo.boundingBox())?.y ?? 0)
       .toBeGreaterThan((await hero.getByRole("heading", { level: 1 }).boundingBox())?.y ?? 0);
+  });
+
+  test("pita proses terbaca sekali dan berhenti saat gerak dikurangi", async ({ page }) => {
+    await page.goto("/produk");
+
+    const pita = page.locator("#pita-alur");
+    await expect(pita).toHaveCount(1);
+
+    // Daftar aksesibel: pembaca layar mendengar alur proses lengkap, tepat sekali.
+    const daftar = page.locator("#pita-alur-daftar li");
+    await expect(daftar).toHaveCount(copy.productStory.marquee.length);
+    await expect(daftar.first()).toContainText(copy.productStory.marquee[0] ?? "");
+
+    // Salinan yang bergerak hanya hiasan: disembunyikan dari pembaca layar.
+    const trek = page.locator("#pita-alur-trek");
+    await expect(trek).toHaveAttribute("aria-hidden", "true");
+    expect(await trek.evaluate((node) => getComputedStyle(node).animationName)).toBe("marquee");
+
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.reload();
+    expect(await trek.evaluate((node) => getComputedStyle(node).animationName)).toBe("none");
   });
 
   test("bilah kemajuan gulir hanya ada di halaman produk dan lebarnya bertambah", async ({
