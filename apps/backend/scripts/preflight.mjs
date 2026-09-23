@@ -44,7 +44,7 @@ if (dbUrl === undefined || dbUrl.length === 0) {
 }
 
 const sql = "select table_schema || '.' || table_name as name from information_schema.tables " +
-  "where table_schema not in ('pg_catalog','information_schema') order by 1";
+  "where table_schema = 'public' order by 1";
 
 const client = new Client({ connectionString: dbUrl, connectionTimeoutMillis: 8000 });
 await client.connect();

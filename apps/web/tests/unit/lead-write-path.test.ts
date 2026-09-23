@@ -121,6 +121,18 @@ describe("jalur tulis lead terhadap stub PostgREST", () => {
     expect(body.p_utm).toEqual({ source: "tiktok" });
   });
 
+  it("menghilangkan argumen RPC opsional saat nilainya kosong", async () => {
+    rekaman = [];
+    balasan = { status: 200, body: [{ lead_id: "33333333-3333-3333-3333-333333333333", created: true }] };
+
+    const { submitLead } = await muatSubmitLead();
+    await submitLead({ ...masukan, kudSlug: undefined, message: undefined });
+
+    const body = JSON.parse(rekaman[0]?.body ?? "{}") as Record<string, unknown>;
+    expect(body).not.toHaveProperty("p_kud_slug");
+    expect(body).not.toHaveProperty("p_message");
+  });
+
   it("menerjemahkan respons created=false menjadi duplicate", async () => {
     rekaman = [];
     balasan = { status: 200, body: [{ lead_id: "22222222-2222-2222-2222-222222222222", created: false }] };
