@@ -135,6 +135,41 @@ test.describe("prototipe ReCob.id", () => {
     await expect(page.locator("#mitra")).toHaveCount(0);
   });
 
+  test("produk utuh di ponsel dan desktop tanpa luber horizontal", async ({ page }) => {
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/produk");
+
+      await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+      for (const id of ["produk-hero", "pita-alur", "formulasi", "cara-pakai", "perbandingan"]) {
+        await expect(page.locator(`#${id}`)).toHaveCount(1);
+      }
+
+      // Tidak ada luber horizontal: badan halaman tidak lebih lebar dari viewport.
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow, `lebar ${String(width)} px luber`).toBeLessThanOrEqual(1);
+
+      // Foto produk benar-benar termuat, bukan kotak kosong.
+      const foto = await page
+        .locator("#produk-hero img")
+        .evaluateAll((nodes) => nodes.map((node) => (node as HTMLImageElement).naturalWidth));
+      expect(foto.length).toBeGreaterThan(0);
+      for (const lebar of foto) expect(lebar).toBeGreaterThan(0);
+
+      // Ajakan bisa difokus papan tik dan anchor formulasi mendarat di seksi yang benar.
+      await page.keyboard.press("Tab");
+      await page.locator('#produk-hero a[href="/kontak#form-sampel"]').first().focus();
+      await expect(page.locator('#produk-hero a[href="/kontak#form-sampel"]').first()).toBeFocused();
+
+      await page.goto("/produk#formulasi");
+      await expect
+        .poll(async () => page.locator("#formulasi").evaluate((node) => node.getBoundingClientRect().top))
+        .toBeLessThan(200);
+    }
+  });
+
   test("pita proses terbaca sekali dan berhenti saat gerak dikurangi", async ({ page }) => {
     await page.goto("/produk");
 
