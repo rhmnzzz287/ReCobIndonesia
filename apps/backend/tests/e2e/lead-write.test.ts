@@ -16,7 +16,7 @@ import { Client } from "pg";
  *   4. peran `anon` dihormati: GRANT dan RLS benar-benar dievaluasi
  *
  * Dijalankan dengan:
- *   SUPABASE_DB_URL=... npm run test:e2e:lead --workspace @recobid/backend
+ *   SUPABASE_DB_URL=... npm run test:e2e --workspace @recobid/backend
  */
 
 const DB_URL = process.env.SUPABASE_DB_URL;

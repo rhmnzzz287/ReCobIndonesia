@@ -11,7 +11,7 @@
 
 Tes di `tests/rls/` berbicara langsung ke Postgres: policy RLS, `GRANT`, dan trigger tidak dapat
 diuji dengan mock. Mesin ini tidak memakai Docker, jadi `supabase start` tidak tersedia.
-`dev-db.mjs` menjalankan Postgres 18 tertanam di `.dev-db/` (tidak di-commit).
+`dev-db.mjs` menjalankan Postgres 18 tertanam di `~/.cache/recobid-dev-db` (di luar repo, tidak di-commit).
 
 ```bash
 # terminal 1 — biarkan berjalan

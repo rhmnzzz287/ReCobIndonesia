@@ -102,8 +102,7 @@ for (const e of enums) enumNames.add(e.typname);
 
 const functions = (
   await client.query(
-    `select p.proname, pg_get_function_arguments(p.oid) as args,
-            pg_get_function_result(p.oid) as result
+    `select p.proname, pg_get_function_arguments(p.oid) as args
      from pg_proc p join pg_namespace n on n.oid = p.pronamespace
      where n.nspname = 'public' and p.proname in ('submit_sample_lead')
      order by p.proname`,
@@ -153,12 +152,6 @@ for (const table of tables) {
   }));
 }
 await client.end();
-
-const pascal = (snake) =>
-  snake
-    .split("_")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
 
 const parts = [];
 parts.push("/* BERKAS INI DIHASILKAN. Jangan diedit tangan. */");

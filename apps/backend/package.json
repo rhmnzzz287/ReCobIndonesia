@@ -18,8 +18,7 @@
     "demo:export": "node scripts/export-demo-data.mjs",
     "db:gen-types:local": "node scripts/gen-types-local.mjs",
     "test:e2e": "vitest run tests/e2e",
-    "fn:secrets": "node scripts/fn-secrets.mjs",
-    "fn:test": "vitest run tests/unit/notify-signature.test.ts"
+    "fn:secrets": "node scripts/fn-secrets.mjs"
   },
   "devDependencies": {
     "@types/node": "26.6.2",
@@ -28,7 +27,6 @@
     "supabase": "2.117.0",
     "typescript": "7.0.2",
     "vitest": "5.0.1",
-    "yaml": "2.9.1",
     "embedded-postgres": "18.4.0-beta.17"
   }
 }

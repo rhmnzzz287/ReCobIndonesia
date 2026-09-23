@@ -27,3 +27,8 @@ apps/web/CLAUDE.md
 
 # Vercel CLI (kredensial project lokal)
 .vercel/
+
+# Arsip desain (besar, tidak untuk repo)
+Docs/*.zip
+Docs/Untitled design/
+Docs/sapi/

@@ -3,7 +3,7 @@ import { Client } from "pg";
 /**
  * Tes RLS berbicara langsung ke Postgres. Tanpa Docker, tidak ada basis data lokal dari
  * Supabase CLI, jadi tes ini menuntut `SUPABASE_DB_URL` yang benar-benar dapat dijangkau
- * (project hosted atau cluster Postgres lokal — lihat `scripts/dev-db/README.md`).
+ * (project hosted atau cluster Postgres lokal — lihat `apps/backend/scripts/README.md`).
  */
 export function databaseUrl(): string {
   const url = process.env.SUPABASE_DB_URL;
