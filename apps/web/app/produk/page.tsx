@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/blocks/json-ld";
-import { PageHeader } from "@/components/blocks/page-header";
-import { Product } from "@/components/sections/product";
+import { ScrollProgress } from "@/components/blocks/scroll-progress";
+import { ProductComparison } from "@/components/sections/product-comparison";
+import { ProductHero } from "@/components/sections/product-hero";
+import { ProductIngredients } from "@/components/sections/product-ingredients";
+import { ProductMarquee } from "@/components/sections/product-marquee";
+import { ProductUsage } from "@/components/sections/product-usage";
 import { copy } from "@/content/copy";
 import { getPrimaryProduct } from "@/lib/data/products";
 import { env } from "@/lib/env";
@@ -14,12 +18,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/produk" },
 };
 
-/** S2 — komposisi tiga bahan, spesifikasi karung 50 kg, dan cara ganti pakan 7 hari. */
+/**
+ * S2 — halaman produk, disusun mengikuti irama halaman pendarat: panggung gelap berfoto, pita alur
+ * bergulir, lalu tiga bidang terang yang masing-masing menjawab satu pertanyaan (apa bahannya,
+ * bagaimana memakainya, berapa hematnya).
+ *
+ * `PageHeader` tidak lagi dipakai di sini: judul halaman sudah dibawa panggung pembuka, dan
+ * menambah kepala halaman kedua akan membuat pengunjung membaca dua judul sebelum sampai ke bahan.
+ */
 export default async function ProdukPage(): Promise<ReactNode> {
   const { product } = await getPrimaryProduct();
 
   return (
-    <main id="konten">
+    <>
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -39,8 +50,14 @@ export default async function ProdukPage(): Promise<ReactNode> {
           ],
         }}
       />
-      <PageHeader {...copy.pages.produk} />
-      <Product />
-    </main>
+      <ScrollProgress />
+      <main id="konten">
+        <ProductHero />
+        <ProductMarquee />
+        <ProductIngredients />
+        <ProductUsage />
+        <ProductComparison />
+      </main>
+    </>
   );
 }

@@ -77,6 +77,21 @@ html {
 }
 
 /*
+ * Pita alur produk (components/sections/product-marquee.tsx). Trek berisi daftar yang digandakan,
+ * lalu digeser separuh lebarnya: tepat saat salinan pertama habis, animasi mengulang dan
+ * sambungannya tidak terlihat. Nilainya negatif 50%, bukan lebar piksel, supaya tetap benar di
+ * lebar layar apa pun.
+ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
  * Gerak yang dikurangi: seluruh transisi transformasi dimatikan dan elemen
  * diungkap seketika (Docs/DESIGN.md, bagian Motion).
  */
@@ -90,5 +105,10 @@ html {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  /* Pita alur berhenti bergulir; isinya tetap terbaca utuh karena tidak ada yang disembunyikan. */
+  .animate-\[marquee_38s_linear_infinite\] {
+    animation: none;
   }
 }

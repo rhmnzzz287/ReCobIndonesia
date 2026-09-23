@@ -100,14 +100,10 @@ export const idCopy = {
   },
   product: {
     eyebrow: "Bahan & Kemasan",
-    title: "Isi Karung ReCob.id",
-    intro:
-      "Pakan ini dibuat dari tiga bahan yang difermentasi, lalu dicetak jadi pelet.",
     compositionTitle: "Tiga Bahan Utama",
     compositionCaption: "Total Formula: 100% Terfermentasi",
     compositionReference:
       "Rujukan Ilmiah: Mengacu pada metodologi biokonversi Rumondang et al. (2023) dan evaluasi efektivitas ampas tahu terfermentasi Halawa (2026).",
-    specTitle: "Kemasan & Daya Simpan",
     photoAlt:
       "Karung pakan ReCob.id isi 50 kg berisi pelet konsentrat sapi perah.",
     specs: [
@@ -135,6 +131,92 @@ export const idCopy = {
       { day: "H 5–6", share: "75%", label: "ReCob" },
       { day: "H 7+", share: "100%", label: "Penuh" },
     ],
+  },
+  productStory: {
+    heroBadge: "Pakan Pelet Sapi Perah",
+    heroTitle: "Tiga Bahan Lokal, Satu Karung Pelet Bernutrisi",
+    heroLead:
+      "Bonggol jagung dan ampas tahu difermentasi, dicetak jadi pelet, lalu dikirim ke pos penampungan susu terdekat.",
+    heroCaption:
+      "Satu karung 50 kg, satu harga tetap, dibayar dengan potong setoran susu mingguan.",
+    heroScrollLabel: "Turun untuk melihat bahan",
+    /*
+     * Nama berkas dan teks alternatif sengaja netral. Dua foto ini berasal dari `Docs/sapi/5.svg`
+     * dan `Docs/sapi/6.svg`, dan isinya belum diverifikasi pemilik produk; menulis "karung 50 kg"
+     * di alt akan mengarang keterangan bagi pembaca layar bila gambarnya ternyata hal lain.
+     */
+    heroPhotoAlt: "Produk ReCob.id",
+    usagePhotoAlt: "Produk ReCob.id dalam penyimpanan gudang",
+    figuresTitle: "Produk dalam Angka",
+    figures: [
+      { value: 3, label: "Bahan utama" },
+      { value: 50, suffix: " kg", label: "Isi satu karung" },
+      { value: 6, suffix: " bulan", label: "Daya simpan gudang" },
+      { value: 12, prefix: "< ", suffix: "%", label: "Batas kadar air" },
+    ],
+    marqueeTitle: "Alur Singkat",
+    marquee: [
+      "Bonggol jagung dikumpulkan dari petani sekitar",
+      "Difermentasi bersama ampas tahu",
+      "Dicetak jadi pelet dan dikeringkan",
+      "Dikemas dalam karung 50 kg",
+      "Diantar ke pos penampungan susu KUD",
+      "Tagihan dipotong dari slip susu mingguan",
+    ],
+    ingredientsTitle: "Bahan dan Fungsinya",
+    ingredientsIntro:
+      "Tiga bahan, tiga peran. Pilih satu bahan untuk melihat fungsinya di dalam ransum.",
+    ingredientSelectLabel: "Pilih bahan",
+    ingredientShareLabel: "Porsi dalam formula:",
+    usageTitle: "Cara Memberi ke Sapi",
+    usageIntro: "Lima langkah, dari membuka karung sampai menakar untuk satu ekor.",
+    usageSteps: [
+      {
+        title: "Buka Karung di Tempat Kering",
+        body: "Simpan karung di gudang pakan yang terlindung dan berventilasi. Tutup rapat kembali setelah dipakai.",
+      },
+      {
+        title: "Takaran per Ekor",
+        body: "Mulai dari 4 kg per ekor per hari untuk sapi perah produktif. Sesuaikan dengan bobot dan produksi susu.",
+      },
+      {
+        title: "Sediakan Air Minum",
+        body: "Pastikan air bersih tersedia terus-menerus. Pelet kering membuat sapi minum lebih banyak.",
+      },
+      {
+        title: "Beri Bersama Hijauan",
+        body: "ReCob.id adalah konsentrat penguat, bukan pengganti hijauan. Sapi tetap butuh serat panjang.",
+      },
+      {
+        title: "Amati 3 Hari Pertama",
+        body: "Perhatikan nafsu makan dan kotoran sapi. Hentikan dan hubungi tim kami bila ada perubahan yang mengkhawatirkan.",
+      },
+    ],
+    specTitle: "Spesifikasi Kemasan",
+    storageTitle: "Cara Menyimpan",
+    storageIntro:
+      "Pelet menyerap uap air. Empat kebiasaan berikut menjaga mutunya sampai karung terakhir.",
+    storageSteps: [
+      "Simpan di alas kayu atau palet, jangan langsung di lantai.",
+      "Jauhkan dari dinding dan sumber air.",
+      "Tutup kembali karung yang sudah dibuka.",
+      "Pakai karung yang lebih lama terlebih dahulu.",
+    ],
+    comparisonTitle: "Perbandingan Sederhana",
+    comparisonColumns: ["Yang Dibandingkan", "ReCob.id", "Pakan Pabrik"],
+    comparisonRows: [
+      { criteria: "Harga karung 50 kg", recob: "Rp160.000", conventional: "Rp180.000 - Rp200.000" },
+      { criteria: "Setara per kilogram", recob: "Rp3.200", conventional: "Rp3.600 - Rp4.000" },
+      { criteria: "Waktu tunggu stok", recob: "Diantar ke pos susu", conventional: "Antre di toko pakan" },
+    ],
+    comparisonCaption:
+      "Harga pakan pabrik diambil dari titik penampungan susu KUD di Pulau Jawa. Rinciannya ada di halaman kalkulator.",
+    comparisonCta: "Buka Kalkulator Penghematan",
+    closingTitle: "Siap Diuji di Kandang Anda",
+    closingBody:
+      "Setiap peternak anggota KUD dengan minimal dua ekor sapi perah produktif berhak atas satu paket sampel gratis 2-3 kg.",
+    closingCta: "Klaim Sampel Gratis",
+    closingSecondary: "Tanya Lewat Halaman Kontak",
   },
   costCompare: {
     eyebrow: "Harga Pakan Dibandingkan",

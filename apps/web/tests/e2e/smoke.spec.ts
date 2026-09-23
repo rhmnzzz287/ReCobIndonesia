@@ -44,6 +44,86 @@ test.describe("prototipe ReCob.id", () => {
     await expect(page.locator("#formulasi")).toBeVisible();
   });
 
+  test("halaman produk menyusun seksi pendarat dan chip bahan yang bisa diklik", async ({ page }) => {
+    await page.goto("/produk");
+
+    // Panggung pembuka menggantikan kepala halaman biasa: tetap harus ada satu H1.
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    for (const id of ["produk-hero", "formulasi", "cara-pakai", "perbandingan"]) {
+      await expect(page.locator(`#${id}`)).toHaveCount(1);
+    }
+
+    // Bilah angka naik dari nol; setelah animasi selesai nilainya harus angka akhir yang sama
+    // dengan naskah, bukan angka yang tertinggal di tengah jalan.
+    await expect(page.locator("#angka-produk + dl")).toContainText("50 kg");
+
+    // Tab bahan: memilih bahan lain harus mengganti isi panel, bukan sekadar memindahkan penanda.
+    const tabs = page.locator('#formulasi [role="tab"]');
+    await expect(tabs).toHaveCount(3);
+    await expect(tabs.first()).toHaveAttribute("aria-selected", "true");
+    const panel = page.getByTestId("panel-bahan");
+    const firstPanel = await panel.innerText();
+    await tabs.nth(1).click();
+    await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+    await expect.poll(async () => panel.innerText()).not.toBe(firstPanel);
+
+    // Tidak ada emoji di halaman baru (PRD Bagian 8).
+    const body = (await page.locator("body").innerText()).normalize("NFC");
+    expect(/[\u{1F000}-\u{1FAFF}\u2600-\u27BF]/u.test(body)).toBe(false);
+  });
+
+  test("hero produk editorial dengan foto dan ajakan", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/produk");
+
+    const hero = page.locator("#produk-hero");
+    await expect(hero).toHaveCount(1);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+
+    const photo = hero.getByRole("img", { name: "Produk ReCob.id", exact: true });
+    await expect(photo).toBeVisible();
+    await expect(hero.getByRole("link", { name: /Klaim Sampel Gratis/i })).toBeVisible();
+    await expect(hero.getByRole("link", { name: /Kalkulator/i })).toBeVisible();
+
+    // Panggung editorial terang: bukan lagi foto berlatar gelap dengan selubung.
+    const luminance = await hero.evaluate((node) => {
+      const channels = (getComputedStyle(node).backgroundColor.match(/\d+/gu) ?? []).map(Number);
+      const [r = 0, g = 0, b = 0] = channels;
+      return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+    });
+    expect(luminance).toBeGreaterThan(0.5);
+
+    // Desktop: salinan dan foto berdampingan.
+    const heading = await hero.getByRole("heading", { level: 1 }).boundingBox();
+    const photoBox = await photo.boundingBox();
+    expect(photoBox?.x ?? 0).toBeGreaterThan((heading?.x ?? 0) + (heading?.width ?? 0));
+
+    // Ponsel: foto turun ke bawah salinan, tidak berdesakan di belakang teks.
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect
+      .poll(async () => (await photo.boundingBox())?.y ?? 0)
+      .toBeGreaterThan((await hero.getByRole("heading", { level: 1 }).boundingBox())?.y ?? 0);
+  });
+
+  test("bilah kemajuan gulir hanya ada di halaman produk dan lebarnya bertambah", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.locator('div[aria-hidden="true"] > span.bg-accent')).toHaveCount(0);
+
+    await page.goto("/produk");
+    const bar = page.locator('div[aria-hidden="true"].fixed > span.bg-accent');
+    await expect(bar).toHaveCount(1);
+
+    const before = await bar.evaluate((node) => (node as HTMLElement).style.width);
+    await page.evaluate(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await expect
+      .poll(async () => bar.evaluate((node) => (node as HTMLElement).style.width))
+      .not.toBe(before);
+  });
+
   test("kalkulator menghitung ulang dan membawa jumlah ternak ke formulir sampel", async ({
     page,
   }) => {
