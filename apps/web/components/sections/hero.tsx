@@ -29,7 +29,11 @@ export async function Hero(): Promise<ReactNode> {
   ];
 
   return (
-    <Section className="rounded-b-arc pb-2xl lg:pb-3xl" id="hero" tone="lime">
+    <Section
+      className="rounded-b-arc pb-2xl pt-[calc(var(--header-h)+var(--spacing-lg))] lg:pb-3xl lg:pt-[calc(var(--header-h)+var(--spacing-xl))]"
+      id="hero"
+      tone="lime"
+    >
       <Container>
         <p className="flex items-center gap-xs type-caption text-ink-deep">
           <ShieldCheck aria-hidden="true" size={20} strokeWidth={1.75} />

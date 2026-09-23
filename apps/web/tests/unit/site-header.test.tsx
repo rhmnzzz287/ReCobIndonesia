@@ -63,4 +63,23 @@ describe("SiteHeader", () => {
       "hidden",
     );
   });
+
+  /**
+   * Pulau mengambang: bar pembungkus transparan dan hanya pulau beralas `surface` yang terlihat,
+   * jadi isi halaman tidak pernah membayangi tautan. Tinggi pulau tetap di segala posisi gulir.
+   */
+  it("menyusun pulau mengambang beralas surface", () => {
+    renderHeader();
+    const header = document.querySelector("header");
+    expect(header?.className).toContain("fixed");
+
+    const island = header?.querySelector("header > div");
+    expect(island?.className).toContain("bg-surface");
+    expect(island?.className).toContain("rounded-sm");
+    expect(island?.className).toContain("shadow-");
+
+    Object.defineProperty(window, "scrollY", { configurable: true, value: 640 });
+    fireEvent.scroll(window);
+    expect(island?.className).toContain("bg-surface");
+  });
 });

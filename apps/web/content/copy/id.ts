@@ -50,8 +50,6 @@ export const idCopy = {
     highlightFormulationLabel: "Bahan",
     highlightFormulationValue: "3 Bahan",
     highlightFormulationNote: "Bonggol, tahu, tetes tebu",
-    imageAlt:
-      "Karung pakan konsentrat ReCob.id 50 kg dan pelet hasil fermentasi bonggol jagung",
   },
   problem: {
     eyebrow: "Masalah Peternak",
@@ -110,6 +108,8 @@ export const idCopy = {
     compositionReference:
       "Rujukan Ilmiah: Mengacu pada metodologi biokonversi Rumondang et al. (2023) dan evaluasi efektivitas ampas tahu terfermentasi Halawa (2026).",
     specTitle: "Kemasan & Daya Simpan",
+    photoAlt:
+      "Karung pakan ReCob.id isi 50 kg berisi pelet konsentrat sapi perah.",
     specs: [
       {
         label: "Isi Karung:",

@@ -16,7 +16,7 @@ export function PageHeader({ eyebrow, title, intro }: PageHeaderProps): ReactNod
   return (
     <div className="border-b border-border bg-cream">
       <Container>
-        <div className="max-w-[68ch] py-2xl">
+        <div className="max-w-[68ch] pb-2xl pt-[calc(var(--header-h)+var(--spacing-lg))] lg:pt-[calc(var(--header-h)+var(--spacing-xl))]">
           <p className="type-label-md uppercase text-primary">{eyebrow}</p>
           <h1 className="mt-sm type-h1 text-ink">{title}</h1>
           <p className="mt-md type-body-lg text-text-secondary">{intro}</p>

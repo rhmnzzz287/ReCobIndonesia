@@ -9,6 +9,30 @@ html {
 }
 
 /*
+ * Jarak dari tepi atas viewport ke tepi bawah pulau navigasi mengambang: `pt` + tinggi pulau di
+ * `components/blocks/site-header.tsx` (`pt-sm`+`h-16`, lalu `pt-md`+`h-20`). Seksi pertama tiap
+ * halaman memakainya sebagai jarak atas supaya isinya tidak tertutup pulau, sedangkan latar
+ * halaman sengaja dibiarkan mengalir di belakang pulau.
+ */
+:root {
+  --header-h: 4.75rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --header-h: 6rem;
+  }
+}
+
+/*
+ * Sasaran tautan anchor digeser turun setinggi bilah mengambang; tanpa ini judul bagian
+ * (mis. #form-sampel, #kalkulator) mendarat tepat di bawah bilah dan tertutup.
+ */
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+
+/*
  * Tautan "lewati ke konten": tersembunyi sampai fokus keyboard tiba, lalu muncul di atas
  * header. Tanpa ini pengguna papan tik harus menekan Tab melewati seluruh navigasi di
  * setiap halaman.

@@ -3,9 +3,9 @@
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 import { copy } from "@/content/copy";
 import { cn } from "@/lib/utils/cn";
 
@@ -26,17 +26,34 @@ const SAMPLE_HREF = "/kontak#form-sampel";
  * Header lengket untuk seluruh halaman. Komponen ini mengelola keadaan buka/tutup menu seluler
  * dan membaca naskahnya sendiri dari lapisan konten, sehingga layout akar cukup merendernya.
  *
+ * Susunan mengikuti nufeed.co.id: pulau mengambang berisi lambang di kiri, tautan di tengah, dan
+ * ajakan di kanan. Pulau itu melayang di atas halaman — bar pembungkusnya transparan dan hanya
+ * `--header-h` yang memisahkannya dari tepi atas — sehingga isi halaman lewat di belakangnya.
+ * Kolom kiri/kanan memakai `1fr` supaya menu benar-benar berada di tengah, bukan hanya tampak di
+ * tengah karena lebar kedua sisi kebetulan seimbang.
+ *
+ * Pengakalan tabrakan: pulau ini berlatar `surface` penuh (bukan kaca transparan) dan tetap
+ * setinggi itu di segala posisi gulir, sama seperti nufeed — jadi teks halaman yang lewat di
+ * belakangnya tidak pernah mengganggu baca. Jarak atas setiap seksi pertama diatur `--header-h`
+ * di `app/globals.css`, dan sasaran anchor memakai `scroll-margin-top` yang sama sehingga judul
+ * bagian tidak pernah tertutup pulau.
+ *
  * Tinggi tautan 44 px mengikuti target sentuh DESIGN.md; menu seluler memakai satu tombol
  * dengan `aria-expanded` agar pembaca layar tahu keadaan panel.
  */
 export function SiteHeader(): ReactNode {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur">
-      <Container>
-        <div className="flex h-16 items-center justify-between gap-md md:h-20">
-          <Link className="flex items-center gap-sm" href="/">
+    <header className="fixed inset-x-0 top-0 z-50 px-lg pt-sm md:px-2xl md:pt-md">
+      <div
+        // Elevasi `raised` dari DESIGN.md; bayangan hijau nufeed tidak dipakai karena warnanya
+        // milik merek lain. Panel seluler menempel sebagai pulau kedua di bawahnya.
+        className="mx-auto flex h-16 w-full max-w-[1200px] items-center rounded-sm bg-surface px-md shadow-[0_1px_2px_rgba(13,18,22,0.06),0_8px_24px_rgba(13,18,22,0.06)] md:h-20 md:px-lg"
+      >
+        <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-sm md:gap-md">
+          <Link className="flex items-center gap-sm justify-self-start" href="/">
             <Image
               alt=""
               className="h-8 w-auto"
@@ -48,10 +65,19 @@ export function SiteHeader(): ReactNode {
             <span className="type-h3 text-ink">{copy.nav.brand}</span>
           </Link>
 
-          <nav aria-label={copy.nav.brand} className="hidden items-center gap-lg lg:flex">
+          <nav
+            aria-label={copy.nav.brand}
+            className="hidden items-center justify-self-center lg:flex"
+          >
             {NAV_LINKS.map((link) => (
               <Link
-                className="flex h-11 items-center type-body-sm text-text hover:text-primary"
+                aria-current={pathname === link.href ? "page" : undefined}
+                className={cn(
+                  "flex h-11 items-center rounded-sm px-xs type-label-md uppercase transition-colors",
+                  pathname === link.href
+                    ? "border-b-2 border-primary text-primary"
+                    : "text-text hover:bg-primary-soft hover:text-primary",
+                )}
                 href={link.href}
                 key={link.href}
               >
@@ -60,7 +86,7 @@ export function SiteHeader(): ReactNode {
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden justify-self-end lg:block">
             <ButtonLink href={SAMPLE_HREF} variant="accent">
               {copy.nav.sampleCta}
             </ButtonLink>
@@ -70,7 +96,7 @@ export function SiteHeader(): ReactNode {
             aria-controls="menu-utama"
             aria-expanded={open}
             aria-label={open ? copy.nav.closeLabel : copy.nav.menuLabel}
-            className="flex h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/35 lg:hidden"
+            className="col-start-3 flex h-11 w-11 items-center justify-center justify-self-end rounded-md text-ink hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/35 lg:hidden"
             onClick={() => {
               setOpen((current) => !current);
             }}
@@ -83,13 +109,16 @@ export function SiteHeader(): ReactNode {
             )}
           </button>
         </div>
-      </Container>
+      </div>
 
       <div
-        className={cn("border-t border-border bg-surface lg:hidden", open ? "block" : "hidden")}
+        className={cn(
+          "mx-auto mt-sm w-full max-w-[1200px] overflow-hidden rounded-sm bg-surface shadow-[0_1px_2px_rgba(13,18,22,0.06),0_8px_24px_rgba(13,18,22,0.06)] lg:hidden",
+          open ? "block" : "hidden",
+        )}
         id="menu-utama"
       >
-        <Container>
+        <div className="px-md">
           <nav aria-label={copy.nav.brand} className="flex flex-col py-sm">
             {NAV_LINKS.map((link) => (
               <Link
@@ -114,7 +143,7 @@ export function SiteHeader(): ReactNode {
               {copy.nav.sampleCta}
             </ButtonLink>
           </nav>
-        </Container>
+        </div>
       </div>
     </header>
   );

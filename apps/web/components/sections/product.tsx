@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { CompositionBar } from "@/components/blocks/composition-bar";
 import { CaptionNote } from "@/components/ui/caption-note";
@@ -27,21 +28,33 @@ export async function Product(): Promise<ReactNode> {
           </p>
         </div>
 
-        <div className="mt-2xl grid gap-xl md:grid-cols-2">
-          <div data-reveal="">
-            <h3 className="type-h3 text-ink">
-              {copy.product.compositionTitle}
-            </h3>
-            <div className="mt-md">
-              <CompositionBar ingredients={ingredients} />
-            </div>
-            <CaptionNote className="mt-md">
-              {copy.product.compositionCaption}
-            </CaptionNote>
-            <CaptionNote className="mt-xs">
-              {copy.product.compositionReference}
-            </CaptionNote>
+        <div className="mt-2xl" data-reveal="">
+          <h3 className="type-h3 text-ink">
+            {copy.product.compositionTitle}
+          </h3>
+          <div className="mt-md">
+            <CompositionBar ingredients={ingredients} />
           </div>
+          <CaptionNote className="mt-md">
+            {copy.product.compositionCaption}
+          </CaptionNote>
+          <CaptionNote className="mt-xs">
+            {copy.product.compositionReference}
+          </CaptionNote>
+        </div>
+
+        <div className="mt-2xl grid gap-xl md:grid-cols-2">
+          <figure data-reveal="">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-[420px]">
+              <Image
+                alt={copy.product.photoAlt}
+                className="object-contain"
+                fill
+                sizes="(min-width: 768px) 420px, 90vw"
+                src="/img/produk/karung-50kg.webp"
+              />
+            </div>
+          </figure>
           <div data-reveal="">
             <h3 className="type-h3 text-ink">{copy.product.specTitle}</h3>
             <p className="mt-md type-metric-md text-primary">
