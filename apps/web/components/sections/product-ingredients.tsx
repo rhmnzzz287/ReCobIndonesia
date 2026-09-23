@@ -19,7 +19,7 @@ export async function ProductIngredients(): Promise<ReactNode> {
   const { ingredients } = await getPrimaryProduct();
 
   return (
-    <Section id="formulasi" tone="cream">
+    <Section id="formulasi" tone="surface">
       <Container>
         <div className="max-w-[68ch]" data-reveal="">
           <p className="type-label-md uppercase text-primary">{copy.product.eyebrow}</p>

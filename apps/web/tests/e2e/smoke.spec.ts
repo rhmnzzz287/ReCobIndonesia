@@ -106,6 +106,35 @@ test.describe("prototipe ReCob.id", () => {
       .toBeGreaterThan((await hero.getByRole("heading", { level: 1 }).boundingBox())?.y ?? 0);
   });
 
+  test("alur editorial produk: hero, pita, manfaat, penawaran", async ({ page }) => {
+    await page.goto("/produk");
+
+    // Urutan DOM yang dibaca pengunjung dari atas ke bawah.
+    const urutan = await page
+      .locator("main > *")
+      .evaluateAll((nodes) => nodes.map((node) => node.id));
+    expect(urutan).toEqual([
+      "produk-hero",
+      "pita-alur",
+      "formulasi",
+      "cara-pakai",
+      "perbandingan",
+    ]);
+
+    // Manfaat dan formulasi tetap bersumber dari data produk, bukan angka baru.
+    await expect(page.locator("#formulasi [role=\"tab\"]")).toHaveCount(3);
+    await expect(page.locator("#cara-pakai")).toContainText("Rp160.000");
+
+    // Penawaran mudah ditemukan: harga, syarat sampel, dan dua ajakan penutup.
+    const penutup = page.locator("#perbandingan");
+    await expect(penutup.getByRole("link", { name: /Klaim Sampel Gratis/i })).toBeVisible();
+    await expect(penutup.getByRole("link", { name: /Halaman Kontak/i })).toBeVisible();
+
+    // Tidak ada testimoni atau logo mitra yang dikarang: halaman ini tidak memuat keduanya.
+    await expect(page.locator("blockquote")).toHaveCount(0);
+    await expect(page.locator("#mitra")).toHaveCount(0);
+  });
+
   test("pita proses terbaca sekali dan berhenti saat gerak dikurangi", async ({ page }) => {
     await page.goto("/produk");
 

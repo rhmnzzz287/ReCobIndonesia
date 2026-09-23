@@ -20,8 +20,8 @@ export function ProductMarquee(): ReactNode {
   const items = copy.productStory.marquee;
 
   return (
-    <section aria-labelledby="pita-alur" className="border-y border-border bg-ink py-md">
-      <h2 className="sr-only" id="pita-alur">
+    <section aria-labelledby="pita-alur-judul" className="border-y border-border bg-ink py-md" id="pita-alur">
+      <h2 className="sr-only" id="pita-alur-judul">
         {copy.productStory.marqueeTitle}
       </h2>
 

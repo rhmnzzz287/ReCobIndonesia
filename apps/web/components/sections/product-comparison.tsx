@@ -18,7 +18,7 @@ export function ProductComparison(): ReactNode {
   const [criteria, recob, conventional] = copy.productStory.comparisonColumns;
 
   return (
-    <Section id="perbandingan" tone="paper">
+    <Section id="perbandingan" tone="surface">
       <Container>
         <div className="max-w-[68ch]" data-reveal="">
           <p className="type-label-md uppercase text-primary">{copy.costCompare.eyebrow}</p>

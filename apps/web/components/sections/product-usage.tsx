@@ -7,17 +7,17 @@ import { getPrimaryProduct } from "@/lib/data/products";
 import { formatIdr } from "@/lib/utils/format";
 
 /**
- * Seksi gelap: cara memberi sapi, kemasan, dan cara menyimpan.
+ * Cara memberi sapi, kemasan, dan cara menyimpan.
  *
- * Tiga blok dalam satu permukaan `ink-deep` supaya halaman punya jeda terang-gelap-terang; tanpa
- * jeda ini halaman produk jadi satu bidang krem sepanjang empat layar. Foto gudang memakai
+ * Ketiga blok ini berada di bidang terang supaya seluruh halaman produk terbaca sebagai satu alur
+ * editorial; jeda gelapnya sudah dibawa pita alur tepat di atasnya. Foto gudang memakai
  * `object-cover` pada kotak bersisi tetap, bukan `fill`, karena tingginya ditentukan tata letak.
  */
 export async function ProductUsage(): Promise<ReactNode> {
   const { product } = await getPrimaryProduct();
 
   return (
-    <Section id="cara-pakai" tone="ink">
+    <Section id="cara-pakai" tone="paper">
       <Container>
         <div className="grid gap-2xl lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <figure className="overflow-hidden rounded-lg" data-reveal="">
@@ -32,20 +32,20 @@ export async function ProductUsage(): Promise<ReactNode> {
           </figure>
 
           <div data-reveal="" style={{ "--reveal-delay": "100ms" } as CSSProperties}>
-            <h2 className="type-h2 text-surface">{copy.productStory.usageTitle}</h2>
-            <p className="mt-md max-w-[56ch] type-body-md text-surface/85">
+            <h2 className="type-h2 text-ink">{copy.productStory.usageTitle}</h2>
+            <p className="mt-md max-w-[56ch] type-body-md text-text-secondary">
               {copy.productStory.usageIntro}
             </p>
 
-            <ol className="mt-xl flex flex-col divide-y divide-surface/15">
+            <ol className="mt-xl flex flex-col divide-y divide-border">
               {copy.productStory.usageSteps.map((step, index) => (
                 <li className="flex gap-md py-md" key={step.title}>
-                  <span className="type-mono-data text-accent">
+                  <span className="type-mono-data text-primary">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="type-h3 text-surface">{step.title}</h3>
-                    <p className="mt-2xs type-body-sm text-surface/80">{step.body}</p>
+                    <h3 className="type-h3 text-ink">{step.title}</h3>
+                    <p className="mt-2xs type-body-sm text-text-secondary">{step.body}</p>
                   </div>
                 </li>
               ))}
@@ -55,7 +55,7 @@ export async function ProductUsage(): Promise<ReactNode> {
 
         <div className="mt-3xl grid gap-2xl lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
           <figure
-            className="flex flex-col items-center justify-center rounded-lg bg-surface/5 p-lg"
+            className="flex flex-col items-center justify-center rounded-lg bg-surface p-lg"
             data-reveal=""
           >
             <Image
@@ -69,29 +69,29 @@ export async function ProductUsage(): Promise<ReactNode> {
           </figure>
 
           <div data-reveal="" style={{ "--reveal-delay": "100ms" } as CSSProperties}>
-            <h2 className="type-h3 text-accent">{copy.productStory.specTitle}</h2>
-            <p className="mt-xs type-metric-md text-surface">{formatIdr(product.priceIdr)}</p>
-            <dl className="mt-md divide-y divide-surface/15">
+            <h2 className="type-h3 text-primary">{copy.productStory.specTitle}</h2>
+            <p className="mt-xs type-metric-md text-ink">{formatIdr(product.priceIdr)}</p>
+            <dl className="mt-md divide-y divide-border">
               {copy.product.specs.map((spec) => (
                 <div className="flex justify-between gap-md py-sm" key={spec.label}>
-                  <dt className="type-body-sm text-surface/70">{spec.label}</dt>
-                  <dd className="max-w-[34ch] text-right type-body-sm text-surface">
+                  <dt className="type-body-sm text-text-secondary">{spec.label}</dt>
+                  <dd className="max-w-[34ch] text-right type-body-sm text-text">
                     {spec.value}
                   </dd>
                 </div>
               ))}
             </dl>
 
-            <h3 className="mt-xl type-h3 text-accent">{copy.productStory.storageTitle}</h3>
-            <p className="mt-xs type-body-sm text-surface/80">
+            <h3 className="mt-xl type-h3 text-primary">{copy.productStory.storageTitle}</h3>
+            <p className="mt-xs type-body-sm text-text-secondary">
               {copy.productStory.storageIntro}
             </p>
             <ul className="mt-md grid gap-sm sm:grid-cols-2">
               {copy.productStory.storageSteps.map((step) => (
-                <li className="flex gap-sm type-body-sm text-surface/90" key={step}>
+                <li className="flex gap-sm type-body-sm text-text" key={step}>
                   <span
                     aria-hidden="true"
-                    className="mt-xs h-2 w-2 shrink-0 rounded-pill bg-accent"
+                    className="mt-xs h-2 w-2 shrink-0 rounded-pill bg-primary"
                   />
                   {step}
                 </li>

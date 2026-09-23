@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 };
 
 /**
- * S2 — halaman produk, disusun mengikuti irama halaman pendarat: panggung gelap berfoto, pita alur
- * bergulir, lalu tiga bidang terang yang masing-masing menjawab satu pertanyaan (apa bahannya,
- * bagaimana memakainya, berapa hematnya).
+ * S2 — halaman produk, disusun mengikuti irama halaman pendarat: panggung terang berfoto, pita alur
+ * bergulir sebagai satu-satunya jeda gelap, lalu tiga bidang yang masing-masing menjawab satu
+ * pertanyaan (apa bahannya, bagaimana memakainya, berapa hematnya).
  *
  * `PageHeader` tidak lagi dipakai di sini: judul halaman sudah dibawa panggung pembuka, dan
  * menambah kepala halaman kedua akan membuat pengunjung membaca dua judul sebelum sampai ke bahan.
