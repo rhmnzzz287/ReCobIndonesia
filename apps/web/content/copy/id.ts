@@ -148,6 +148,8 @@ export const idCopy = {
     heroPhotoAlt: "Produk ReCob.id",
     usagePhotoAlt: "Produk ReCob.id dalam penyimpanan gudang",
     figuresTitle: "Produk dalam Angka",
+    figuresCaption:
+      "Empat angka ini adalah spesifikasi kemasan yang dirinci pada bagian cara pakai, bukan klaim hasil.",
     figures: [
       { value: 3, label: "Bahan utama" },
       { value: 50, suffix: " kg", label: "Isi satu karung" },

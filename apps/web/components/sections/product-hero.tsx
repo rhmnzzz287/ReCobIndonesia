@@ -86,6 +86,8 @@ export function ProductHero(): ReactNode {
               </div>
             ))}
           </dl>
+          {/* PRD §7.1: setiap angka wajib membawa sumbernya; di sini sumbernya spesifikasi kemasan. */}
+          <p className="mt-md type-caption text-text-secondary">{copy.productStory.figuresCaption}</p>
         </div>
       </Container>
     </Section>

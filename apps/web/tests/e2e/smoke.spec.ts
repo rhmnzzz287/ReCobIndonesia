@@ -86,6 +86,11 @@ test.describe("prototipe ReCob.id", () => {
     await expect(hero.getByRole("link", { name: /Klaim Sampel Gratis/i })).toBeVisible();
     await expect(hero.getByRole("link", { name: /Kalkulator/i })).toBeVisible();
 
+    // PRD §7.1: setiap angka wajib membawa sumbernya.
+    await expect(hero.locator("#angka-produk + dl + p")).toContainText(
+      copy.productStory.figuresCaption,
+    );
+
     // Panggung editorial terang: bukan lagi foto berlatar gelap dengan selubung.
     const luminance = await hero.evaluate((node) => {
       const channels = (getComputedStyle(node).backgroundColor.match(/\d+/gu) ?? []).map(Number);
