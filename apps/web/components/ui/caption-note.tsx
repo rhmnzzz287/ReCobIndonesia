@@ -22,20 +22,3 @@ export function CaptionNote({
     </p>
   );
 }
-
-/** Varian untuk bidang gelap/jenuh: latar tembus pandang, teks tetap terbaca. */
-export function CaptionNoteInverse({
-  children,
-  className,
-}: CaptionNoteProps): ReactNode {
-  return (
-    <p
-      className={cn(
-        "rounded-sm bg-surface/10 px-sm py-xs type-caption text-surface",
-        className,
-      )}
-    >
-      {children}
-    </p>
-  );
-}

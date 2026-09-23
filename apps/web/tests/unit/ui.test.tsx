@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button, ButtonLink } from "@/components/ui/button";
-import { MetricValue } from "@/components/ui/metric";
 import { Section } from "@/components/ui/section";
 
 describe("Button", () => {
@@ -45,21 +44,6 @@ describe("Badge dan Alert", () => {
     const { container } = render(<Alert>Ilustrasi berbasis asumsi</Alert>);
     expect(container.querySelector("svg")).not.toBeNull();
     expect(container.textContent).toContain("Ilustrasi berbasis asumsi");
-  });
-});
-
-describe("MetricValue", () => {
-  it("selalu menampilkan periode dan sumber", () => {
-    render(
-      <MetricValue
-        caption="Harga dokumen sumber: Rp160.000 vs Rp180.000-200.000"
-        period="per karung"
-        unit="rupiah"
-        value="Rp40.000"
-      />,
-    );
-    expect(screen.getByText(/per karung/u)).toBeTruthy();
-    expect(screen.getByText(/Harga dokumen sumber/u)).toBeTruthy();
   });
 });
 

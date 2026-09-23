@@ -39,5 +39,3 @@ export const env = {
   whatsappUrl:
     whatsappNumber.length > 0 ? `https://wa.me/${whatsappNumber}` : null,
 } as const;
-
-export type Env = typeof env;
