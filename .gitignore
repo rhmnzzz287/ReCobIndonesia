@@ -32,3 +32,6 @@ apps/web/CLAUDE.md
 Docs/*.zip
 Docs/Untitled design/
 Docs/sapi/
+
+# Ekspor sesi agen (besar, bukan isi proyek)
+pi-session-*.html
