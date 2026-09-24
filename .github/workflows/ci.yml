@@ -75,6 +75,10 @@ jobs:
           if [ -n "$NEXT_PUBLIC_SUPABASE_URL" ]; then
             printf 'NEXT_PUBLIC_SUPABASE_URL=%s\nNEXT_PUBLIC_SUPABASE_ANON_KEY=%s\nDEMO_MODE=false\n' \
               "$NEXT_PUBLIC_SUPABASE_URL" "$NEXT_PUBLIC_SUPABASE_ANON_KEY" > apps/web/.env.local
+            # Playwright berjalan sebagai proses terpisah, jadi `.env.local` yang dibaca server
+            # Next tidak sampai ke `test.skip(process.env.NEXT_PUBLIC_SUPABASE_URL === ...)`.
+            # Tanpa baris ini, skenario lead nyata selalu dilewati walau secrets terisi.
+            printf 'NEXT_PUBLIC_SUPABASE_URL=%s\n' "$NEXT_PUBLIC_SUPABASE_URL" >> "$GITHUB_ENV"
           else
             printf 'DEMO_MODE=true\n' > apps/web/.env.local
           fi
