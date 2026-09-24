@@ -24,6 +24,10 @@ const SCAN_ROOTS = [
 const IGNORED_DIRS = new Set(["node_modules", ".next", ".git", "dist", "coverage", "tests"]);
 const SCANNED_EXT = new Set([".ts", ".tsx", ".mjs", ".js", ".json"]);
 const ENV_REF = /process\.env\.([A-Z0-9_]{2,})/gu;
+// `optional("X")`/`positiveInt("X", n)` di apps/web/lib/env.ts memakai lookup dinamis,
+// sehingga ENV_REF di atas tidak melihatnya. Tanpa pola ini, variabel seperti
+// NEXT_PUBLIC_WHATSAPP_NUMBER bisa dipakai kode tetapi lolos dari .env.example.
+const ENV_HELPER_REF = /(?:optional|positiveInt)\("([A-Z0-9_]{2,})"/gu;
 const VERCEL_INJECTED = new Set(["NODE_ENV", "VERCEL", "VERCEL_ENV", "CI"]);
 
 /**
@@ -81,11 +85,13 @@ for (const { dir, example } of SCAN_ROOTS) {
   for (const file of walk(dir)) {
     if (statSync(file).size > 1_000_000) continue;
     const text = readFileSync(file, "utf8");
-    for (const match of text.matchAll(ENV_REF)) {
-      const name = match[1];
-      if (name === undefined) continue;
-      if (VERCEL_INJECTED.has(name)) continue;
-      referenced.add(name);
+    for (const pattern of [ENV_REF, ENV_HELPER_REF]) {
+      for (const match of text.matchAll(pattern)) {
+        const name = match[1];
+        if (name === undefined) continue;
+        if (VERCEL_INJECTED.has(name)) continue;
+        referenced.add(name);
+      }
     }
   }
   for (const name of [...referenced].sort()) {

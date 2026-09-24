@@ -5,7 +5,7 @@
 | `preflight.mjs` | Memastikan project Supabase tertaut masih kosong sebelum migrasi. Menolak berjalan bila ada tabel aplikasi (risiko R-1). |
 | `dev-db.mjs` | Menjalankan Postgres lokal untuk tes RLS — tanpa Docker, tanpa menyentuh project Supabase. |
 | `gen-types.mjs` | Menghasilkan `packages/shared/src/db/database.types.ts` dari project tertaut. |
-| `check-env.mjs` | Gate: setiap `process.env.X` tercantum di `.env.example`. |
+| `check-env.mjs` | Gate: setiap `process.env.X` dan lookup dinamis `optional("X")`/`positiveInt("X")` di `apps/web/lib/env.ts` tercantum di `.env.example`. |
 
 ## Postgres lokal untuk tes RLS
 
