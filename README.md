@@ -2,6 +2,54 @@
 
 Platform digital ReCob.id — pelet konsentrat sapi perah dari limbah bonggol jagung terfermentasi.
 
+## Tentang ReCob
+
+ReCob.id memproduksi pelet konsentrat sapi perah berprotein tinggi dari tiga bahan: limbah
+bonggol jagung terfermentasi (50%–55%), ampas tahu terfermentasi (35%–40%), dan tetes tebu
+(molase, 5%–10%). Bahan bakunya adalah limbah pertanian yang selama ini dibuang atau dibakar,
+sehingga produk ini menjawab dua masalah sekaligus: biaya pakan konsentrat yang menekan
+peternak, dan tumpukan limbah jagung yang tidak termanfaatkan.
+
+Produk dijual Rp160.000 per karung 50 kg melalui KUD penampung susu, dengan pembayaran potong
+setoran susu mingguan. Koperasi jadi jalur distribusi sekaligus jalur penagihan, sehingga
+peternak tidak perlu membayar tunai di muka.
+
+Repositori ini adalah **Phase 1: prototipe pitching**, bukan aplikasi manajemen peternakan.
+Satu target tunggal: membuktikan dalam dua minggu bahwa trafik digital (TikTok, Instagram,
+Facebook, WhatsApp) bisa berubah menjadi permintaan sampel gratis terverifikasi dari peternak
+sapi perah di Bandung, Boyolali, dan Pasuruan. Portal peternak, dasbor KUD, dan ledger potong
+setoran susu sudah dirancang di `Docs/SCHEMA.md` dan `Docs/DESIGN.md` sebagai Phase 2–4, tetapi
+sengaja belum dibangun. Karena itu tidak ada halaman login dan tidak ada sistem akun: Phase 1
+hanya punya satu jalur konversi, yaitu formulir permintaan sampel.
+
+Dokumen produk lengkap ada di `Docs/PRD.md`, keputusan arsitektur di `Docs/DESIGN.md`
+(ADR-001 sampai ADR-009), dan model data di `Docs/SCHEMA.md`.
+
+## Tech stack
+
+| Lapisan | Pilihan | Keterangan |
+|---|---|---|
+| Runtime | Node.js 26 (`.nvmrc`), npm 12 workspaces | tiga paket: `@recobid/web`, `@recobid/backend`, `@recobid/shared` |
+| Bahasa | TypeScript 7 | mode `strict`, `tsc --noEmit` jadi gate |
+| Kerangka web | Next.js 16.3.5 (App Router) | Server Component sebagai bawaan; hanya komponen interaktif yang menandai `"use client"` |
+| UI | React 19.3.0 | tanpa pustaka komponen pihak ketiga; komponen dasar sendiri di `apps/web/components/ui` dan `blocks` |
+| Gaya | Tailwind CSS v4.3.3 | token di `apps/web/styles/theme.css` **dihasilkan** dari `Docs/DESIGN.md` |
+| Ikon | `lucide-react` | tanpa emoji sama sekali, ditegakkan gate `check:emoji` |
+| Utilitas UI | `class-variance-authority`, `clsx`, `tailwind-merge` | varian komponen dan penggabungan kelas |
+| Tipografi | `next/font/google` | Plus Jakarta Sans, Rubik, IBM Plex Mono, di-host sendiri saat build |
+| Basis data | Supabase (Postgres) | skema ternormalisasi, RLS aktif sejak Phase 1, migrasi SQL bernomor di `apps/backend/supabase/migrations` |
+| Akses data | `@supabase/supabase-js` | hanya `apps/web/lib/data/*` yang boleh memanggilnya; komponen UI tidak pernah menyentuh basis data |
+| Kontrak bersama | Zod 4.6.5 | skema validasi dan tipe dipakai web maupun backend dari `packages/shared` |
+| Backend fungsi | Supabase Edge Function (Deno) | `notify-lead`, menerima webhook bertanda tangan HMAC lalu meneruskan notifikasi |
+| Uji unit | Vitest 5, Testing Library, `jsdom` | web dan backend |
+| Uji end-to-end | Playwright 1.63 | satu peramban (Chromium), termasuk uji luber horizontal di 390 dan 768 px |
+| Basis data uji | `embedded-postgres` | Postgres lokal di port 55432 untuk uji RLS tanpa project tertaut |
+| Deploy | Vercel, `Dockerfile.vercel` | keluaran `standalone`, berjalan sebagai pengguna non-root; `podman` sebagai pengganti Docker di mesin pengembangan |
+| Gate mutu | skrip sendiri di `scripts/` | token, variabel lingkungan, emoji, istilah asing, rahasia, dan alur pelanggan |
+
+Catatan: ADR-004 merencanakan konten edukasi sebagai MDX. Saat ini keempat artikel edukasi
+masih berada di `apps/web/content/copy/id.ts`, belum dipindahkan ke MDX.
+
 ## Struktur
 
 | Bagian | Isi |
@@ -121,7 +169,7 @@ commit yang memuat nilai rahasia.
 1. `npm run db:push --workspace @recobid/backend` (setelah `--dry-run` bersih)
 2. `npm run db:seed --workspace @recobid/backend`
 3. `npm run fn:deploy --workspace @recobid/backend` lalu `npm run fn:secrets --workspace @recobid/backend`
-4. Deploy Vercel dengan **root directory `apps/web`**, isi variabel dari tabel di atas
+4. Deploy Vercel dengan **Root Directory pada akar repo** (karena `Dockerfile.vercel` di akar), isi variabel dari tabel di atas
 5. `npm run verify`
 
 ## Catatan
