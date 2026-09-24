@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { JsonLd } from "@/components/blocks/json-ld";
 import { PageHeader } from "@/components/blocks/page-header";
 import { Education } from "@/components/sections/education";
+import { ProductCta } from "@/components/sections/product-cta";
 import { copy } from "@/content/copy";
 import { env } from "@/lib/env";
 import { buildWebPageJsonLd } from "@/lib/seo/structured-data";
@@ -32,6 +33,7 @@ export default function EdukasiPage(): ReactNode {
       />
       <PageHeader {...copy.pages.edukasi} />
       <Education />
+      <ProductCta />
     </main>
   );
 }

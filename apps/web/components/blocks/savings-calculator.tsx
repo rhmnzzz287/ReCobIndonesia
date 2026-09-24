@@ -289,7 +289,7 @@ export function SavingsCalculator({
                 variant="accent"
               >
                 <CalculatorIcon aria-hidden="true" size={18} strokeWidth={1.75} />
-                {copy.calculator.ctaLabel}
+                {copy.cta.sampleLabel}
                 <ArrowRight aria-hidden="true" size={18} strokeWidth={1.75} />
               </ButtonLink>
               <p className="type-caption text-text-secondary">{copy.calculator.ctaNote}</p>

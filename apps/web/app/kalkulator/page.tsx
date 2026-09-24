@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/blocks/json-ld";
 import { PageHeader } from "@/components/blocks/page-header";
 import { Calculator } from "@/components/sections/calculator";
 import { CostCompare } from "@/components/sections/cost-compare";
+import { ProductCta } from "@/components/sections/product-cta";
 import { copy } from "@/content/copy";
 import { env } from "@/lib/env";
 import { buildHowToJsonLd, buildWebPageJsonLd } from "@/lib/seo/structured-data";
@@ -17,8 +18,8 @@ export const metadata: Metadata = {
 /**
  * S9 — halaman kalkulator.
  *
- * Dua bagian berurutan: tabel perbandingan harga yang statis (bisa diperiksa tanpa mengubah
- * apa pun), lalu kalkulator interaktif yang memakai jumlah sapi pengunjung. Keduanya membaca
+ * Dua bagian berurutan: kalkulator interaktif yang memakai jumlah sapi pengunjung, lalu tabel
+ * perbandingan harga yang statis (bisa diperiksa tanpa mengubah apa pun). Keduanya membaca
  * aritmetika yang sama dari `lib/utils/feed-cost.ts`, dan uji silang mengunci kecocokannya.
  *
  * `HowTo` protokol pakan diikutsertakan karena pertanyaan "berapa hematnya" hampir selalu
@@ -41,8 +42,9 @@ export default function KalkulatorPage(): ReactNode {
         }}
       />
       <PageHeader {...copy.pages.kalkulator} />
-      <CostCompare />
       <Calculator />
+      <CostCompare />
+      <ProductCta />
     </main>
   );
 }

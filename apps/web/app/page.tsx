@@ -4,11 +4,7 @@ import { JsonLd } from "@/components/blocks/json-ld";
 import { Cta } from "@/components/sections/cta";
 import { Faq } from "@/components/sections/faq";
 import { Hero } from "@/components/sections/hero";
-import { ImpactStrip } from "@/components/sections/impact-strip";
-import { Problem } from "@/components/sections/problem";
-import { ProductSummary } from "@/components/sections/product-summary";
 import { Solution } from "@/components/sections/solution";
-import { ToolLinks } from "@/components/sections/tool-links";
 import { Validation } from "@/components/sections/validation";
 import { getPrimaryProduct } from "@/lib/data/products";
 import { env } from "@/lib/env";
@@ -34,10 +30,10 @@ export const metadata: Metadata = {
 /**
  * Beranda: halaman naratif.
  *
- * Sejak prototipe dipecah menjadi enam halaman, isi berat (katalog produk, kalkulator, kemitraan,
- * panduan, kontak) tinggal di rutenya masing-masing dan beranda menyusut menjadi alur kesadaran:
- * masalah, solusi, penawaran, lalu jalan masuk ke empat halaman lain. Kerangka situs (header,
- * footer, bilah ajakan) kini diwarisi dari `app/layout.tsx`.
+ * Sejak prototipe dipecah menjadi tujuh halaman, isi berat (katalog produk, spesifikasi, kalkulator,
+ * kemitraan, panduan, kontak) tinggal di rutenya masing-masing dan beranda menyusut menjadi alur
+ * keputusan produk: orientasi, solusi, validasi, tanya jawab, lalu form permintaan. Kerangka situs
+ * (header, footer, bilah ajakan) kini diwarisi dari `app/layout.tsx`.
  *
  * Data terstruktur: entitas (Organization, WebSite), tanya jawab (FAQPage), prosedur (HowTo), dan
  * penawaran (Product). Semuanya diturunkan dari lapisan konten dan data produk resmi, sehingga
@@ -71,11 +67,7 @@ export default async function HomePage(): Promise<ReactNode> {
       <JsonLd data={jsonLd} />
       <main id="konten">
         <Hero />
-        <ImpactStrip />
-        <Problem />
         <Solution />
-        <ProductSummary product={product} />
-        <ToolLinks />
         <Validation />
         <Faq />
         <Cta />

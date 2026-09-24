@@ -2,6 +2,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { IngredientTabs } from "@/components/blocks/ingredient-tabs";
 import { CountUp } from "@/components/blocks/count-up";
+import { ProductCatalog } from "@/components/sections/product-catalog";
+import { demoProduct } from "@/lib/data/demo-data";
 
 /**
  * Dua perilaku yang tidak terlihat dari markup statis: tab bahan yang benar-benar berganti isi, dan
@@ -35,6 +37,34 @@ describe("IngredientTabs", () => {
     expect(panel).not.toContain("Fungsi A");
     expect(tabs[1]?.getAttribute("aria-selected")).toBe("true");
     expect(tabs[0]?.getAttribute("aria-selected")).toBe("false");
+  });
+});
+
+describe("ProductCatalog", () => {
+  it("menampilkan kategori, produk, harga, dan tautan kalkulator", () => {
+    render(
+      <ProductCatalog
+        products={[
+          {
+            ...demoProduct,
+            category: "Sapi Perah",
+            imagePath: "/img/produk/karung-50kg.webp",
+          },
+        ]}
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "Katalog Produk" })).toBeInTheDocument();
+    expect(screen.getByText("Sapi Perah")).toBeInTheDocument();
+    expect(screen.getByText("Rp160.000")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Kalkulator Penghematan/i })).toHaveAttribute(
+      "href",
+      "/kalkulator",
+    );
+    expect(screen.getByRole("link", { name: /Lihat spesifikasi/i })).toHaveAttribute(
+      "href",
+      "/spesifikasi-produk",
+    );
   });
 });
 

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { env } from "@/lib/env";
 
 /**
- * Enam rute publik prototipe.
+ * Tujuh rute publik prototipe.
  *
  * Daftar ini harus diperbarui setiap kali rute baru dibuat: halaman yang tidak ada di sitemap
  * praktis tidak pernah ditemukan mesin pencari.
@@ -10,6 +10,7 @@ import { env } from "@/lib/env";
 const ROUTES = [
   { path: "", changeFrequency: "weekly", priority: 1 },
   { path: "/produk", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/spesifikasi-produk", changeFrequency: "monthly", priority: 0.7 },
   { path: "/kalkulator", changeFrequency: "monthly", priority: 0.9 },
   { path: "/mitra", changeFrequency: "monthly", priority: 0.8 },
   { path: "/edukasi", changeFrequency: "monthly", priority: 0.7 },

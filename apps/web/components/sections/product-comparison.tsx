@@ -92,11 +92,10 @@ export function ProductComparison(): ReactNode {
           </div>
           <div className="flex flex-wrap gap-sm">
             <ButtonLink href="/kontak#form-sampel" size="lg" variant="accent">
-              {copy.productStory.closingCta}
+              {copy.cta.preorderLabel}
             </ButtonLink>
-            <ButtonLink href="/kontak" size="lg" variant="secondary">
-              {copy.productStory.closingSecondary}
-              <ArrowRight aria-hidden="true" size={18} strokeWidth={1.75} />
+            <ButtonLink href="/kontak#form-sampel" size="lg" variant="secondary">
+              {copy.cta.sampleLabel}
             </ButtonLink>
           </div>
         </div>

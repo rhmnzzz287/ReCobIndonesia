@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
+import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { copy } from "@/content/copy";
@@ -38,16 +39,20 @@ export async function ProductUsage(): Promise<ReactNode> {
               {copy.productStory.usageIntro}
             </p>
 
-            <ol className="mt-xl flex flex-col divide-y divide-border">
+            <ol className="mt-xl grid gap-md md:grid-cols-2">
               {copy.productStory.usageSteps.map((step, index) => (
-                <li className="flex gap-md py-md" key={step.title}>
-                  <span className="type-mono-data text-primary">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="type-h3 text-ink">{step.title}</h3>
-                    <p className="mt-2xs type-body-sm text-text-secondary">{step.body}</p>
-                  </div>
+                <li className="h-full" data-testid="usage-step-card" key={step.title}>
+                  <Card className="h-full" tone="paper">
+                    <div className="flex items-start gap-md">
+                      <span className="type-mono-data shrink-0 text-primary">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <h3 className="type-h3 text-ink">{step.title}</h3>
+                        <p className="mt-2xs type-body-sm text-text-secondary">{step.body}</p>
+                      </div>
+                    </div>
+                  </Card>
                 </li>
               ))}
             </ol>

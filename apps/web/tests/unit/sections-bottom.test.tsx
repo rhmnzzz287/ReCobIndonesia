@@ -1,10 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { copy } from "@/content/copy";
 import { Contact } from "@/components/sections/contact";
 import { Education } from "@/components/sections/education";
 import { Footer } from "@/components/sections/footer";
 import { Partnership } from "@/components/sections/partnership";
+import { ProductCta } from "@/components/sections/product-cta";
 import { Validation } from "@/components/sections/validation";
 
 describe("seksi beranda bagian bawah", () => {
@@ -35,6 +36,22 @@ describe("seksi beranda bagian bawah", () => {
   it("footer memuat catatan kontak belum final", async () => {
     render(await Footer());
     expect(screen.getByText(copy.footer.contactNotice)).toBeTruthy();
+  });
+});
+
+describe("CTA produk ringkas", () => {
+  it("menampilkan dua ajakan form sampel dengan heading yang benar", () => {
+    render(<ProductCta />);
+
+    const heading = screen.getByRole("heading", { name: copy.cta.compact.title });
+    const section = heading.closest("section");
+    expect(section?.id).toBe("cta-produk");
+    expect(within(section as HTMLElement).getAllByRole("link")).toHaveLength(2);
+
+    for (const label of [copy.cta.preorderLabel, copy.cta.sampleLabel]) {
+      const link = within(section as HTMLElement).getByRole("link", { name: label });
+      expect(link).toHaveAttribute("href", "/kontak#form-sampel");
+    }
   });
 });
 

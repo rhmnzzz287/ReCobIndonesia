@@ -14,8 +14,8 @@ import { copy } from "@/content/copy";
  * di atasnya, sedangkan `text-secondary` hanya 3,38:1 sehingga TIDAK boleh dipakai di pita
  * ini. Karena itu seluruh teks hero memakai `ink`/`ink-deep`/`primary-strong`, bukan putih.
  *
- * Bilah angka kredibilitas (karung, ekor, peternak) sengaja dipindah ke komponen
- * `ImpactStrip` di bawah hero, mengikuti pola locol yang menaruhnya sebagai bilah tersendiri.
+ * Angka 20% adalah hitungan worst-case dari asumsi replacement rate NRC yang dipakai
+ * validator, bukan janji yield penggembaran atau penghematan.
  */
 export async function Hero(): Promise<ReactNode> {
   const priceRows = [
@@ -51,12 +51,12 @@ export async function Hero(): Promise<ReactNode> {
             <p className="mt-lg max-w-[44ch] type-body-lg text-ink-deep">
               {copy.hero.subtitle}
             </p>
-            <div className="mt-xl flex flex-wrap gap-sm">
-              <ButtonLink href="/kontak#form-sampel" size="lg" variant="primary">
-                {copy.hero.ctaPrimary}
+            <div className="mt-xl flex flex-col gap-sm sm:flex-row sm:flex-wrap">
+              <ButtonLink className="w-full sm:w-auto" href="/kontak#form-sampel" size="lg" variant="primary">
+                {copy.cta.preorderLabel}
               </ButtonLink>
-              <ButtonLink href="/produk" size="lg" variant="secondary">
-                {copy.hero.ctaSecondary}
+              <ButtonLink className="w-full sm:w-auto" href="/kontak#form-sampel" size="lg" variant="secondary">
+                {copy.cta.sampleLabel}
               </ButtonLink>
             </div>
           </div>

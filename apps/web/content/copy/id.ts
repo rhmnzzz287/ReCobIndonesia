@@ -6,9 +6,8 @@
  *
  * Aturan yang mengikat (PRD Bagian 8):
  *  1. Setiap angka melekat pada sumbernya: nilai metrik dan klaim disertai caption berisi nilai,
- *     satuan, periode, dan sumber. Pengecualian yang disetujui pemilik produk: kartu
- *     `problem.items` tidak lagi menampilkan caption sumbernya; daftar lengkapnya tetap ada di
- *     `validation.citations` dan dipakai `/llms.txt`.
+ *     satuan, periode, dan sumber. Daftar lengkapnya tetap ada di `validation.citations` dan
+ *     dipakai `/llms.txt`.
  *  2. Klaim kenaikan produksi susu wajib berlabel "klaim berbasis kajian" dan "validasi lapangan".
  *  3. Status NPP dinyatakan apa adanya; nomor tidak dikarang.
  *  4. Tanpa emoji. Tanpa tanda seru pada caption.
@@ -24,20 +23,11 @@ export const idCopy = {
       "Pakan Konsentrat Sapi Perah Hemat 11%–20%, Pasokan Pasti Sepanjang Tahun",
     subtitle:
       "Pelet pakan sapi perah dari bonggol jagung dan ampas tahu yang difermentasi. Rp160.000 per karung 50 kg lewat kemitraan KUD penampung susu, dibayar dengan potong setoran susu mingguan.",
-    ctaPrimary: "Klaim Sampel Gratis 2-3 kg",
-    ctaSecondary: "Lihat Bahan & Cara Pakai",
     statLeadLabel: "Penghematan",
     statLeadValue: "20%",
     statLeadUnit: "lebih hemat per karung 50 kg",
     statLeadCaption:
       "Perbandingan Rp160.000 dengan harga pakan pabrik Rp180.000–Rp200.000 di sentra susu Jawa.",
-    statStripTitle: "Skala Operasi Fase Awal",
-    statKudValue: "1.200+",
-    statKudUnit: "karung terkirim",
-    statCattleValue: "480",
-    statCattleUnit: "ekor sapi perah terlayani",
-    statFarmerValue: "320",
-    statFarmerUnit: "peternak anggota KUD",
     priceAnchorLabel: "Harga Resmi",
     priceAnchorUnit: "Karung 50 kg",
     priceAnchorValue: "Rp160.000",
@@ -50,29 +40,6 @@ export const idCopy = {
     highlightFormulationLabel: "Bahan",
     highlightFormulationValue: "3 Bahan",
     highlightFormulationNote: "Bonggol, tahu, tetes tebu",
-  },
-  problem: {
-    eyebrow: "Masalah Peternak",
-    title: "Tiga Masalah yang Dihadapi Peternak Sapi Perah",
-    intro:
-      "Tiga masalah ini muncul berulang di kajian lapangan dan literatur peternakan rakyat di sentra susu.",
-    items: [
-      {
-        title: "Biaya Pakan Menyerap 60%–65%",
-        body: "Pakan jadi pengeluaran terbesar peternak setiap hari. Saat harga bahan baku impor naik, keuntungan peternak ikut tertekan.",
-        metric: "60%–65%",
-      },
-      {
-        title: "Pakan Hijauan Langka di Musim Kemarau",
-        body: "Saat kemarau, rumput segar turun sampai 40%. Peternak terpaksa membeli jerami murah, dan itu bisa mengganggu pencernaan sapi.",
-        metric: "40%",
-      },
-      {
-        title: "3,45–4,6 Juta Ton Bonggol Jagung Terbuang",
-        body: "Setiap tahun bonggol jagung dibuang dan dibakar di ladang. Padahal bahan ini bisa diolah jadi pakan, dan asapnya mencemari udara desa.",
-        metric: "3,45–4,6 Juta Ton",
-      },
-    ],
   },
   solution: {
     eyebrow: "Solusi ReCob.id",
@@ -216,9 +183,7 @@ export const idCopy = {
     comparisonCta: "Buka Kalkulator Penghematan",
     closingTitle: "Siap Diuji di Kandang Anda",
     closingBody:
-      "Setiap peternak anggota KUD dengan minimal dua ekor sapi perah produktif berhak atas satu paket sampel gratis 2-3 kg.",
-    closingCta: "Klaim Sampel Gratis",
-    closingSecondary: "Tanya Lewat Halaman Kontak",
+      "Ajukan sampel gratis 2-3 kg atau preorder karung pertama. Tim ReCob.id menghubungi Anda untuk jadwal dan ketersediaan; belum ada konfirmasi pembayaran di tahap ini.",
   },
   costCompare: {
     eyebrow: "Harga Pakan Dibandingkan",
@@ -314,7 +279,6 @@ export const idCopy = {
     },
     claimNotice:
       "Simulasi ini menghitung selisih biaya pakan, bukan jaminan kenaikan produksi susu. Klaim produksi susu masih menunggu uji lapangan.",
-    ctaLabel: "Klaim Sampel Gratis 2-3 kg",
     ctaNote: "Jumlah sapi yang Anda isi akan dibawa ke formulir permintaan sampel.",
     kudNote: "Perhitungan ini belum menghitung biaya hijauan dan tenaga kerja kandang.",
   },
@@ -426,8 +390,25 @@ export const idCopy = {
   pages: {
     produk: {
       eyebrow: "Produk",
-      title: "Pakan ReCob.id",
-      intro: "Bahan pembuat, isi karung, dan cara mengganti pakan lama ke ReCob.id.",
+      title: "Katalog Produk ReCob.id",
+      intro: "Pilih produk Pakan ReCob.id, lalu lihat bahan, isi karung, dan cara pemakaiannya.",
+      catalog: {
+        eyebrow: "Katalog",
+        title: "Katalog Produk",
+        intro: "Lihat produk ReCob.id sesuai kebutuhan peternakan Anda.",
+        priceLabel: "Harga",
+        priceUnit: "per",
+        weightUnit: "kg",
+        cta: "Kalkulator Penghematan",
+        specificationCta: "Lihat spesifikasi",
+        emptyTitle: "Belum ada produk",
+        emptyBody: "Katalog produk sedang disiapkan.",
+      },
+    },
+    spesifikasiProduk: {
+      eyebrow: "Detail Produk",
+      title: "Spesifikasi Produk",
+      intro: "Lihat cara memberi pakan, isi karung, dan cara menyimpan ReCob.id.",
     },
     kalkulator: {
       eyebrow: "Hitung Sendiri",
@@ -450,26 +431,6 @@ export const idCopy = {
       title: "Hubungi ReCob.id",
       intro: "Ajukan sampel gratis atau tanyakan ransum sapi Anda lewat WhatsApp.",
     },
-  },
-  productSummary: {
-    eyebrow: "Produk",
-    title: "Pakan Konsentrat dari Bonggol Jagung",
-    intro: "Tiga bahan, satu karung 50 kg, satu harga tetap.",
-    ctaLabel: "Lihat Detail Produk",
-  },
-  toolLinks: {
-    title: "Yang Bisa Anda Lakukan di Sini",
-    intro: "Empat halaman berikut menjawab pertanyaan yang paling sering ditanyakan peternak.",
-    items: [
-      { href: "/produk", title: "Produk", body: "Bahan, isi karung, dan cara pakainya." },
-      {
-        href: "/kalkulator",
-        title: "Kalkulator",
-        body: "Hitung sendiri penghematan pakan Anda.",
-      },
-      { href: "/mitra", title: "Kemitraan KUD", body: "Alur potong setoran susu mingguan." },
-      { href: "/kontak", title: "Kontak", body: "Ajukan sampel gratis lewat WhatsApp." },
-    ],
   },
   contact: {
     channelsTitle: "Kanal Resmi",
@@ -527,10 +488,18 @@ export const idCopy = {
     ],
   },
   cta: {
+    preorderLabel: "Preorder Sekarang",
+    sampleLabel: "Klaim Sampel Gratis",
+    compact: {
+      eyebrow: "Langkah Berikutnya",
+      title: "Siap Uji Pakan di Kandang?",
+      intro:
+        "Kirim permintaan sampel atau preorder. Tim ReCob.id akan menghubungi Anda untuk jadwal dan ketersediaan.",
+    },
     eyebrow: "Uji Mutu di Kandang Sendiri",
-    title: "Klaim Sampel Gratis 2–3 kg",
+    title: "Minta Sampel atau Preorder",
     intro:
-      "Buktikan sendiri aroma harum molase dan tingginya palatabilitas konsentrat ReCob.id langsung pada sapi perah Anda sebelum memesan skala karung.",
+      "Kirim permintaan sampel atau preorder. Tim ReCob.id akan menghubungi Anda untuk jadwal dan ketersediaan; belum ada konfirmasi pembayaran.",
     benefits: [
       "Gratis tanpa biaya pakan untuk peternak anggota KUD aktif",
       "Disertai lembar panduan takaran transisi hari ke-1 hingga ke-7",
@@ -541,9 +510,9 @@ export const idCopy = {
     whatsappUnavailable:
       "Nomor WhatsApp resmi belum tersedia. Isi formulir di samping, tim lapangan akan menghubungi Anda.",
     form: {
-      title: "Formulir Permintaan Sampel Uji Coba",
+      title: "Formulir Permintaan Sampel atau Preorder",
       intro:
-        "Lengkapi data kandang Anda untuk verifikasi pengiriman sampel gratis 2–3 kg.",
+        "Lengkapi data kandang Anda untuk verifikasi permintaan sampel atau preorder. Tim ReCob.id akan menghubungi Anda untuk jadwal dan ketersediaan; formulir ini bukan konfirmasi pembayaran.",
       nameLabel: "Nama Lengkap Peternak",
       namePlaceholder: "Nama sesuai kartu anggota KUD",
       phoneLabel: "Nomor WhatsApp Aktif",
@@ -593,10 +562,6 @@ export const idCopy = {
         consentRequired: "Persetujuan penggunaan data wajib dicentang.",
         generic: "Data belum dapat diproses. Periksa kembali isian Anda.",
       },
-    },
-    sticky: {
-      ctaLabel: "Klaim Sampel Gratis",
-      whatsappLabel: "Tanya via WhatsApp",
     },
   },
   footer: {
@@ -652,6 +617,7 @@ export const idCopy = {
     partnership: "Kemitraan KUD",
     education: "Panduan",
     contact: "Kontak",
+    primaryCta: "Preorder Sekarang",
     sampleCta: "Klaim Sampel Gratis",
     menuLabel: "Buka menu navigasi",
     closeLabel: "Tutup menu navigasi",

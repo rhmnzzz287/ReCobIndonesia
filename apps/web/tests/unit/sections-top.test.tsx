@@ -8,8 +8,10 @@ describe("seksi beranda bagian atas", () => {
   it("hero menampilkan judul, dua ajakan, dan pembanding harga", async () => {
     render(await Hero());
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(copy.hero.title);
-    expect(screen.getByRole("link", { name: copy.hero.ctaPrimary })).toBeTruthy();
-    expect(screen.getByRole("link", { name: copy.hero.ctaSecondary })).toBeTruthy();
+    for (const label of [copy.cta.preorderLabel, copy.cta.sampleLabel]) {
+      const link = screen.getByRole("link", { name: label });
+      expect(link.getAttribute("href")).toBe("/kontak#form-sampel");
+    }
     expect(screen.getByText(copy.hero.priceAnchorValue)).toBeTruthy();
   });
 });
@@ -31,5 +33,14 @@ describe("panggung produk", () => {
     }
     expect(screen.getByText("50 kg")).toBeTruthy();
     expect(screen.getByText("< 12%")).toBeTruthy();
+  });
+
+  it("menawarkan preorder dan sampel lewat form yang sama", () => {
+    render(<ProductHero />);
+
+    for (const label of [copy.cta.preorderLabel, copy.cta.sampleLabel]) {
+      const link = screen.getByRole("link", { name: label });
+      expect(link.getAttribute("href")).toBe("/kontak#form-sampel");
+    }
   });
 });

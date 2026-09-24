@@ -40,6 +40,12 @@ const SAMPLE_HREF = "/kontak#form-sampel";
  *
  * Tinggi tautan 44 px mengikuti target sentuh DESIGN.md; menu seluler memakai satu tombol
  * dengan `aria-expanded` agar pembaca layar tahu keadaan panel.
+ *
+ * Nama merek di samping lambang memakai jarak `gap-2xs` di bawah 1280 px. Pada 1024 px, kolom
+ * kiri grid hanya selebar 130 px, sedangkan lambang (39,7 px), jarak `gap-sm` (12 px), dan kata
+ * merek (85 px) berjumlah 137 px sehingga kata merek meluber 7 px ke dalam parit 16 px menuju
+ * menu. Merapatkan jarak ke 4 px membuatnya pas di dalam kolom tanpa menyembunyikan nama merek,
+ * mengecilkan lambang, atau menggeser penengahan menu.
  */
 export function SiteHeader(): ReactNode {
   const pathname = usePathname();
@@ -53,16 +59,21 @@ export function SiteHeader(): ReactNode {
         className="mx-auto flex h-16 w-full max-w-[1200px] items-center rounded-sm bg-surface px-md shadow-[0_1px_2px_rgba(13,18,22,0.06),0_8px_24px_rgba(13,18,22,0.06)] md:h-20 md:px-lg"
       >
         <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-sm md:gap-md">
-          <Link className="flex items-center gap-sm justify-self-start" href="/">
+          <Link
+            className="flex min-h-11 items-center gap-2xs justify-self-start xl:gap-sm"
+            href="/"
+          >
             <Image
               alt=""
-              className="h-8 w-auto"
+              className="h-8 w-auto shrink-0"
               height={150}
               priority
               src="/img/logo.png"
               width={186}
             />
-            <span className="type-h3 text-ink">{copy.nav.brand}</span>
+            <span className="whitespace-nowrap type-h3 text-ink">
+              {copy.nav.brand}
+            </span>
           </Link>
 
           <nav
@@ -88,7 +99,7 @@ export function SiteHeader(): ReactNode {
 
           <div className="hidden justify-self-end lg:block">
             <ButtonLink href={SAMPLE_HREF} variant="accent">
-              {copy.nav.sampleCta}
+              {copy.nav.primaryCta}
             </ButtonLink>
           </div>
 
@@ -132,16 +143,28 @@ export function SiteHeader(): ReactNode {
                 {link.label}
               </Link>
             ))}
-            <ButtonLink
-              className="mt-sm"
-              href={SAMPLE_HREF}
-              onClick={() => {
-                setOpen(false);
-              }}
-              variant="accent"
-            >
-              {copy.nav.sampleCta}
-            </ButtonLink>
+            <div className="mt-sm flex flex-col gap-xs">
+              <ButtonLink
+                className="w-full"
+                href={SAMPLE_HREF}
+                onClick={() => {
+                  setOpen(false);
+                }}
+                variant="accent"
+              >
+                {copy.nav.primaryCta}
+              </ButtonLink>
+              <ButtonLink
+                className="w-full"
+                href={SAMPLE_HREF}
+                onClick={() => {
+                  setOpen(false);
+                }}
+                variant="secondary"
+              >
+                {copy.nav.sampleCta}
+              </ButtonLink>
+            </div>
           </nav>
         </div>
       </div>

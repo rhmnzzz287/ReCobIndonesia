@@ -20,7 +20,6 @@ describe("lapisan konten", () => {
   it("memuat naskah setiap bagian dan setiap halaman", () => {
     for (const section of [
       "hero",
-      "problem",
       "solution",
       "product",
       "costCompare",
@@ -34,8 +33,6 @@ describe("lapisan konten", () => {
       "nav",
       "meta",
       "pages",
-      "productSummary",
-      "toolLinks",
       "contact",
     ]) {
       expect(copy).toHaveProperty(section);
@@ -57,6 +54,13 @@ describe("lapisan konten", () => {
     expect(copy.product.transitionTitle).toBe("Cara Ganti Pakan (7 Hari)");
   });
 
+  it("menyediakan label dan blok CTA konversi yang konsisten", () => {
+    expect(copy.cta.preorderLabel).toBe("Preorder Sekarang");
+    expect(copy.cta.sampleLabel).toBe("Klaim Sampel Gratis");
+    expect(copy.nav.primaryCta).toBe("Preorder Sekarang");
+    expect(copy.cta.compact.title.length).toBeGreaterThan(3);
+  });
+
   it("tidak lagi menyimpan naskah metrik dampak", () => {
     // Bagian "Metrik Dampak & Skala Misi Berkelanjutan" dihapus atas keputusan pemilik produk;
     // sisa naskahnya tidak boleh hidup kembali tanpa sengaja.
@@ -68,6 +72,12 @@ describe("lapisan konten", () => {
     for (const { path, text } of strings) {
       expect(EMOJI.test(text), `${path} memuat emoji`).toBe(false);
     }
+  });
+
+  it("tidak lagi menyimpan blok beranda yang sudah dihapus", () => {
+    expect("productSummary" in copy).toBe(false);
+    expect("toolLinks" in copy).toBe(false);
+    expect("problem" in copy).toBe(false);
   });
 
   it("tidak memuat penanda TODO atau placeholder implementasi", () => {

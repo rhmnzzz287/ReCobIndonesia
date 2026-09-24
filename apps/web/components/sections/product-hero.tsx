@@ -37,14 +37,18 @@ export function ProductHero(): ReactNode {
             <p className="mt-sm max-w-[52ch] type-body-sm text-text-secondary">
               {copy.productStory.heroCaption}
             </p>
-            <div className="mt-xl flex flex-wrap gap-sm">
-              <ButtonLink href="/kontak#form-sampel" size="lg" variant="accent">
-                {copy.hero.ctaPrimary}
+            <div className="mt-xl flex flex-col gap-sm sm:flex-row sm:flex-wrap">
+              <ButtonLink className="w-full sm:w-auto" href="/kontak#form-sampel" size="lg" variant="accent">
+                {copy.cta.preorderLabel}
               </ButtonLink>
-              <ButtonLink href="/kalkulator" size="lg" variant="secondary">
-                {copy.productStory.comparisonCta}
+              <ButtonLink className="w-full sm:w-auto" href="/kontak#form-sampel" size="lg" variant="secondary">
+                {copy.cta.sampleLabel}
               </ButtonLink>
             </div>
+            <ButtonLink className="mt-sm" href="/kalkulator" variant="ghost">
+              {copy.productStory.comparisonCta}
+              <ArrowDown aria-hidden="true" size={18} strokeWidth={1.75} />
+            </ButtonLink>
             <p className="mt-lg flex items-center gap-xs type-caption text-text-secondary">
               <ArrowDown aria-hidden="true" size={16} strokeWidth={1.75} />
               {copy.productStory.heroScrollLabel}

@@ -47,6 +47,9 @@ html {
 .skip-link:focus-visible {
   left: var(--spacing-lg, 1.5rem);
   top: var(--spacing-sm, 0.5rem);
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
   border-radius: 0.5rem;
   background: var(--color-surface, #fff);
   padding: 0.75rem 1rem;

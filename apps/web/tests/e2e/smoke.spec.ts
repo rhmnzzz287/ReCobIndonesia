@@ -2,8 +2,16 @@ import { expect, test } from "@playwright/test";
 import { copy } from "../../content/copy";
 
 test.describe("prototipe ReCob.id", () => {
-  test("enam halaman balas 200 dan punya judul utama", async ({ page }) => {
-    for (const route of ["/", "/produk", "/kalkulator", "/mitra", "/edukasi", "/kontak"]) {
+  test("tujuh halaman balas 200 dan punya judul utama", async ({ page }) => {
+    for (const route of [
+      "/",
+      "/produk",
+      "/spesifikasi-produk",
+      "/kalkulator",
+      "/mitra",
+      "/edukasi",
+      "/kontak",
+    ]) {
       const response = await page.goto(route);
       expect(response?.status(), `${route} harus balas 200`).toBe(200);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -13,20 +21,12 @@ test.describe("prototipe ReCob.id", () => {
   test("beranda memuat seksi naratif dan tanpa emoji", async ({ page }) => {
     await page.goto("/");
 
-    for (const id of [
-      "hero",
-      "tantangan",
-      "solusi",
-      "produk-ringkas",
-      "jelajahi",
-      "mutu",
-      "faq",
-      "form-sampel",
-    ]) {
+    for (const id of ["hero", "solusi", "mutu", "faq", "form-sampel"]) {
       await expect(page.locator(`#${id}`)).toHaveCount(1);
     }
 
-    // Bagian "Metrik Dampak" dihapus atas keputusan pemilik produk.
+    // Narasi generic dan metrik dampak tidak lagi menghalangi keputusan produk.
+    await expect(page.locator("#tantangan")).toHaveCount(0);
     await expect(page.locator("#dampak")).toHaveCount(0);
 
     const body = (await page.locator("body").innerText()).normalize("NFC");
@@ -50,9 +50,10 @@ test.describe("prototipe ReCob.id", () => {
 
     // Panggung pembuka menggantikan kepala halaman biasa: tetap harus ada satu H1.
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-    for (const id of ["produk-hero", "formulasi", "cara-pakai", "perbandingan"]) {
+    for (const id of ["katalog-produk", "produk-hero", "formulasi", "perbandingan"]) {
       await expect(page.locator(`#${id}`)).toHaveCount(1);
     }
+    await expect(page.getByRole("heading", { name: "Katalog Produk" })).toBeVisible();
 
     // Bilah angka naik dari nol; setelah animasi selesai nilainya harus angka akhir yang sama
     // dengan naskah, bukan angka yang tertinggal di tengah jalan.
@@ -73,6 +74,52 @@ test.describe("prototipe ReCob.id", () => {
     expect(/[\u{1F000}-\u{1FAFF}\u2600-\u27BF]/u.test(body)).toBe(false);
   });
 
+  test("halaman spesifikasi memisahkan cara memberi dan spesifikasi kemasan", async ({ page }) => {
+    await page.goto("/spesifikasi-produk");
+
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    await expect(page.locator("#cara-pakai")).toHaveCount(1);
+    await expect(page.locator('[data-testid="usage-step-card"]')).toHaveCount(
+      copy.productStory.usageSteps.length,
+    );
+    await expect(page.locator("#cara-pakai")).toContainText("Spesifikasi Kemasan");
+    await expect(page.locator("#cara-pakai")).toContainText("Cara Menyimpan");
+    await expect(page.locator("#cara-pakai")).toContainText("Rp160.000");
+  });
+
+  test("halaman produk ringkas dan menautkan halaman spesifikasi", async ({ page }) => {
+    await page.goto("/produk");
+
+    await expect(page.locator("#cara-pakai")).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Lihat spesifikasi" })).toHaveAttribute(
+      "href",
+      "/spesifikasi-produk",
+    );
+    await expect(
+      page.locator("#katalog-produk").getByRole("link", { name: /Kalkulator Penghematan/i }),
+    ).toHaveAttribute("href", "/kalkulator");
+  });
+
+  test("beranda hanya mempertahankan blok yang punya tugas konversi atau informasi", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(page.locator("#produk-ringkas")).toHaveCount(0);
+    await expect(page.locator("#jelajahi")).toHaveCount(0);
+    await expect(page.locator("#tantangan")).toHaveCount(0);
+    await expect(page.locator("#dampak")).toHaveCount(0);
+    await expect(page.locator("#mutu")).toHaveCount(1);
+    await expect(page.locator("#faq")).toHaveCount(1);
+  });
+
+  test("kalkulator menempatkan kalkulator interaktif sebelum tabel", async ({ page }) => {
+    await page.goto("/kalkulator");
+
+    const urutan = await page.locator("main > *").evaluateAll((nodes) =>
+      nodes.map((node) => node.id),
+    );
+    expect(urutan.indexOf("kalkulator")).toBeLessThan(urutan.indexOf("penghematan"));
+  });
+
   test("hero produk editorial dengan foto dan ajakan", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/produk");
@@ -83,8 +130,12 @@ test.describe("prototipe ReCob.id", () => {
 
     const photo = hero.getByRole("img", { name: "Produk ReCob.id", exact: true });
     await expect(photo).toBeVisible();
-    await expect(hero.getByRole("link", { name: /Klaim Sampel Gratis/i })).toBeVisible();
-    await expect(hero.getByRole("link", { name: /Kalkulator/i })).toBeVisible();
+    const preorder = hero.getByRole("link", { name: "Preorder Sekarang", exact: true });
+    const sample = hero.getByRole("link", { name: "Klaim Sampel Gratis", exact: true });
+    await expect(preorder).toBeVisible();
+    await expect(sample).toBeVisible();
+    await expect(preorder).toHaveAttribute("href", "/kontak#form-sampel");
+    await expect(sample).toHaveAttribute("href", "/kontak#form-sampel");
 
     // PRD §7.1: setiap angka wajib membawa sumbernya.
     await expect(hero.locator("#angka-produk + dl + p")).toContainText(
@@ -114,7 +165,7 @@ test.describe("prototipe ReCob.id", () => {
   test("foto produk tampil transparan tanpa kotak di belakangnya", async ({ page }) => {
     await page.goto("/produk");
 
-    for (const seksi of ["#produk-hero", "#cara-pakai"]) {
+    for (const seksi of ["#produk-hero"]) {
       const foto = page.locator(`${seksi} img`);
       const jumlah = await foto.count();
       expect(jumlah, `${seksi} tidak memuat foto`).toBeGreaterThan(0);
@@ -192,18 +243,20 @@ test.describe("prototipe ReCob.id", () => {
       "produk-hero",
       "pita-alur",
       "formulasi",
-      "cara-pakai",
+      "katalog-produk",
       "perbandingan",
     ]);
 
     // Manfaat dan formulasi tetap bersumber dari data produk, bukan angka baru.
     await expect(page.locator("#formulasi [role=\"tab\"]")).toHaveCount(3);
-    await expect(page.locator("#cara-pakai")).toContainText("Rp160.000");
 
     // Penawaran mudah ditemukan: harga, syarat sampel, dan dua ajakan penutup.
     const penutup = page.locator("#perbandingan");
-    await expect(penutup.getByRole("link", { name: /Klaim Sampel Gratis/i })).toBeVisible();
-    await expect(penutup.getByRole("link", { name: /Halaman Kontak/i })).toBeVisible();
+    for (const label of ["Preorder Sekarang", "Klaim Sampel Gratis"]) {
+      const link = penutup.getByRole("link", { name: label, exact: true });
+      await expect(link).toBeVisible();
+      await expect(link).toHaveAttribute("href", "/kontak#form-sampel");
+    }
 
     // Tidak ada testimoni atau logo mitra yang dikarang: halaman ini tidak memuat keduanya.
     await expect(page.locator("blockquote")).toHaveCount(0);
@@ -216,7 +269,7 @@ test.describe("prototipe ReCob.id", () => {
       await page.goto("/produk");
 
       await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-      for (const id of ["produk-hero", "pita-alur", "formulasi", "cara-pakai", "perbandingan"]) {
+      for (const id of ["produk-hero", "pita-alur", "formulasi", "perbandingan"]) {
         await expect(page.locator(`#${id}`)).toHaveCount(1);
       }
 
@@ -233,16 +286,54 @@ test.describe("prototipe ReCob.id", () => {
       expect(foto.length).toBeGreaterThan(0);
       for (const lebar of foto) expect(lebar).toBeGreaterThan(0);
 
-      // Ajakan bisa difokus papan tik dan anchor formulasi mendarat di seksi yang benar.
+      // Ajakan bisa difokus papan tik dan anchor formulasi membuat seksi yang benar terlihat.
+      // Matikan smooth-scroll agar assertion tidak menangkap posisi transisi.
+      await page.emulateMedia({ reducedMotion: "reduce" });
       await page.keyboard.press("Tab");
       await page.locator('#produk-hero a[href="/kontak#form-sampel"]').first().focus();
       await expect(page.locator('#produk-hero a[href="/kontak#form-sampel"]').first()).toBeFocused();
 
       await page.goto("/produk#formulasi");
-      await expect
-        .poll(async () => page.locator("#formulasi").evaluate((node) => node.getBoundingClientRect().top))
-        .toBeLessThan(200);
+      await expect(page.locator("#formulasi")).toBeInViewport();
     }
+  });
+
+  for (const width of [390, 768]) {
+    test(`semua rute bersih dari luber horizontal di ${String(width)} px`, async ({ page }) => {
+      test.slow();
+      const rute = ["/", "/produk", "/kalkulator", "/spesifikasi-produk", "/edukasi", "/mitra", "/kontak"];
+      for (const jalur of rute) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(jalur);
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        );
+        expect(overflow, `${jalur} luber di ${String(width)} px`).toBeLessThanOrEqual(1);
+      }
+
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/produk");
+      // Bilah lengket melayani semua lebar di bawah `lg`; tablet 768 px tidak punya ajakan
+      // header, jadi bilah ini jalur konversi utamanya.
+      await expect(page.locator("div.fixed.inset-x-0.bottom-0")).toBeAttached();
+
+      await page.evaluate(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" });
+      });
+      await page.waitForFunction(
+        () =>
+          window.scrollY > 0 &&
+          window.innerHeight + window.scrollY >= document.body.scrollHeight - 2,
+      );
+      await expect(page.locator("div.fixed.inset-x-0.bottom-0")).toBeVisible();
+      await expect(page.getByText(/NPP|Nomor Pendaftaran/i).first()).toBeInViewport();
+    });
+  }
+
+  test("bilah lengket disembunyikan di desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 900 });
+    await page.goto("/produk");
+    await expect(page.locator("div.fixed.inset-x-0.bottom-0")).toBeHidden();
   });
 
   test("pita proses terbaca sekali dan berhenti saat gerak dikurangi", async ({ page }) => {
@@ -285,6 +376,85 @@ test.describe("prototipe ReCob.id", () => {
       .not.toBe(before);
   });
 
+  test("CTA konversi produk menuju form sampel", async ({ page }) => {
+    await page.goto("/produk");
+
+    for (const label of ["Preorder Sekarang", "Klaim Sampel Gratis"]) {
+      const links = page.getByRole("link", { name: label, exact: true });
+      await expect(links.first()).toBeVisible();
+      await expect(links.first()).toHaveAttribute("href", "/kontak#form-sampel");
+    }
+  });
+
+  test("halaman pendukung menyertakan CTA produk yang ringkas", async ({ page }) => {
+    for (const route of ["/kalkulator", "/spesifikasi-produk", "/edukasi", "/mitra"]) {
+      await page.goto(route);
+      const cta = page.locator("#cta-produk");
+      await expect(cta).toHaveCount(1);
+      for (const label of ["Preorder Sekarang", "Klaim Sampel Gratis"]) {
+        await expect(cta.getByRole("link", { name: label, exact: true })).toHaveAttribute(
+          "href",
+          "/kontak#form-sampel",
+        );
+      }
+    }
+  });
+
+  test("menu ponsel membuka dua ajakan konversi dan menutup setelah dipilih", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/");
+
+    const toggle = page.getByRole("button", { name: /buka menu|tutup menu/i });
+    await toggle.click();
+
+    const panel = page.locator("#menu-utama");
+    await expect(panel).toBeVisible();
+    for (const label of ["Preorder Sekarang", "Klaim Sampel Gratis"]) {
+      const link = panel.getByRole("link", { name: label, exact: true });
+      await expect(link).toHaveAttribute("href", "/kontak#form-sampel");
+    }
+
+    await panel.getByRole("link", { name: "Preorder Sekarang", exact: true }).click();
+    await expect(page.locator("#menu-utama")).toBeHidden();
+    await expect(page).toHaveURL(/\/kontak#form-sampel$/u);
+  });
+
+  test("bilah lengket ponsel menyediakan dua ajakan konversi tanpa menutup footer", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/produk");
+
+    await page.evaluate(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" });
+    });
+    await page.waitForFunction(
+      () =>
+        window.scrollY > 0 &&
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 2,
+    );
+
+    const sticky = page.locator("div.fixed.inset-x-0.bottom-0");
+    await expect(sticky).toBeVisible();
+    for (const label of ["Preorder Sekarang", "Klaim Sampel Gratis"]) {
+      await expect(sticky.getByRole("link", { name: label, exact: true })).toHaveAttribute(
+        "href",
+        "/kontak#form-sampel",
+      );
+    }
+
+    const legal = page.getByText(/NPP|Nomor Pendaftaran/i).first();
+    await expect(legal).toBeVisible();
+    const clearance = await legal.evaluate((el) => {
+      const bar = document.querySelector("div.fixed.inset-x-0.bottom-0");
+      return {
+        legalBottom: el.getBoundingClientRect().bottom,
+        barTop: bar?.getBoundingClientRect().top ?? Number.NEGATIVE_INFINITY,
+      };
+    });
+    expect(clearance.legalBottom).toBeLessThanOrEqual(clearance.barTop + 1);
+  });
+
   test("kalkulator menghitung ulang dan membawa jumlah ternak ke formulir sampel", async ({
     page,
   }) => {
@@ -298,9 +468,9 @@ test.describe("prototipe ReCob.id", () => {
 
     await page
       .locator("#kalkulator")
-      .getByRole("link", { name: /Klaim Sampel Gratis 2-3 kg/i })
+      .getByRole("link", { name: "Klaim Sampel Gratis", exact: true })
       .click();
-    await expect(page).toHaveURL(/\/kontak#form-sampel$/u);
+    await expect(page).toHaveURL(/\/kontak#form-sampel$/u, { timeout: 15_000 });
     await expect(page.locator("#cattleCount")).toHaveValue("10");
   });
 
@@ -349,8 +519,15 @@ test.describe("prototipe ReCob.id", () => {
     const sitemap = await request.get("/sitemap.xml");
     expect(sitemap.status()).toBe(200);
     const sitemapBody = await sitemap.text();
-    // Keenam halaman prototipe harus terdaftar.
-    for (const route of ["/produk", "/kalkulator", "/mitra", "/edukasi", "/kontak"]) {
+    // Enam rute sekunder prototipe harus terdaftar.
+    for (const route of [
+      "/produk",
+      "/spesifikasi-produk",
+      "/kalkulator",
+      "/mitra",
+      "/edukasi",
+      "/kontak",
+    ]) {
       expect(sitemapBody).toContain(route);
     }
   });
@@ -404,7 +581,14 @@ test.describe("prototipe ReCob.id", () => {
   });
 
   test("setiap halaman sekunder menetapkan kanoniknya sendiri", async ({ page }) => {
-    for (const route of ["/produk", "/kalkulator", "/mitra", "/edukasi", "/kontak"]) {
+    for (const route of [
+      "/produk",
+      "/spesifikasi-produk",
+      "/kalkulator",
+      "/mitra",
+      "/edukasi",
+      "/kontak",
+    ]) {
       await page.goto(route);
       const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
       expect(canonical, `${route} kanonik salah`).toContain(route);

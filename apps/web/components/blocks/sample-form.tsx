@@ -226,8 +226,14 @@ export function SampleForm({ regions }: SampleFormProps): ReactNode {
         />
       </div>
 
-      <div className="flex items-start gap-xs">
-        <input id="consent" name="consent" type="checkbox" value="true" />
+      <div className="flex min-h-11 items-start gap-xs">
+        <input
+          className="mt-2xs h-6 w-6 shrink-0 accent-primary"
+          id="consent"
+          name="consent"
+          type="checkbox"
+          value="true"
+        />
         <Label htmlFor="consent">{copy.cta.form.consentLabel}</Label>
       </div>
       {fieldErrors.consent !== undefined ? <FieldError>{fieldErrors.consent}</FieldError> : null}

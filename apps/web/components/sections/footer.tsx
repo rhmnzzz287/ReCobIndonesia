@@ -32,7 +32,7 @@ export async function Footer(): Promise<ReactNode> {
   ];
 
   return (
-    <footer className="bg-ink-deep py-2xl text-surface">
+    <footer className="bg-ink-deep pb-[calc(var(--spacing-2xl)+80px)] pt-2xl text-surface lg:pb-2xl">
       <Container>
         <div className="max-w-[68ch]">
           <div className="flex items-center gap-sm">

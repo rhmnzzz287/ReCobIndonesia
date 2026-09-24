@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { SiteHeader } from "@/components/blocks/site-header";
+import { StickyCta } from "@/components/blocks/sticky-cta";
 import { copy } from "@/content/copy";
 
 function renderHeader(): void {
@@ -20,7 +21,18 @@ describe("SiteHeader", () => {
     ]) {
       expect(screen.getAllByRole("link", { name: label }).length).toBeGreaterThan(0);
     }
+    expect(screen.getAllByRole("link", { name: copy.nav.primaryCta }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: copy.nav.sampleCta }).length).toBeGreaterThan(0);
+  });
+
+  it("menampilkan dua ajakan konversi pada bilah lengket", () => {
+    render(<StickyCta />);
+
+    for (const label of [copy.cta.preorderLabel, copy.cta.sampleLabel]) {
+      const links = screen.getAllByRole("link", { name: label });
+      expect(links).toHaveLength(1);
+      expect(links[0]?.getAttribute("href")).toBe("/kontak#form-sampel");
+    }
   });
 
   it("menautkan setiap halaman sekunder lewat rute, bukan anchor", () => {
@@ -30,6 +42,20 @@ describe("SiteHeader", () => {
     }
     // Ajakan sampel harus menunjuk ke formulir di halaman kontak.
     expect(document.querySelectorAll('a[href="/kontak#form-sampel"]').length).toBeGreaterThan(0);
+  });
+
+  it("menampilkan dua ajakan konversi dengan tujuan form sampel", () => {
+    renderHeader();
+
+    fireEvent.click(screen.getByRole("button", { name: copy.nav.menuLabel }));
+
+    for (const label of [copy.nav.primaryCta, copy.nav.sampleCta]) {
+      const links = screen.getAllByRole("link", { name: label });
+      expect(links.length).toBeGreaterThan(0);
+      for (const link of links) {
+        expect(link.getAttribute("href")).toBe("/kontak#form-sampel");
+      }
+    }
   });
 
   it("menu seluler tertutup secara bawaan dan terbuka lewat tombol", () => {

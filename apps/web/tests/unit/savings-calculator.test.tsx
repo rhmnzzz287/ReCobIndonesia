@@ -98,7 +98,7 @@ describe("kalkulator penghematan", () => {
 
   it("menyediakan tautan ke formulir sampel", () => {
     renderCalculator();
-    const link = screen.getByRole("link", { name: new RegExp(copy.calculator.ctaLabel, "iu") });
+    const link = screen.getByRole("link", { name: copy.cta.sampleLabel });
     expect(link.getAttribute("href")).toBe("/kontak#form-sampel");
   });
 
