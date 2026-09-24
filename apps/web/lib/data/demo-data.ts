@@ -10,11 +10,13 @@ export interface DemoProduct {
   slug: string;
   name: string;
   description: string;
-  unit: "karung";
+  unit: string;
   packWeightKg: number;
   priceIdr: number;
   comparePriceIdr: number | null;
   proteinPct: number | null;
+  category: string;
+  imagePath: string | null;
 }
 
 export interface DemoIngredient {
@@ -64,16 +66,22 @@ export const demoRegions: ReadonlyArray<{ code: RegionCode; name: string }> = [
   }
 ];
 
-export const demoProduct: DemoProduct = {
-  "slug": "recob-pelet-50kg",
-  "name": "ReCob.id Pelet Konsentrat 50 kg",
-  "description": "Pelet konsentrat sapi perah dari bonggol jagung dan ampas tahu terfermentasi, dikeringkan dan dipres menjadi pelet.",
-  "unit": "karung",
-  "packWeightKg": 50,
-  "priceIdr": 160000,
-  "comparePriceIdr": 200000,
-  "proteinPct": 16
-};
+export const demoProducts: ReadonlyArray<DemoProduct> = [
+  {
+    "slug": "recob-pelet-50kg",
+    "name": "ReCob.id Pelet Konsentrat 50 kg",
+    "description": "Pelet konsentrat sapi perah dari bonggol jagung dan ampas tahu terfermentasi, dikeringkan dan dipres menjadi pelet.",
+    "unit": "karung",
+    "packWeightKg": 50,
+    "priceIdr": 160000,
+    "comparePriceIdr": 200000,
+    "proteinPct": 16,
+    "category": "Sapi Perah",
+    "imagePath": "/img/produk/karung-50kg.webp"
+  }
+];
+
+export const demoProduct: DemoProduct = demoProducts[0]!;
 
 export const demoIngredients: ReadonlyArray<DemoIngredient> = [
   {

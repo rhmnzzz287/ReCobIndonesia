@@ -14,7 +14,9 @@ vi.mock("@/lib/env", () => ({
 }));
 
 const { getRegions } = await import("@/lib/data/regions");
-const { getPrimaryProduct } = await import("@/lib/data/products");
+const { getPrimaryProduct, getProducts, groupProductsByCategory } = await import(
+  "@/lib/data/products"
+);
 const { demoProduct } = await import("@/lib/data/demo-data");
 
 describe("mode demo (tanpa Supabase)", () => {
@@ -29,5 +31,28 @@ describe("mode demo (tanpa Supabase)", () => {
     expect(product.priceIdr).toBe(160000);
     expect(ingredients).toHaveLength(3);
     expect(ingredients[0]?.shareMinPct).toBe(50);
+  });
+
+  it("getProducts mengembalikan katalog retail aktif", async () => {
+    const products = await getProducts();
+
+    expect(products).toHaveLength(1);
+    expect(products[0]?.category).toBe("Sapi Perah");
+    expect(products[0]?.imagePath).toBe("/img/produk/karung-50kg.webp");
+  });
+
+  it("groupProductsByCategory mengelompokkan kartu per kategori", () => {
+    const products = [
+      { ...demoProduct, slug: "sapi-perah-1", category: "Sapi Perah" },
+      { ...demoProduct, slug: "penggemukan-1", category: "Sapi Penggemukan" },
+      { ...demoProduct, slug: "sapi-perah-2", category: "Sapi Perah" },
+    ];
+
+    expect(
+      groupProductsByCategory(products).map((group) => [group.category, group.products.length]),
+    ).toEqual([
+      ["Sapi Perah", 2],
+      ["Sapi Penggemukan", 1],
+    ]);
   });
 });

@@ -285,8 +285,10 @@ export type Database = {
         Row: {
           compare_price_idr: number | null
           created_at: string
+          category: string
           description: string
           id: string
+          image_path: string | null
           is_active: boolean
           is_bulk: boolean
           name: string
@@ -301,8 +303,10 @@ export type Database = {
         Insert: {
           compare_price_idr?: number | null
           created_at?: string
+          category?: string
           description?: string
           id?: string
+          image_path?: string | null
           is_active?: boolean
           is_bulk?: boolean
           name: string
@@ -317,8 +321,10 @@ export type Database = {
         Update: {
           compare_price_idr?: number | null
           created_at?: string
+          category?: string
           description?: string
           id?: string
+          image_path?: string | null
           is_active?: boolean
           is_bulk?: boolean
           name?: string

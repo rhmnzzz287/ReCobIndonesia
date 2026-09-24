@@ -140,6 +140,8 @@ create table product (
   price_idr         numeric(14,2) not null check (price_idr >= 0),
   compare_price_idr numeric(14,2) check (compare_price_idr is null or compare_price_idr > 0),
   protein_pct       numeric(5,2) check (protein_pct between 0 and 100),
+  category           text not null default 'Sapi Perah',
+  image_path         text,
   is_bulk           boolean not null default false,
   is_active         boolean not null default true,
   created_at        timestamptz not null default now(),

@@ -41,10 +41,14 @@ await client.connect();
 const regions = (await client.query("select code, name from region order by code")).rows;
 const products = (
   await client.query(
-    `select slug, name, description, unit, pack_weight_kg, price_idr, compare_price_idr, protein_pct
-     from product where is_active order by is_bulk, slug limit 1`,
+    `select slug, name, description, unit, pack_weight_kg, price_idr, compare_price_idr, protein_pct, category, image_path
+     from product where is_active and is_bulk = false order by category, slug`,
   )
 ).rows;
+if (products.length === 0) {
+  throw new Error("Tidak ada produk aktif. Jalankan seed terlebih dahulu (npm run db:seed).");
+}
+
 const ingredients = (
   await client.query(
     `select name, share_min_pct, share_max_pct, function_label, sort_order
@@ -70,9 +74,19 @@ const metrics = (
 const kudSlugs = (await client.query("select slug from kud order by slug")).rows.map((r) => r.slug);
 await client.end();
 
-if (products.length === 0) {
-  throw new Error("Tidak ada produk aktif. Jalankan seed terlebih dahulu (npm run db:seed).");
-}
+const catalogProducts = products.map((product) => ({
+  slug: product.slug,
+  name: product.name,
+  description: product.description,
+  unit: product.unit,
+  packWeightKg: Number(product.pack_weight_kg),
+  priceIdr: Number(product.price_idr),
+  comparePriceIdr:
+    product.compare_price_idr === null ? null : Number(product.compare_price_idr),
+  proteinPct: product.protein_pct === null ? null : Number(product.protein_pct),
+  category: product.category,
+  imagePath: product.image_path,
+}));
 
 const file = `/**
  * BERKAS INI DIHASILKAN oleh \`npm run demo:export\` di apps/backend.
@@ -86,11 +100,13 @@ export interface DemoProduct {
   slug: string;
   name: string;
   description: string;
-  unit: "karung";
+  unit: string;
   packWeightKg: number;
   priceIdr: number;
   comparePriceIdr: number | null;
   proteinPct: number | null;
+  category: string;
+  imagePath: string | null;
 }
 
 export interface DemoIngredient {
@@ -129,17 +145,9 @@ export const demoRegions: ReadonlyArray<{ code: RegionCode; name: string }> = ${
   regions.map((r) => ({ code: r.code, name: r.name })),
 )};
 
-export const demoProduct: DemoProduct = ${ts({
-  slug: products[0].slug,
-  name: products[0].name,
-  description: products[0].description,
-  unit: products[0].unit,
-  packWeightKg: Number(products[0].pack_weight_kg),
-  priceIdr: Number(products[0].price_idr),
-  comparePriceIdr:
-    products[0].compare_price_idr === null ? null : Number(products[0].compare_price_idr),
-  proteinPct: products[0].protein_pct === null ? null : Number(products[0].protein_pct),
-})};
+export const demoProducts: ReadonlyArray<DemoProduct> = ${ts(catalogProducts)};
+
+export const demoProduct: DemoProduct = demoProducts[0]!;
 
 export const demoIngredients: ReadonlyArray<DemoIngredient> = ${ts(
   ingredients.map((i) => ({

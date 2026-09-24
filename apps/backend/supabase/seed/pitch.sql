@@ -27,22 +27,25 @@ on conflict (slug) do update set
   daily_milk_l = excluded.daily_milk_l;
 
 -- 3. Produk
-insert into product (sku, slug, name, description, unit, pack_weight_kg, price_idr, compare_price_idr, protein_pct, is_bulk)
+insert into product (sku, slug, name, description, unit, pack_weight_kg, price_idr, compare_price_idr, protein_pct, is_bulk, category, image_path)
 values
   ('RECOB-50', 'recob-pelet-50kg', 'ReCob.id Pelet Konsentrat 50 kg',
    'Pelet konsentrat sapi perah dari bonggol jagung dan ampas tahu terfermentasi, dikeringkan dan dipres menjadi pelet.',
-   'karung', 50.00, 160000.00, 200000.00, 16.00, false),
+   'karung', 50.00, 160000.00, 200000.00, 16.00, false, 'Sapi Perah', '/img/produk/karung-50kg.webp'),
   ('RECOB-BULK', 'recob-bulk-curah', 'ReCob.id Curah (penawaran volume)',
    'Penawaran volume untuk peternakan komersial di luar skema KUD.',
-   'karung', 50.00, 150000.00, null, 16.00, true)
+   'karung', 50.00, 150000.00, null, 16.00, true, 'Sapi Perah', null)
 on conflict (slug) do update set
   name = excluded.name,
   description = excluded.description,
+  unit = excluded.unit,
   pack_weight_kg = excluded.pack_weight_kg,
   price_idr = excluded.price_idr,
   compare_price_idr = excluded.compare_price_idr,
   protein_pct = excluded.protein_pct,
-  is_bulk = excluded.is_bulk;
+  is_bulk = excluded.is_bulk,
+  category = excluded.category,
+  image_path = excluded.image_path;
 
 -- 4. Bahan formulasi (pola: hapus lalu tulis ulang agar rentang selalu sinkron)
 delete from product_ingredient
