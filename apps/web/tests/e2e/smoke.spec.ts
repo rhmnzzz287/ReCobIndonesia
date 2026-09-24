@@ -602,15 +602,22 @@ test.describe("prototipe ReCob.id", () => {
       "Kredensial Supabase tidak tersedia; skenario ini dijalankan pada CI ber-secrets.",
     );
 
+    // Nomor dan kunci idempotensi harus unik per jalannya tes. Basis data menolak nomor
+    // yang masih aktif (`lead_phone_active_idx`) dan kunci idempotensi yang terpakai
+    // (`lead_idempotency_unique`); nomor tetap membuat panggilan pertama berubah menjadi
+    // `duplicate` pada jalannya tes berikutnya, sehingga skenario ini tidak pernah lulus dua kali.
+    const runId = `${Date.now()}${Math.floor(Math.random() * 1000)}`;
+    const phoneWa = `0812${runId.slice(-8)}`;
+
     // Kontrak: source hanya menerima nilai enum lead_source; utm memakai objek (bukan null).
     const body = {
       fullName: "Uji E2E Idempoten",
-      phoneWa: "081234567891",
+      phoneWa,
       cattleCount: 5,
       regionCode: "jabar",
       source: "other",
       utm: {},
-      idempotencyKey: `e2e-${Date.now()}`,
+      idempotencyKey: `e2e-${runId}`,
     };
 
     const first = await request.post("/api/lead", { data: body });
